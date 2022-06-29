@@ -1,9 +1,8 @@
-import styled from 'styled-components'
+import { DEFAULT_META, getCustomMeta } from 'config/constants/meta'
 import { useTranslation } from 'contexts/Localization'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
-import { DEFAULT_META, getCustomMeta } from 'config/constants/meta'
-import { useCakeBusdPrice } from 'hooks/useBUSDPrice'
+import styled from 'styled-components'
 import Container from './Container'
 
 const StyledPage = styled(Container)`
@@ -29,12 +28,10 @@ export const PageMeta: React.FC<{ symbol?: string }> = ({ symbol }) => {
     currentLanguage: { locale },
   } = useTranslation()
   const { pathname } = useRouter()
-  const cakePriceUsd = useCakeBusdPrice()
-  const cakePriceUsdDisplay = cakePriceUsd ? `$${cakePriceUsd.toFixed(3)}` : '...'
 
   const pageMeta = getCustomMeta(pathname, t, locale) || {}
   const { title, description, image } = { ...DEFAULT_META, ...pageMeta }
-  let pageTitle = cakePriceUsdDisplay ? [title, cakePriceUsdDisplay].join(' - ') : title
+  let pageTitle = title
   if (symbol) {
     pageTitle = [symbol, title].join(' - ')
   }

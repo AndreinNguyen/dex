@@ -37,7 +37,7 @@ const PriceLink = styled.a`
 const CakePrice: React.FC<Props> = ({ svcBalance, showSkeleton = true }) => {
   const balanceFormatted = svcBalance
     ? Number(svcBalance)
-        .toFixed(2)
+        .toFixed(3)
         .replace(/\d(?=(\d{3})+\.)/g, "$&,")
     : 0;
 
