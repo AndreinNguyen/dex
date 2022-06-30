@@ -5,6 +5,7 @@ import { PageMeta } from 'components/Layout/Page'
 import GreySavvycoinIcon from 'components/Svg/GreySavvycoinIcon'
 import SmsIcon from 'components/Svg/SmsIcon'
 import useSVCTokenBalanceDisplay from 'hooks/useSVCTokenBalanceDisplay'
+import { useCallback } from 'react'
 import { escapeRegExp } from 'utils'
 import ConfirmModal from './components/ConfirmModal'
 import InputTransfer from './components/InputTransfer'
@@ -30,11 +31,14 @@ const Transfer = () => {
   function openSuccess() {
     onPresentSuccess()
   }
-  const validAmount = (e: { target: HTMLInputElement }) => {
-    if (inputRegex.test(escapeRegExp(e.target.value))) {
-      handleChange(e)
-    }
-  }
+  const validAmount = useCallback(
+    (e: { target: HTMLInputElement }) => {
+      if (inputRegex.test(escapeRegExp(e.target.value))) {
+        handleChange(e)
+      }
+    },
+    [handleChange],
+  )
 
   return (
     <>

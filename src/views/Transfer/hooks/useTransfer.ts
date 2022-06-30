@@ -5,7 +5,12 @@ import { getProviderOrSigner } from 'utils'
 import { getSVCContract } from 'utils/contractHelpers'
 import { getDecimalAmount } from 'utils/formatBalance'
 
-export const useTransfer = (address: string, amount: string, callback?: () => void) => {
+interface TransferProps {
+  transferHandler: () => void
+  transferHash: string
+}
+
+export const useTransfer = (address: string, amount: string, callback?: () => void): TransferProps => {
   const [transferHash, setTransferHash] = useState<string>('')
   const { account, library } = useActiveWeb3React()
   const contract = getSVCContract(getProviderOrSigner(library, account))

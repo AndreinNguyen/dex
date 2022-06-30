@@ -5,8 +5,13 @@ export interface TransferValues {
   amount: string
 }
 
+export interface ErrorMsg {
+  address: string
+  amount: string
+}
+
 export const validate = (values: TransferValues, balance: string) => {
-  const errors: TransferValues = {
+  const errors: ErrorMsg = {
     address: '',
     amount: '',
   }
