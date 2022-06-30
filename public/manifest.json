@@ -1,8 +1,8 @@
 {
   "short_name": "Savvycoin",
   "name": "Savvycoin",
-  "description": "Farm CAKE with Pancake LP Tokens",
-  "homepage_url": "https://pancakeswap.finance",
+  "description": "Farm SVC with Pancake LP Tokens",
+  "homepage_url": "https://lab-dex.savvycom.xyz/",
   "start_url": ".",
   "display": "standalone",
   "theme_color": "#1FC7D4",
