@@ -24,8 +24,8 @@ const farms: SerializedFarmConfig[] = [
     v1pid: 251,
     lpSymbol: 'SVC-BNB LP',
     lpAddresses: {
-      97: '0xb7700d40d934478C172E55697734CAE0A7858127',
-      56: '0xb7700d40d934478C172E55697734CAE0A7858127',
+      97: '0xf8291Ba5FEb2f6fe01126c84728A0aAe32374153',
+      56: '0xf8291Ba5FEb2f6fe01126c84728A0aAe32374153',
     },
     token: serializedTokens.svc,
     quoteToken: serializedTokens.wbnb,
