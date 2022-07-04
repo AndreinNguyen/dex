@@ -360,7 +360,8 @@ const Farms: React.FC = ({ children }) => {
         <ControlContainer>
           <ViewControls>
             <ToggleView idPrefix="clickFarm" viewMode={viewMode} onToggle={(mode: ViewMode) => setViewMode(mode)} />
-            <ToggleWrapper>
+            {/* TODO: Comment this for disbale toggle button stake and live/finished */}
+            {/* <ToggleWrapper>
               <Toggle
                 id="staked-only-farms"
                 checked={stakedOnly}
@@ -368,8 +369,8 @@ const Farms: React.FC = ({ children }) => {
                 scale="sm"
               />
               <Text> {t('Staked only')}</Text>
-            </ToggleWrapper>
-            <FarmTabButtons hasStakeInFinishedFarms={stakedInactiveFarms.length > 0} />
+            </ToggleWrapper> */}
+            {/* <FarmTabButtons hasStakeInFinishedFarms={stakedInactiveFarms.length > 0} /> */}
           </ViewControls>
           <FilterContainer>
             <LabelWrapper>
