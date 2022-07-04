@@ -1,4 +1,4 @@
-import { CurrencyAmount, Token, Trade } from '@pancakeswap/sdk'
+import { CurrencyAmount, Token, Trade } from '@savvydex/sdk'
 import {
   ArrowDownIcon,
   ArrowUpDownIcon,

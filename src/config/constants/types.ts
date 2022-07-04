@@ -1,5 +1,5 @@
 import BigNumber from 'bignumber.js'
-import { Token, ChainId } from '@pancakeswap/sdk'
+import { Token, ChainId } from '@savvydex/sdk'
 
 // a list of tokens by chain
 export type ChainTokenList = {
