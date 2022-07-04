@@ -48,6 +48,10 @@ export const links: MenuItemsType[] = [
         iconName: "Chart",
         isMobileOnly: true,
       },
+      {
+        label: "Lear to Earn",
+        href: "/questions",
+      },
     ],
   },
   {

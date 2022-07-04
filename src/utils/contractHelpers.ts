@@ -111,7 +111,7 @@ import type {
   CakeVaultV2,
   TradingCompetitionMobox,
   TradingCompetitionMoD,
-  SVC,
+  Svc,
 } from 'config/abi/types'
 
 export const getContract = (abi: any, address: string, signer?: Signer | Provider) => {
@@ -152,7 +152,7 @@ export const getCakeContract = (signer?: Signer | Provider) => {
   return getContract(cakeAbi, tokens.svc.address, signer) as Cake
 }
 export const getSVCContract = (signer?: Signer | Provider) => {
-  return getContract(svcAbi, tokens.svc.address, signer) as SVC
+  return getContract(svcAbi, tokens.svc.address, signer) as Svc
 }
 export const getProfileContract = (signer?: Signer | Provider) => {
   return getContract(profileABI, getPancakeProfileAddress(), signer) as PancakeProfile

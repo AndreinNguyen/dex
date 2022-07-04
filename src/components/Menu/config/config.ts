@@ -34,6 +34,10 @@ const config: (t: ContextApi['t'], languageCode?: string) => ConfigMenuItemsType
         label: t('Liquidity'),
         href: '/liquidity',
       },
+      {
+        label: 'Learn to Earn',
+        href: '/questions',
+      },
     ],
   },
   {
