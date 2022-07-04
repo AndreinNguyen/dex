@@ -6,6 +6,11 @@ import Link from 'next/link'
 
 const StyledNav = styled.nav`
   margin-bottom: 40px;
+
+  @media screen and (min-width: 1024px) {
+    padding-left: 30px;
+    padding-right: 30px;
+  }
 `
 
 const getActiveIndex = (pathname: string): number => {

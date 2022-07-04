@@ -158,4 +158,5 @@ export { default as SVCLogo } from "./Icons/SVCLogo";
 export { default as Svg } from "./Svg";
 export { default as SVCTextLogo } from "./Icons/SVCTextLogo";
 export { default as SavvycomLogo } from "./Icons/SavvycomLogo";
+export { default as SVCWhiteIcon } from "./Icons/SVCWhiteIcon";
 export type { SvgProps } from "./types";

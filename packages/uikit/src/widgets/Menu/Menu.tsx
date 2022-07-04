@@ -23,6 +23,11 @@ const StyledNavContainer = styled.div`
   ${({ theme }) => theme.mediaQueries.lg} {
     max-width: 1216px;
   }
+
+  @media screen and (max-width: 1024px) {
+    padding-left: 30px;
+    padding-right: 30px;
+  }
 `;
 
 const StyledNav = styled.nav`
