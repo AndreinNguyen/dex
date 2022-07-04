@@ -32,7 +32,7 @@ export const DropdownMenuItem = styled.button<StyledDropdownMenuItemProps & { $i
   width: 100%;
 
   &:hover:not(:disabled) {
-    transition: all 0.3s ease-in-out;
+    transition: all 0.2s ease-in-out;
     transform: translateX(12px);
     color: ${({ theme }) => theme.colors.primaryYellow};
   }
