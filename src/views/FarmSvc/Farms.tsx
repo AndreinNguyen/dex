@@ -2,7 +2,7 @@ import { useEffect, useCallback, useState, useMemo, useRef, createContext } from
 import BigNumber from 'bignumber.js'
 import { useWeb3React } from '@web3-react/core'
 import { Image, Heading, RowType, Toggle, Text, Button, ArrowForwardIcon, Flex, Link } from '@pancakeswap/uikit'
-import { ChainId } from '@pancakeswap/sdk'
+import { ChainId } from '@savvydex/sdk'
 import { NextLinkFromReactRouter } from 'components/NextLink'
 import styled from 'styled-components'
 import FlexLayout from 'components/Layout/Flex'
@@ -358,7 +358,8 @@ const Farms: React.FC = ({ children }) => {
         <ControlContainer>
           <ViewControls>
             <ToggleView idPrefix="clickFarm" viewMode={viewMode} onToggle={(mode: ViewMode) => setViewMode(mode)} />
-            <ToggleWrapper>
+            {/* TODO: Comment this for disbale toggle button stake and live/finished */}
+            {/* <ToggleWrapper>
               <Toggle
                 id="staked-only-farms"
                 checked={stakedOnly}
@@ -367,7 +368,7 @@ const Farms: React.FC = ({ children }) => {
               />
               <Text> {t('Staked only')}</Text>
             </ToggleWrapper>
-            <FarmTabButtons hasStakeInFinishedFarms={stakedInactiveFarms.length > 0} />
+            <FarmTabButtons hasStakeInFinishedFarms={stakedInactiveFarms.length > 0} /> */}
           </ViewControls>
           <FilterContainer>
             <LabelWrapper>

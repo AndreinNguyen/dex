@@ -1,8 +1,8 @@
 import React, { useContext } from "react";
 import styled, { keyframes } from "styled-components";
 import Flex from "../../../components/Box/Flex";
-import { LogoIcon, LogoWithTextIcon } from "../../../components/Svg";
 import SVCTextLogo from "../../../components/Svg/Icons/SVCTextLogo";
+import SVCWhiteIcon from "../../../components/Svg/Icons/SVCWhiteIcon";
 import { MenuContext } from "../context";
 
 interface Props {
@@ -55,7 +55,8 @@ const Logo: React.FC<Props> = ({ isDark, href }) => {
     <>
       {/* <LogoIcon className="mobile-icon" />
       <LogoWithTextIcon className="desktop-icon" isDark={isDark} /> */}
-      <SVCTextLogo />
+      <SVCWhiteIcon className="mobile-icon" />
+      <SVCTextLogo className="desktop-icon" />
     </>
   );
 

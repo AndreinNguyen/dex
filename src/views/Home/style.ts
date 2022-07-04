@@ -37,4 +37,20 @@ export const BannerBox = styled.div`
     z-index: 2;
     max-width: 1050px;
   }
+
+  @media screen and (max-width: 576px) {
+    .about-box {
+      align-items: center;
+      margin-bottom: 50px;
+      min-height: 0;
+      margin: 0 auto;
+      margin-bottom: 50px;
+      h1.hero-title {
+        font-size: 42px;
+        line-height: 1.2;
+        margin-bottom: 20px;
+      }
+      padding: 0 30px;
+    }
+  }
 `
