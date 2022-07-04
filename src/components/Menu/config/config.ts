@@ -36,7 +36,7 @@ const config: (t: ContextApi['t'], languageCode?: string) => ConfigMenuItemsType
       },
       {
         label: 'Learn to Earn',
-        href: '/questions',
+        href: '/learn-and-earn',
       },
     ],
   },

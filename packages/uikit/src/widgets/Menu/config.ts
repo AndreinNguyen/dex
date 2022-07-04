@@ -50,7 +50,7 @@ export const links: MenuItemsType[] = [
       },
       {
         label: "Lear to Earn",
-        href: "/questions",
+        href: "/learn-and-earn",
       },
     ],
   },
