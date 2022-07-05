@@ -17,12 +17,12 @@ interface StackedLPProps {
 
 const StakedLP: React.FunctionComponent<StackedLPProps> = ({
   stakedBalance,
-  lpSymbol,
-  quoteTokenSymbol,
-  tokenSymbol,
-  lpTotalSupply,
-  tokenAmountTotal,
-  quoteTokenAmountTotal,
+  // lpSymbol,
+  // quoteTokenSymbol,
+  // tokenSymbol,
+  // lpTotalSupply,
+  // tokenAmountTotal,
+  // quoteTokenAmountTotal,
 }) => {
   const cakePrice = usePriceCakeBusd()
 
@@ -43,7 +43,7 @@ const StakedLP: React.FunctionComponent<StackedLPProps> = ({
             unit=" USD"
             prefix="~"
           />
-          <Flex style={{ gap: '4px' }}>
+          {/* <Flex style={{ gap: '4px' }}>
             <Balance
               fontSize="12px"
               color="textSubtle"
@@ -58,7 +58,7 @@ const StakedLP: React.FunctionComponent<StackedLPProps> = ({
               value={stakedBalance.div(lpTotalSupply).times(quoteTokenAmountTotal).toNumber()}
               unit={` ${quoteTokenSymbol}`}
             />
-          </Flex>
+          </Flex> */}
         </>
       )}
     </Flex>
