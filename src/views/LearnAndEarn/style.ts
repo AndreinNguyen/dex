@@ -36,6 +36,7 @@ export const CourseCardContainer = styled.div`
   width: 100%;
   padding: 24px;
   display: flex;
+  color: #fff;
 
   &:not(:last-child) {
     border-bottom: 1px solid #383241;
