@@ -5,6 +5,8 @@ export const RootContainer = styled.div`
   min-height: 60vh;
   width: 100%;
 
+  color: #fff;
+
   .header {
     max-width: 464px;
     margin-bottom: 30px;

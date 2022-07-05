@@ -51,6 +51,7 @@ const CourseLearning = () => {
     if (currentQuestion < listQuestion.length - 1) {
       setCurrentQuestion(currentQuestion + 1)
     }
+    setAnswerChecked(null)
   }
 
   const onPreQuestion = () => {
