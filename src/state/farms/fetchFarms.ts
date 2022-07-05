@@ -27,6 +27,11 @@ const fetchFarms = async (farmsToFetch: SerializedFarmConfig[]): Promise<Seriali
     // Ratio in % of LP tokens that are staked in the MC, vs the total number in circulation
     const lpTokenRatio = new BigNumber(lpTokenBalanceMC).div(new BigNumber(lpTotalSupply)) // 4 / 14,213764850863520921
 
+    // Balance of svc in farming[0]
+    const svcBalanceMC = new BigNumber(lpTokenBalanceMC).div(getFullDecimalMultiplier(tokenDecimals))
+
+    // console.log({ svcBalanceMC: svcBalanceMC.toJSON() })
+
     // Raw amount of token in the LP, including those not staked
     const tokenAmountTotal = new BigNumber(tokenBalanceLP).div(getFullDecimalMultiplier(tokenDecimals)) // 13195,195757743820167629
 
@@ -52,6 +57,7 @@ const fetchFarms = async (farmsToFetch: SerializedFarmConfig[]): Promise<Seriali
       token: farm.token,
       quoteToken: farm.quoteToken,
       tokenAmountTotal: tokenAmountTotal.toJSON(),
+      lpTokenBalanceMC: svcBalanceMC.toJSON(),
       quoteTokenAmountTotal: quoteTokenAmountTotal.toJSON(),
       lpTotalSupply: new BigNumber(lpTotalSupply).toJSON(),
       lpTotalInQuoteToken: lpTotalInQuoteToken.toJSON(),

@@ -175,7 +175,9 @@ const Farms: React.FC = ({ children }) => {
         if (!farm.lpTotalInQuoteToken || !farm.quoteTokenPriceBusd) {
           return farm
         }
-        const totalLiquidity = new BigNumber(farm.lpTotalInQuoteToken).times(farm.quoteTokenPriceBusd)
+
+        const totalLiquidity = new BigNumber(farm.lpTokenBalanceMC).times(farm.quoteTokenPriceBusd)
+
         const { cakeRewardsApr, lpRewardsApr } = isActive
           ? getFarmApr(
               new BigNumber(farm.poolWeight),

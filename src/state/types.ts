@@ -94,6 +94,7 @@ export interface SerializedFarm extends SerializedFarmConfig {
   tokenPriceBusd?: string
   quoteTokenPriceBusd?: string
   tokenAmountTotal?: SerializedBigNumber
+  lpTokenBalanceMC?: SerializedBigNumber
   quoteTokenAmountTotal?: SerializedBigNumber
   lpTotalInQuoteToken?: SerializedBigNumber
   lpTotalSupply?: SerializedBigNumber
