@@ -14,6 +14,7 @@ export const RootContainer = styled.div`
       font-weight: 600;
       line-height: 1.2;
       margin-bottom: 16px;
+      color: #fff;
     }
 
     .description {

@@ -90,7 +90,7 @@ const CourseLearning = () => {
                 />
                 <label
                   htmlFor={`answer${index}`}
-                  className={`answer-label ${answerChecked === index ? 'answer-checked' : ''}`}
+                  className={`answer-label ${answerChecked == index ? 'answer-checked' : ''}`}
                 >
                   <span>{data.A || data.B || data.C || data.D}</span>
                 </label>
