@@ -1,7 +1,7 @@
 import { Button, Modal } from '@pancakeswap/uikit'
 import GreenSavvycoinIcon from 'components/Svg/GreenSavvycoinIcon'
 import React from 'react'
-import { ConfirmModalBox } from './style'
+import { ConfirmModalBox } from '../style'
 // eslint-disable-next-line import/order
 
 interface Props {
