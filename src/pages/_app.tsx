@@ -1,27 +1,28 @@
 import { ResetCSS } from '@pancakeswap/uikit'
+import Script from 'next/script'
+import dynamic from 'next/dynamic'
 import BigNumber from 'bignumber.js'
 import GlobalCheckClaimStatus from 'components/GlobalCheckClaimStatus'
 import FixedSubgraphHealthIndicator from 'components/SubgraphHealthIndicator'
 import { ToastListener } from 'contexts/ToastsContext'
-import { useAccountEventListener } from 'hooks/useAccountEventListener'
 import useEagerConnect from 'hooks/useEagerConnect'
+import { useAccountEventListener } from 'hooks/useAccountEventListener'
 import useSentryUser from 'hooks/useSentryUser'
 import useUserAgent from 'hooks/useUserAgent'
-import { NextPage } from 'next'
 import type { AppProps } from 'next/app'
-import dynamic from 'next/dynamic'
 import Head from 'next/head'
-import Script from 'next/script'
-import { Fragment } from 'react'
+import { Fragment, useRef } from 'react'
 import { PersistGate } from 'redux-persist/integration/react'
-import { persistor, useStore } from 'state'
+import { useStore, persistor } from 'state'
 import { usePollBlockNumber } from 'state/block/hooks'
 import { usePollCoreFarmData } from 'state/farms/hooks'
+import { NextPage } from 'next'
 import { Blocklist, Updaters } from '..'
 import ErrorBoundary from '../components/ErrorBoundary'
 import Menu from '../components/Menu'
 import Providers from '../Providers'
 import GlobalStyle from '../style/Global'
+import { QueryClient, QueryClientProvider } from 'react-query'
 
 const EasterEgg = dynamic(() => import('components/EasterEgg'), { ssr: false })
 
@@ -45,6 +46,16 @@ function MyApp(props: AppProps) {
   const { pageProps } = props
   const store = useStore(pageProps.initialReduxState)
 
+  const queryClientRef = useRef(null)
+  if (!queryClientRef.current) {
+    queryClientRef.current = new QueryClient({
+      defaultOptions: {
+        queries: {
+          refetchOnWindowFocus: false,
+        },
+      },
+    })
+  }
 
   return (
     <>
@@ -67,6 +78,7 @@ function MyApp(props: AppProps) {
         {/* <meta name="twitter:title" content="🥞 PancakeSwap - A next evolution DeFi exchange on BNB Smart Chain (BSC)" /> */}
         <title>Savvycoin</title>
       </Head>
+      <QueryClientProvider client={queryClientRef.current}>
         <Providers store={store}>
           <Blocklist>
             <GlobalHooks />
@@ -79,6 +91,7 @@ function MyApp(props: AppProps) {
             </PersistGate>
           </Blocklist>
         </Providers>
+      </QueryClientProvider>
       <Script
         strategy="afterInteractive"
         id="google-tag"
