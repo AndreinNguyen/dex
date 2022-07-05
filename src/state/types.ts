@@ -107,6 +107,7 @@ export interface DeserializedFarm extends DeserializedFarmConfig {
   tokenPriceBusd?: string
   quoteTokenPriceBusd?: string
   tokenAmountTotal?: BigNumber
+  lpTokenBalanceMC?: BigNumber
   quoteTokenAmountTotal?: BigNumber
   lpTotalInQuoteToken?: BigNumber
   lpTotalSupply?: BigNumber
