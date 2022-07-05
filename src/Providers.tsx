@@ -9,13 +9,28 @@ import { ToastsProvider } from 'contexts/ToastsContext'
 import { fetchStatusMiddleware } from 'hooks/useSWRContract'
 import { Store } from '@reduxjs/toolkit'
 import { ThemeProvider as NextThemeProvider, useTheme as useNextTheme } from 'next-themes'
+import { QueryClient, QueryClientProvider } from 'react-query'
+import { useRef } from 'react'
 
 const StyledThemeProvider = (props) => {
   return <ThemeProvider theme={dark} {...props} />
 }
 
+
+const queryClientRef = useRef(null)
+if (!queryClientRef.current) {
+  queryClientRef.current = new QueryClient({
+    defaultOptions: {
+      queries: {
+        refetchOnWindowFocus: false,
+      },
+    },
+  })
+}
+
 const Providers: React.FC<{ store: Store }> = ({ children, store }) => {
   return (
+    <QueryClientProvider client={queryClientRef.current}>
     <Web3ReactProvider getLibrary={getLibrary}>
       <Provider store={store}>
         <MatchBreakpointsProvider>
@@ -37,6 +52,8 @@ const Providers: React.FC<{ store: Store }> = ({ children, store }) => {
         </MatchBreakpointsProvider>
       </Provider>
     </Web3ReactProvider>
+    </QueryClientProvider>
+
   )
 }
 

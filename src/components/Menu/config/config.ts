@@ -34,10 +34,6 @@ const config: (t: ContextApi['t'], languageCode?: string) => ConfigMenuItemsType
         label: t('Liquidity'),
         href: '/liquidity',
       },
-      {
-        label: 'Learn to Earn',
-        href: '/learn-and-earn',
-      },
     ],
   },
   {
@@ -54,14 +50,11 @@ const config: (t: ContextApi['t'], languageCode?: string) => ConfigMenuItemsType
         label: t('Pools'),
         href: '/pools',
       },
+      {
+        label: 'Learn to earn',
+        href: '/learn-and-earn',
+      },
     ],
-  },
-  {
-    label: 'Shop',
-    href: '/shop',
-    icon: TrophyIcon,
-    fillIcon: TrophyFillIcon,
-    items: [],
   },
   {
     label: 'Transfer',
