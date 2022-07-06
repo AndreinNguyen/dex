@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router'
-import { CourseCardInterface, DataQuestions } from './interface'
+import { DataQuestions } from './interface'
 import { CourseCardContainer, StartCourseButton } from './style'
 
 type Props = {
