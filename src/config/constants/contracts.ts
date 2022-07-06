@@ -1,6 +1,6 @@
 export default {
   masterChef: {
-    97: '0x185198f651e1eDabE6b47fbED81F8455e6F11494',
+    97: '0x5a800dCb9E2934d8f3B7A5f1dF2a5131BeBf15f4',
     56: '0xa5f8C5Dbd5F286960b9d90548680aE5ebFf07652',
   },
   masterChefV1: {
