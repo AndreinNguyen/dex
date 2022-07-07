@@ -1,15 +1,17 @@
-import { Button } from '@pancakeswap/uikit'
+import { Button, useModal } from '@pancakeswap/uikit'
 import { ChevronLeft } from '@styled-icons/entypo/ChevronLeft'
 import { useWeb3React } from '@web3-react/core'
 import axios from 'axios'
 import camelcaseKeys from 'camelcase-keys'
 import { SAVVYDEX_API } from 'config/constants/endpoints'
 import { useRouter } from 'next/router'
-import { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useMutation } from 'react-query'
 import Page from 'views/Page'
+import ConfirmModal from './ConfirmModal'
 import { Metadata } from './interface'
 import { LearningContainer, NavigateHeader } from './style'
+import SubmitAlert from './SubmitAlert'
 
 const getListQuestions = async (id: string) => {
   const response = await axios.get(`${SAVVYDEX_API}/questions/${id}`)
@@ -31,6 +33,12 @@ const CourseLearning = () => {
   const [currentQuestion, setCurrentQuestion] = useState<number>(0)
   const [questionData, setQuestionData] = useState<Metadata>()
   const [answerData, setAnswerData] = useState([])
+
+  const [onOpenErrorModal] = useModal(<SubmitAlert type="error" message="You already did it." />)
+  const [onOpenSuccessModal] = useModal(
+    <SubmitAlert type="success" message="Your question has been successfully submitted" />,
+  )
+  const [onConfirmSubmit] = useModal(<ConfirmModal onConfirm={(captcha: string) => sendingQuestionRequest(captcha)} />)
 
   useEffect(() => {
     async function fetchQuestionData() {
@@ -82,14 +90,28 @@ const CourseLearning = () => {
     }
   }
 
-  const onSubmitQuestion = async () => {
+  const onSubmitQuestion = async (event) => {
+    event.preventDefault()
+    onConfirmSubmit()
+  }
+
+  const sendingQuestionRequest = async (captcha: string) => {
     const body = {
       wallet_address: account,
       question_id: String(query.courseId),
       answers: answerData,
+      captcha,
     }
-    const response = await createAnswerQuestionMutation(body)
-    console.log('response', response)
+    try {
+      const response = await createAnswerQuestionMutation(body)
+      console.log('response', response)
+      onOpenSuccessModal()
+    } catch (error: any) {
+      const { response } = error
+      if (response.data.message === 'user_already_did_it') {
+        onOpenErrorModal()
+      }
+    }
   }
 
   const renderNextOrSubmitButton = () => {
@@ -104,10 +126,10 @@ const CourseLearning = () => {
       {listQuestion && (
         <LearningContainer>
           <NavigateHeader>
-            <span className="navigate-back" onClick={onBack}>
+            <div className="navigate-back" onClick={onBack} onKeyDown={onBack}>
               <ChevronLeft size={24} />
               Learn and Earn
-            </span>
+            </div>
           </NavigateHeader>
 
           <div className="question">
@@ -119,7 +141,7 @@ const CourseLearning = () => {
 
           <div className="options">
             {questionData &&
-              Object.keys(questionData.answer).map((key, index) => (
+              Object.keys(questionData.answer).map((key) => (
                 <div className="answer-item">
                   <input
                     type="radio"

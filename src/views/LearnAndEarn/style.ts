@@ -1,3 +1,4 @@
+import { Modal, ModalContainer } from '@pancakeswap/uikit'
 import styled from 'styled-components'
 
 export const RootContainer = styled.div`
@@ -34,7 +35,7 @@ export const RootContainer = styled.div`
 
 export const CourseCardContainer = styled.div`
   width: 100%;
-  padding: 24px;
+  padding: 18px;
   display: flex;
   color: #fff;
 
@@ -189,5 +190,16 @@ export const NavigateHeader = styled.div`
     &:hover {
       color: #fff;
     }
+  }
+`
+
+export const StyledModalContainer = styled(Modal)`
+  max-width: 440px;
+
+  p.message {
+    margin-top: 18px;
+    color: ${({ theme }) => theme.colors.text};
+    text-align: center;
+    line-height: 1.5;
   }
 `
