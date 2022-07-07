@@ -68,6 +68,10 @@ export const links: MenuItemsType[] = [
         label: "Syrup pools",
         href: "/pools",
       },
+      {
+        label: "Learn to earn",
+        href: "/learn-and-earn",
+      },
     ],
   },
   {
