@@ -148,6 +148,7 @@ const CourseLearning = () => {
                     value={key}
                     id={`answer${key}`}
                     onChange={onSelectAnswer}
+                    checked={answerChecked === key}
                     className="answer-input"
                     name="answer"
                   />
