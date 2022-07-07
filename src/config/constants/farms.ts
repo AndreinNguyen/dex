@@ -24,7 +24,7 @@ const farms: SerializedFarmConfig[] = [
     v1pid: 251,
     lpSymbol: 'SVC-BUSD LP',
     lpAddresses: {
-      97: '0x0f8D3d400C7E9fa695EcE3087D6E949c06f7815f',
+      97: '0x5e683748CCbE2CFa39Ccb9bF9BDB4A0A867eA1d8',
       56: '',
     },
     token: serializedTokens.svc,
@@ -46,7 +46,7 @@ const farms: SerializedFarmConfig[] = [
     v1pid: 252,
     lpSymbol: 'BUSD-BNB LP',
     lpAddresses: {
-      97: '0xfef45e3113f7a39341504fdb9a017e4d3aeca3f5',
+      97: '0xa895d43C9a07AaEccCFF829A5615191eCB3991A9',
       56: '0x58F876857a02D6762E0101bb5C46A8c1ED44Dc16',
     },
     token: serializedTokens.busd,
