@@ -1,45 +1,44 @@
-import Container from 'components/Layout/Container'
-// eslint-disable-next-line import/named
 import { Button, useModal } from '@pancakeswap/uikit'
+import { inputRegex } from 'components/CurrencyInputPanel/NumericalInput'
+import Container from 'components/Layout/Container'
 import { PageMeta } from 'components/Layout/Page'
 import GreySavvycoinIcon from 'components/Svg/GreySavvycoinIcon'
 import SmsIcon from 'components/Svg/SmsIcon'
-import { useEffect, useState } from 'react'
-import { getSVCContract } from 'utils/contractHelpers'
-import useActiveWeb3React from 'hooks/useActiveWeb3React'
-import { getProviderOrSigner } from 'utils'
-import { getDecimalAmount } from 'utils/formatBalance'
-import BigNumber from 'bignumber.js'
-import ConfirmModal from './ConfirmModal'
-import { TransferBox } from './style'
-import TransferHeader from './transferHeader'
-import Notification from './Notification'
+import useSVCTokenBalanceDisplay from 'hooks/useSVCTokenBalanceDisplay'
+import { useCallback } from 'react'
+import { escapeRegExp } from 'utils'
+import ConfirmModal from './components/ConfirmModal'
+import InputTransfer from './components/InputTransfer'
+import Notification from './components/Notification'
+import TransferHeader from './components/TransferHeader'
+import { validate } from './components/utils/validateTransfer'
+import { useFormTransfer } from './hooks/useFormTransfer'
+import { useTransfer } from './hooks/useTransfer'
+import { ErrorMsg, TransferBox } from './style'
 
 const Transfer = () => {
-  const { account, library } = useActiveWeb3React()
-  const [transferHash, setTransferHash] = useState<string>('')
-  const [address, setAddress] = useState<string>('')
-  const [amount, setAmount] = useState<string>('')
-  const contract = getSVCContract(getProviderOrSigner(library, account))
+  const { balanceDisplay } = useSVCTokenBalanceDisplay()
+  const { values, handleChange, errors, handleSubmit } = useFormTransfer(validate, balanceDisplay, openConfirm)
+  const { transferHandler, transferHash } = useTransfer(values.address, values.amount, openSuccess)
 
-  const transferHandler = async () => {
-    const transferAmount = getDecimalAmount(new BigNumber(amount)).toString()
-    const recieverAddress = address
-    const txt = await contract.transfer(recieverAddress, transferAmount)
-
-    setTransferHash(txt.hash)
+  const [onPresentConfirm] = useModal(
+    <ConfirmModal address={values.address} amount={values.amount} onSubmit={transferHandler} />,
+  )
+  function openConfirm() {
+    onPresentConfirm()
   }
-
-  useEffect(() => {
-    if (transferHash) {
-      onPresentSuccess()
-      setAddress('')
-      setAmount('')
-    }
-  }, [transferHash])
-
-  const [onPresentConfirm] = useModal(<ConfirmModal address={address} amount={amount} onSubmit={transferHandler} />)
-  const [onPresentSuccess] = useModal(<Notification txtHash={transferHash} />)
+  const [onPresentSuccess] = useModal(<Notification txHash={transferHash} />)
+  function openSuccess() {
+    onPresentSuccess()
+  }
+  const validAmount = useCallback(
+    (e: { target: HTMLInputElement }) => {
+      if (inputRegex.test(escapeRegExp(e.target.value))) {
+        handleChange(e)
+      }
+    },
+    [handleChange],
+  )
 
   return (
     <>
@@ -47,50 +46,47 @@ const Transfer = () => {
       <Container>
         <TransferBox>
           <TransferHeader />
-
-          <div className="receive-address">
-            <div className="receive-title">
-              <div className="icon">
-                <SmsIcon />
+          <form className="transfer-form">
+            <div className="receive-address">
+              <div className="receive-title">
+                <div className="icon">
+                  <SmsIcon />
+                </div>
+                <div className="label-input">Receiver address</div>
               </div>
-              <div className="p">Receiver address</div>
-            </div>
-            <div className="receive-input">
-              <input
-                type="text"
-                className="abc"
-                id="recieverAddress"
-                placeholder="Input the address"
-                value={address}
-                onChange={(e) => setAddress(e.target.value)}
-              />
-            </div>
-          </div>
-
-          <div className="receive-address">
-            <div className="receive-title">
-              <div className="icon">
-                <GreySavvycoinIcon />
+              <div className="receive-input">
+                <InputTransfer
+                  type="text"
+                  placeholder="Input the address"
+                  name="address"
+                  value={values.address}
+                  onChange={handleChange}
+                />
+                <ErrorMsg>{errors.address}</ErrorMsg>
               </div>
-              <div className="p">Amount</div>
             </div>
-            <div className="receive-input">
-              <input
-                type="text"
-                className="abc"
-                id="sendAmount"
-                placeholder="Input number of coin"
-                value={amount}
-                onChange={(e) => setAmount(e.target.value)}
-              />
+            <div className="receive-address">
+              <div className="receive-title">
+                <div className="icon">
+                  <GreySavvycoinIcon />
+                </div>
+                <div className="label-input">Amount</div>
+              </div>
+              <div className="receive-input">
+                <InputTransfer
+                  type="text"
+                  placeholder="Input number of coin"
+                  name="amount"
+                  value={values.amount}
+                  onChange={validAmount}
+                />
+                <ErrorMsg>{errors.amount}</ErrorMsg>
+              </div>
             </div>
-          </div>
-
-          <div className="button">
-            <Button width="100%" onClick={onPresentConfirm}>
+            <Button width="100%" type="button" onClick={handleSubmit}>
               Confirm
             </Button>
-          </div>
+          </form>
         </TransferBox>
       </Container>
     </>

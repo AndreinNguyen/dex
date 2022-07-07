@@ -38,7 +38,7 @@
     {
       "name": "BUSD Token",
       "symbol": "BUSD",
-      "address": "0xeD24FC36d5Ee211Ea25A80239Fb8C4Cfd80f12Ee",
+      "address": "0x3aD71C276df5b4Ca78912e8780b6C3F0ea8296F2",
       "chainId": 97,
       "decimals": 18,
       "logoURI": "https://pancakeswap.finance/images/tokens/0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56.png"
@@ -46,10 +46,10 @@
     {
       "name": "Savvycoin Token",
       "symbol": "SCV",
-      "address": "0xCE84144EF7A0b300433570dCC8C06269bcB0a218",
+      "address": "0xfa4Fb5daC36439e467707a11eD0e41965A01974c",
       "chainId": 97,
       "decimals": 18,
-      "logoURI": "https://lab-dex.savvycom.xyz/images/tokens/0xCE84144EF7A0b300433570dCC8C06269bcB0a218.png"
+      "logoURI": "https://lab-dex.savvycom.xyz/images/tokens/0x6dd1f1917443530e3adf9011e71b19d25943a21e.png"
     }
   ]
 }

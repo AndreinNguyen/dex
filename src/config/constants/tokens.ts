@@ -14,7 +14,7 @@ export const defineTokens = <T extends TokenList>(t: T) => t
 export const mainnetTokens = defineTokens({
   svc: new Token(
     MAINNET,
-    '0xCE84144EF7A0b300433570dCC8C06269bcB0a218',
+    '0xcc6c2a4df8A88F1E0302cCF455d4023FA797b368',
     18,
     'SVC',
     'Savvycoin',
@@ -2123,14 +2123,7 @@ export const mainnetTokens = defineTokens({
 } as const)
 
 export const testnetTokens = defineTokens({
-  svc: new Token(
-    TESTNET,
-    '0xCE84144EF7A0b300433570dCC8C06269bcB0a218',
-    18,
-    'SVC',
-    'Savvycoin',
-    'https://coin.savvycom.vn/',
-  ),
+  svc: new Token(TESTNET, process.env.NEXT_PUBLIC_SVC_ADDRESS, 18, 'SVC', 'Savvycoin', 'https://coin.savvycom.vn/'),
   wbnb: new Token(
     TESTNET,
     '0xae13d989daC2f0dEbFf460aC112a837C89BAa7cd',
@@ -2149,7 +2142,7 @@ export const testnetTokens = defineTokens({
   ),
   busd: new Token(
     TESTNET,
-    '0x78867BbEeF44f2326bF8DDd1941a4439382EF2A7',
+    '0x3aD71C276df5b4Ca78912e8780b6C3F0ea8296F2',
     18,
     'BUSD',
     'Binance USD',

@@ -13,8 +13,8 @@ const farms: SerializedFarmConfig[] = [
     v1pid: 0,
     lpSymbol: 'SVC',
     lpAddresses: {
-      97: '0xCE84144EF7A0b300433570dCC8C06269bcB0a218',
-      56: '0x0E09FaBB73Bd3Ade0a17ECC321fD13a19e81cE82',
+      97: process.env.NEXT_PUBLIC_SVC_ADDRESS,
+      56: '',
     },
     token: serializedTokens.svc,
     quoteToken: serializedTokens.svc,
@@ -22,13 +22,13 @@ const farms: SerializedFarmConfig[] = [
   {
     pid: 1,
     v1pid: 251,
-    lpSymbol: 'SVC-BNB LP',
+    lpSymbol: 'SVC-BUSD LP',
     lpAddresses: {
-      97: '0xf8291Ba5FEb2f6fe01126c84728A0aAe32374153',
-      56: '0xf8291Ba5FEb2f6fe01126c84728A0aAe32374153',
+      97: '0x5e683748CCbE2CFa39Ccb9bF9BDB4A0A867eA1d8',
+      56: '',
     },
     token: serializedTokens.svc,
-    quoteToken: serializedTokens.wbnb,
+    quoteToken: serializedTokens.busd,
   },
   {
     pid: 3,
@@ -46,7 +46,7 @@ const farms: SerializedFarmConfig[] = [
     v1pid: 252,
     lpSymbol: 'BUSD-BNB LP',
     lpAddresses: {
-      97: '0xe0e92035077c39594793e61802a350347c320cf2',
+      97: '0xa895d43C9a07AaEccCFF829A5615191eCB3991A9',
       56: '0x58F876857a02D6762E0101bb5C46A8c1ED44Dc16',
     },
     token: serializedTokens.busd,

@@ -2,24 +2,12 @@ import { useMemo } from 'react'
 import IPancakePairABI from 'config/abi/IPancakePair.json'
 import { Interface } from '@ethersproject/abi'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
-import { TokenAmount, Pair, Currency, ChainId, Token } from '@savvydex/sdk'
+import { TokenAmount, Pair, Currency } from '@savvydex/sdk'
 
 import { useMultipleContractSingleData } from '../state/multicall/hooks'
 import { wrappedCurrency } from '../utils/wrappedCurrency'
 
 const PAIR_INTERFACE = new Interface(IPancakePairABI)
-
-// const path = require('@savvydex/sdk')
-// const SVC = new path.Token(path.ChainId.TESTNET, '0xCE84144EF7A0b300433570dCC8C06269bcB0a218', 18, 'SVC', 'Savvy Coin')
-
-// const WBNB = new path.Token(path.ChainId.TESTNET, '0xae13d989daC2f0dEbFf460aC112a837C89BAa7cd', 18, 'WBNB', 'Wrap BNB')
-
-// const getPairs = () => {
-//   const pair = path.Pair.getAddress(SVC, WBNB)
-//   console.log('sdksdksdksdksdk', pair)
-// }
-
-// getPairs()
 
 export enum PairState {
   LOADING,

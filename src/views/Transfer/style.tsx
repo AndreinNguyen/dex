@@ -7,15 +7,15 @@ export const TransferBox = styled.div`
   margin-bottom: 200px;
   padding: 20px;
   max-width: 592px;
-  min-height: 388px;
-
-  /* Dark/100 */
-
   background: #08121c;
   border: 2px solid rgba(255, 255, 255, 0.25);
   border-radius: 32px;
+
+  .transfer-form {
+    padding-top: 20px;
+  }
   .receive-address {
-    margin-top: 20px;
+    min-height: 120px;
   }
   .receive-title {
     display: flex;
@@ -24,36 +24,23 @@ export const TransferBox = styled.div`
     color: rgba(255, 255, 255, 0.65);
     margin-bottom: 10px;
   }
-  .receive-input {
-    position: relative;
-    input {
-      outline: none;
-      width: 100%;
-      height: 54px;
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: 16px;
-      border: none;
-      padding-left: 15px;
-      font-family: inter;
-      font-size: 16px;
-      color: white;
-    }
-    input::placeholder {
-      color: rgba(255, 255, 255, 0.25);
-    }
-    .icon-multiple {
-      position: absolute;
-      color: rgba(255, 255, 255, 0.65);
-      top: 17px;
-      right: 10px;
-      cursor: pointer;
-    }
-  }
-
-  .button {
-    margin-top: 20px;
+`
+export const InputStyleTransfer = styled.input`
+  outline: none;
+  width: 100%;
+  height: 54px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  border: none;
+  padding: 15px;
+  font-family: inter;
+  font-size: 16px;
+  color: white;
+  &::placeholder {
+    color: rgba(255, 255, 255, 0.25);
   }
 `
+
 export const TransferHeaderStyle = styled.div`
   text-align: center;
   .transfer-title {
@@ -77,7 +64,7 @@ export const TransferHeaderStyle = styled.div`
     right: 16px;
     cursor: pointer;
   }
-  hr {
+  .header-divider {
     border: 1px solid rgba(255, 255, 255, 0.25);
     margin: 0 -20px;
     margin-top: 20px;
@@ -157,4 +144,13 @@ export const NotificationBox = styled.div`
     cursor: pointer;
     border: transparent;
   }
+`
+
+export const ErrorMsg = styled.p`
+  color: #f6b24f;
+  margin-top: 8px;
+  margin-left: 10px;
+  font-size: 13px;
+  font-family: 'Inter';
+  font-style: normal;
 `
