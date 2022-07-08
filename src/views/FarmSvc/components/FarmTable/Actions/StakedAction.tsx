@@ -57,7 +57,7 @@ const Staked: React.FunctionComponent<StackedActionProps> = ({
   const { onStake } = useStakeFarms()
   const { onUnstake } = useUnstakeFarms()
   const router = useRouter()
-  const lpPrice = useLpTokenPrice(lpSymbol)
+  // const lpPrice = useLpTokenPrice(lpSymbol)
   const cakePrice = usePriceCakeBusd()
 
   const isApproved = account && allowance && allowance.isGreaterThan(0)
@@ -102,7 +102,7 @@ const Staked: React.FunctionComponent<StackedActionProps> = ({
   const [onPresentDeposit] = useModal(
     <DepositModal
       max={tokenBalance}
-      lpPrice={lpPrice}
+      lpPrice={cakePrice}
       lpLabel={lpLabel}
       apr={apr}
       displayApr={displayApr}

@@ -44,14 +44,14 @@ const StakeAction: React.FC<FarmCardActionsProps> = ({
   quoteTokenAmountTotal,
 }) => {
   const { t } = useTranslation()
-  const { onStake } = useStakeFarms(pid)
-  const { onUnstake } = useUnstakeFarms(pid)
+  const { onStake } = useStakeFarms()
+  const { onUnstake } = useUnstakeFarms()
   const { tokenBalance, stakedBalance } = useFarmUser(pid)
   const cakePrice = usePriceCakeBusd()
   const router = useRouter()
   const dispatch = useAppDispatch()
   const { account } = useWeb3React()
-  const lpPrice = useLpTokenPrice(lpSymbol)
+  // const lpPrice = useLpTokenPrice(lpSymbol)
   const { toastSuccess } = useToast()
   const { fetchWithCatchTxError } = useCatchTxError()
 
@@ -92,7 +92,7 @@ const StakeAction: React.FC<FarmCardActionsProps> = ({
       onConfirm={handleStake}
       tokenName={lpSymbol}
       multiplier={multiplier}
-      lpPrice={lpPrice}
+      lpPrice={cakePrice} // FARMING SVC
       lpLabel={lpLabel}
       apr={apr}
       displayApr={displayApr}
