@@ -1,22 +1,22 @@
-import { useRef, useEffect, useMemo } from 'react'
-import styled from 'styled-components'
 import {
+  BalanceInput,
+  Button,
+  ButtonMenu,
+  ButtonMenuItem,
+  Flex,
+  HelpIcon,
   Modal,
   Text,
-  Button,
-  Flex,
-  ButtonMenu,
-  Checkbox,
-  BalanceInput,
-  HelpIcon,
-  ButtonMenuItem,
   useTooltip,
 } from '@pancakeswap/uikit'
 import BigNumber from 'bignumber.js'
 import { useTranslation } from 'contexts/Localization'
+import { useEffect, useMemo, useRef } from 'react'
+import styled from 'styled-components'
 import { getBalanceNumber } from 'utils/formatBalance'
 
 import { useWeb3React } from '@web3-react/core'
+import AnimatedArrow from './AnimatedArrow'
 import RoiCalculatorFooter from './RoiCalculatorFooter'
 import RoiCard from './RoiCard'
 import useRoiCalculatorReducer, {
@@ -24,7 +24,6 @@ import useRoiCalculatorReducer, {
   DefaultCompoundStrategy,
   EditingCurrency,
 } from './useRoiCalculatorReducer'
-import AnimatedArrow from './AnimatedArrow'
 
 export interface RoiCalculatorModalProps {
   onDismiss?: () => void
@@ -107,15 +106,13 @@ const RoiCalculatorModal: React.FC<RoiCalculatorModalProps> = ({
     setPrincipalFromUSDValue,
     setPrincipalFromTokenValue,
     setStakingDuration,
-    toggleCompounding,
     toggleEditingCurrency,
-    setCompoundingFrequency,
     setCalculatorMode,
     setTargetRoi,
     dispatch,
   } = useRoiCalculatorReducer({ stakingTokenPrice, earningTokenPrice, autoCompoundFrequency }, initialState)
 
-  const { compounding, activeCompoundingIndex, stakingDuration, editingCurrency } = state.controls
+  const { stakingDuration, editingCurrency } = state.controls
   const { principalAsUSD, principalAsToken } = state.data
 
   // Auto-focus input on opening modal

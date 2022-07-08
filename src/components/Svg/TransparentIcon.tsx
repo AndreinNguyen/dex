@@ -1,5 +1,3 @@
-import { Svg } from '@pancakeswap/uikit'
-
 const TransparentIcon = () => (
   <svg viewBox="0 0 54 54" width={54} height={54} fill="none" xmlns="http://www.w3.org/2000/svg">
     <path

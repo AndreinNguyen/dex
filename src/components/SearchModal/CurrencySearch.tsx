@@ -1,21 +1,20 @@
 /* eslint-disable no-restricted-syntax */
-import { KeyboardEvent, RefObject, useCallback, useMemo, useRef, useState, useEffect } from 'react'
+import { Box, Input, Text } from '@pancakeswap/uikit'
 import { Currency, ETHER, Token } from '@savvydex/sdk'
-import { Text, Input, Box } from '@pancakeswap/uikit'
 import { useTranslation } from 'contexts/Localization'
-import { FixedSizeList } from 'react-window'
-import { useAudioModeManager } from 'state/user/hooks'
-import useDebounce from 'hooks/useDebounce'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
+import useDebounce from 'hooks/useDebounce'
+import { KeyboardEvent, RefObject, useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { FixedSizeList } from 'react-window'
 import { useAllLists, useInactiveListUrls } from 'state/lists/hooks'
 import { TagInfo, WrappedTokenInfo } from 'state/types'
-import { useAllTokens, useToken, useIsUserAddedToken } from '../../hooks/Tokens'
+import { useAudioModeManager } from 'state/user/hooks'
+import { useAllTokens, useIsUserAddedToken, useToken } from '../../hooks/Tokens'
 import { isAddress } from '../../utils'
 import Column, { AutoColumn } from '../Layout/Column'
 import Row from '../Layout/Row'
-import CommonBases from './CommonBases'
 import CurrencyList from './CurrencyList'
-import { useSortedTokensByQuery, createFilterToken } from './filtering'
+import { createFilterToken, useSortedTokensByQuery } from './filtering'
 import useTokenComparator from './sorting'
 import { getSwapSound } from './swapSound'
 
@@ -81,12 +80,10 @@ function CurrencySearch({
   selectedCurrency,
   onCurrencySelect,
   otherSelectedCurrency,
-  showCommonBases,
   showImportView,
   setImportToken,
 }: CurrencySearchProps) {
   const { t } = useTranslation()
-  const { chainId } = useActiveWeb3React()
 
   // refs for fixed size lists
   const fixedList = useRef<FixedSizeList>()
@@ -234,9 +231,6 @@ function CurrencySearch({
             onKeyDown={handleEnter}
           />
         </Row>
-        {/* {showCommonBases && (
-          <CommonBases chainId={chainId} onSelect={handleCurrencySelect} selectedCurrency={selectedCurrency} />
-        )} */}
       </AutoColumn>
       {getCurrencyListRows()}
     </>

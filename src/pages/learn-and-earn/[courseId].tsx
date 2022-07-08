@@ -1,7 +1,5 @@
-import CourseLearning from 'views/LearnAndEarn/CourseLearning'
-
-import React from 'react'
 import { GoogleReCaptchaProvider } from 'react-google-recaptcha-v3'
+import CourseLearning from 'views/LearnAndEarn/CourseLearning'
 
 const CourseLeaningPage = () => {
   return (
