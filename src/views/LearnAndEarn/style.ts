@@ -203,3 +203,27 @@ export const StyledModalContainer = styled(Modal)`
     line-height: 1.5;
   }
 `
+
+export const ResultContainer = styled.div`
+  width: 100%;
+  gap: 8px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+
+  h4 {
+    font-size: 32px;
+    color: ${({ theme }) => theme.colors.primaryYellow};
+    margin-bottom: 12px;
+  }
+
+  p {
+    color: ${({ theme }) => theme.colors.textGrey};
+    font-size: 18px;
+  }
+
+  .claimBtn {
+    margin-top: 12px;
+  }
+`

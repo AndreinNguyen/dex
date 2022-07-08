@@ -16,7 +16,6 @@ const ConfirmQuestion = styled.h4`
 `
 
 const ConfirmModal = ({ onDismiss, onConfirm }: Props) => {
-  const recaptchaRef = React.createRef()
   const [captcha, setCaptcha] = useState<string>()
 
   const onReCAPTCHAChange = (captchaCode) => {
@@ -28,17 +27,7 @@ const ConfirmModal = ({ onDismiss, onConfirm }: Props) => {
 
   return (
     <Modal title="Confirm" headerBackground="gradients.cardHeader" onDismiss={onDismiss} style={{ maxWidth: '420px' }}>
-      <GoogleReCaptchaProvider
-        reCaptchaKey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
-        scriptProps={{
-          async: false,
-          defer: false,
-          appendTo: 'head',
-          nonce: undefined,
-        }}
-      >
-        <GoogleReCaptcha onVerify={onReCAPTCHAChange} />
-      </GoogleReCaptchaProvider>
+      <GoogleReCaptcha onVerify={onReCAPTCHAChange} />
       <Flex pt={10} pb={50}>
         <ConfirmQuestion>Are you sure to submit your answer?</ConfirmQuestion>
       </Flex>

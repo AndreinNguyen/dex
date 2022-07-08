@@ -9,6 +9,7 @@ import { ToastsProvider } from 'contexts/ToastsContext'
 import { fetchStatusMiddleware } from 'hooks/useSWRContract'
 import { Store } from '@reduxjs/toolkit'
 import { ThemeProvider as NextThemeProvider, useTheme as useNextTheme } from 'next-themes'
+import { GoogleReCaptchaProvider } from 'react-google-recaptcha-v3'
 
 const StyledThemeProvider = (props) => {
   return <ThemeProvider theme={dark} {...props} />
