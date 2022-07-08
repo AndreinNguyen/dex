@@ -101,6 +101,10 @@ const Row: React.FunctionComponent<RowPropsWithLoading> = (props) => {
             }
 
             switch (key) {
+              // Disable: multiplier because we have one pool
+              case 'multiplier':
+                return null
+
               case 'type':
                 return (
                   <td key={key}>

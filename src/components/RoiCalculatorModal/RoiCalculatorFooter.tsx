@@ -93,7 +93,7 @@ const RoiCalculatorFooter: React.FC<RoiCalculatorFooterProps> = ({
             )}
             {!Number.isFinite(apy) ? (
               <Text color="textSubtle" small>
-                {isFarm ? t('Base APR (CAKE yield only)') : t('APR')}
+                {isFarm ? t('Base APR (SVC yield only)') : t('APR')}
               </Text>
             ) : (
               <Text color="textSubtle" small>

@@ -37,14 +37,14 @@ const ApyButton: React.FC<ApyButtonProps> = ({
   addLiquidityUrl,
 }) => {
   const { t } = useTranslation()
-  const lpPrice = useLpTokenPrice(lpSymbol)
+  // const lpPrice = useLpTokenPrice(lpSymbol)
   const { tokenBalance, stakedBalance } = useFarmUser(pid)
   const [onPresentApyModal] = useModal(
     <RoiCalculatorModal
       linkLabel={t('Get %symbol%', { symbol: lpLabel })}
       stakingTokenBalance={stakedBalance.plus(tokenBalance)}
       stakingTokenSymbol={lpSymbol}
-      stakingTokenPrice={lpPrice.toNumber()}
+      stakingTokenPrice={cakePrice.toNumber()} // STAKING SVC FOR THIS POOL
       earningTokenPrice={cakePrice.toNumber()}
       apr={apr}
       multiplier={multiplier}

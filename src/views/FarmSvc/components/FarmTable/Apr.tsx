@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import ApyButton from 'views/Farms/components/FarmCard/ApyButton'
+import ApyButton from 'views/FarmSvc/components/FarmCard/ApyButton'
 import BigNumber from 'bignumber.js'
 import { BASE_ADD_LIQUIDITY_URL } from 'config'
 import getLiquidityUrlPathParts from 'utils/getLiquidityUrlPathParts'
