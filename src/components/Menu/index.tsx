@@ -14,7 +14,7 @@ import UserMenu from './UserMenu'
 import { getActiveMenuItem, getActiveSubMenuItem } from './utils'
 
 const Menu = (props) => {
-  const { isDark, setTheme } = useTheme()
+  const { isDark } = useTheme()
   const { currentLanguage, setLanguage, t } = useTranslation()
   const { pathname } = useRouter()
   const showPhishingWarningBanner = false

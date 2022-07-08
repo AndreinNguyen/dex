@@ -33,9 +33,9 @@ const config = {
   compiler: {
     styledComponents: true,
   },
-  experimental: {
-    scrollRestoration: true,
-  },
+  // experimental: {
+  //   scrollRestoration: true,
+  // },
   reactStrictMode: true,
   images: {
     domains: ['static-nft.pancakeswap.com'],

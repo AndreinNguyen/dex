@@ -1,6 +1,8 @@
+import { Flex, InjectedModalProps, Modal, PancakeToggle, Text, Toggle } from '@pancakeswap/uikit'
+import { useTranslation } from 'contexts/Localization'
+import useTheme from 'hooks/useTheme'
 import { useState } from 'react'
-import styled from 'styled-components'
-import { Text, PancakeToggle, Toggle, Flex, Modal, InjectedModalProps, ThemeSwitcher } from '@pancakeswap/uikit'
+import { useSwapActionHandlers } from 'state/swap/useSwapActionHandlers'
 import {
   useAudioModeManager,
   useExpertModeManager,
@@ -8,13 +10,11 @@ import {
   useUserExpertModeAcknowledgementShow,
   useUserSingleHopOnly,
 } from 'state/user/hooks'
-import { useSwapActionHandlers } from 'state/swap/useSwapActionHandlers'
-import { useTranslation } from 'contexts/Localization'
-import useTheme from 'hooks/useTheme'
+import styled from 'styled-components'
 import QuestionHelper from '../../QuestionHelper'
-import TransactionSettings from './TransactionSettings'
 import ExpertModal from './ExpertModal'
 import GasSettings from './GasSettings'
+import TransactionSettings from './TransactionSettings'
 
 const ScrollableContainer = styled(Flex)`
   flex-direction: column;

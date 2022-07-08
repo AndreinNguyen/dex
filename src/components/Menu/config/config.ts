@@ -1,14 +1,4 @@
-import {
-  EarnFillIcon,
-  EarnIcon,
-  MenuItemsType,
-  NftFillIcon,
-  NftIcon,
-  SwapFillIcon,
-  SwapIcon,
-  TrophyFillIcon,
-  TrophyIcon,
-} from '@pancakeswap/uikit'
+import { EarnFillIcon, EarnIcon, MenuItemsType, NftFillIcon, NftIcon, SwapFillIcon, SwapIcon } from '@pancakeswap/uikit'
 import { DropdownMenuItems } from '@pancakeswap/uikit/src/components/DropdownMenu/types'
 import { ContextApi } from 'contexts/Localization/types'
 
@@ -17,7 +7,7 @@ export type ConfigMenuItemsType = Omit<MenuItemsType, 'items'> & { hideSubNav?: 
   items?: ConfigMenuDropDownItemsType[]
 }
 
-const config: (t: ContextApi['t'], languageCode?: string) => ConfigMenuItemsType[] = (t, languageCode) => [
+const config: (t: ContextApi['t'], languageCode?: string) => ConfigMenuItemsType[] = (t) => [
   {
     label: t('Trade'),
     icon: SwapIcon,
