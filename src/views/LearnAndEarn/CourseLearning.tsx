@@ -53,6 +53,7 @@ const CourseLearning = () => {
   const [resultData, setResultData] = useState<any>()
   const [captcha, setCaptcha] = useState<string>()
   const [isLoadingReward, setIsLoadingReward] = useState<boolean>(false)
+  const [loadingComplete, setLoadingComplete] = useState(false)
 
   const [onOpenErrorModal] = useModal(<SubmitAlert type="error" message="You already did it." />)
   const [onOpenSuccessModal] = useModal(
@@ -61,7 +62,6 @@ const CourseLearning = () => {
 
   const { executeRecaptcha } = useGoogleReCaptcha()
 
-  // Create an event handler so you can call the verification on button click event or form submit
   const handleReCaptchaVerify = useCallback(async () => {
     if (!executeRecaptcha) {
       console.log('Execute recaptcha not yet available')
@@ -70,10 +70,8 @@ const CourseLearning = () => {
 
     const token = await executeRecaptcha('MS_Pyme_DatosEmpresa')
     setCaptcha(token)
-    // Do whatever you want with the token
   }, [executeRecaptcha])
 
-  // You can use useEffect to trigger the verification as soon as the component being loaded
   useEffect(() => {
     handleReCaptchaVerify()
   }, [handleReCaptchaVerify])
@@ -83,7 +81,6 @@ const CourseLearning = () => {
       console.log('captcha undefine')
       return
     }
-    console.log('captcha', captcha)
     const body = {
       wallet_address: account,
       question_id: String(query.courseId),
@@ -126,6 +123,7 @@ const CourseLearning = () => {
       if (data.data.isAnswered) {
         setResultData(data.data)
         setIsAnswered(true)
+        setLoadingComplete(true)
       }
     }
 
@@ -205,13 +203,6 @@ const CourseLearning = () => {
     }
   }
 
-  const onReCAPTCHAChange = (captchaCode) => {
-    if (!captchaCode) {
-      return
-    }
-    setCaptcha(captchaCode)
-  }
-
   return (
     <Page>
       <LearningContainer>
@@ -222,7 +213,30 @@ const CourseLearning = () => {
           </div>
         </NavigateHeader>
 
-        {listQuestion && !isAnswered && (
+        {isAnswered && resultData && loadingComplete && (
+          <ResultContainer>
+            <h4>Congratulations! You've completed the quiz</h4>
+            <p>Correct answer {resultData.correctAnswers}</p>
+            <p>Reward BNB: {resultData.rewardToken.rewardBnb}</p>
+            <p>Reward SVC: {resultData.rewardToken.rewardSvc}</p>
+
+            <div className="claimBtn">
+              {resultData.isClaimed ? (
+                <Button disabled>Claimed</Button>
+              ) : (
+                <>
+                  {isLoadingReward ? (
+                    <Button disabled>Reward being transferred</Button>
+                  ) : (
+                    <Button onClick={onClaimReward}>Claim</Button>
+                  )}
+                </>
+              )}
+            </div>
+          </ResultContainer>
+        )}
+
+        {!isAnswered && listQuestion && loadingComplete && (
           <>
             <div className="question">
               <h4 className="question__name">{questionData?.name}</h4>
@@ -261,29 +275,6 @@ const CourseLearning = () => {
               <div className="next">{renderNextOrSubmitButton()}</div>
             </div>
           </>
-        )}
-
-        {isAnswered && resultData && (
-          <ResultContainer>
-            <h4>Congratulations! You've completed the quiz</h4>
-            <p>Correct answer {resultData.correctAnswers}</p>
-            <p>Reward BNB: {resultData.rewardToken.rewardBnb}</p>
-            <p>Reward SVC: {resultData.rewardToken.rewardSvc}</p>
-
-            <div className="claimBtn">
-              {resultData.isClaimed ? (
-                <Button disabled>Claimed</Button>
-              ) : (
-                <>
-                  {isLoadingReward ? (
-                    <Button disabled>Reward being transferred</Button>
-                  ) : (
-                    <Button onClick={onClaimReward}>Claim</Button>
-                  )}
-                </>
-              )}
-            </div>
-          </ResultContainer>
         )}
       </LearningContainer>
     </Page>
