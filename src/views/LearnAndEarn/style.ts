@@ -115,12 +115,14 @@ export const LearningContainer = styled.div`
       margin: 0;
       font-size: 28px;
       font-weight: 400;
+      color: ${({ theme }) => theme.colors.text};
     }
 
     .total-question {
       font-size: 28px;
       font-weight: bold;
       margin: 0;
+      color: ${({ theme }) => theme.colors.text};
     }
   }
 
@@ -153,6 +155,7 @@ export const LearningContainer = styled.div`
         transform: none;
         line-height: 1.2;
         transition: 0.2s ease-in-out;
+        color: ${({ theme }) => theme.colors.text};
 
         &:hover {
           cursor: pointer;

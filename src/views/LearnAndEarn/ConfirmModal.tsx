@@ -5,7 +5,7 @@ import styled from 'styled-components'
 
 interface Props extends InjectedModalProps {
   message?: string
-  onConfirm: (captcha: string) => void
+  onConfirm: () => void
 }
 
 const ConfirmQuestion = styled.h4`
@@ -16,23 +16,13 @@ const ConfirmQuestion = styled.h4`
 `
 
 const ConfirmModal = ({ onDismiss, onConfirm }: Props) => {
-  const [captcha, setCaptcha] = useState<string>()
-
-  const onReCAPTCHAChange = (captchaCode) => {
-    if (!captchaCode) {
-      return
-    }
-    setCaptcha(captchaCode)
-  }
-
   return (
     <Modal title="Confirm" headerBackground="gradients.cardHeader" onDismiss={onDismiss} style={{ maxWidth: '420px' }}>
-      <GoogleReCaptcha onVerify={onReCAPTCHAChange} />
       <Flex pt={10} pb={50}>
         <ConfirmQuestion>Are you sure to submit your answer?</ConfirmQuestion>
       </Flex>
       <Flex justifyContent="center">
-        <Button onClick={() => onConfirm(captcha)}>Confirm</Button>
+        <Button onClick={onConfirm}>Confirm</Button>
       </Flex>
     </Modal>
   )

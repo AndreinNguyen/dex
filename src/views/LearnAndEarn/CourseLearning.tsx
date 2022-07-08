@@ -5,8 +5,8 @@ import axios from 'axios'
 import camelcaseKeys from 'camelcase-keys'
 import { SAVVYDEX_API } from 'config/constants/endpoints'
 import { useRouter } from 'next/router'
-import React, { useEffect, useState } from 'react'
-import { GoogleReCaptchaProvider } from 'react-google-recaptcha-v3'
+import { useCallback, useEffect, useState } from 'react'
+import { useGoogleReCaptcha } from 'react-google-recaptcha-v3'
 import { useMutation } from 'react-query'
 import Page from 'views/Page'
 import ConfirmModal from './ConfirmModal'
@@ -51,12 +51,54 @@ const CourseLearning = () => {
   const [answerData, setAnswerData] = useState([])
   const [isAnswered, setIsAnswered] = useState<boolean>(false)
   const [resultData, setResultData] = useState<any>()
+  const [captcha, setCaptcha] = useState<string>()
+  const [isLoadingReward, setIsLoadingReward] = useState<boolean>(false)
+  const [loadingComplete, setLoadingComplete] = useState(false)
 
   const [onOpenErrorModal] = useModal(<SubmitAlert type="error" message="You already did it." />)
   const [onOpenSuccessModal] = useModal(
     <SubmitAlert type="success" message="Your question has been successfully submitted" />,
   )
-  const [onConfirmSubmit] = useModal(<ConfirmModal onConfirm={(captcha: string) => sendingQuestionRequest(captcha)} />)
+
+  const { executeRecaptcha } = useGoogleReCaptcha()
+
+  const handleReCaptchaVerify = useCallback(async () => {
+    if (!executeRecaptcha) {
+      console.log('Execute recaptcha not yet available')
+      return
+    }
+
+    const token = await executeRecaptcha('MS_Pyme_DatosEmpresa')
+    setCaptcha(token)
+  }, [executeRecaptcha])
+
+  useEffect(() => {
+    handleReCaptchaVerify()
+  }, [handleReCaptchaVerify])
+
+  const sendingQuestionRequest = async () => {
+    if (!captcha) {
+      console.log('captcha undefine')
+      return
+    }
+    const body = {
+      wallet_address: account,
+      question_id: String(query.courseId),
+      answers: answerData,
+      captcha,
+    }
+    try {
+      const response = await createAnswerQuestionMutation(body)
+      onOpenSuccessModal()
+    } catch (error: any) {
+      const { response } = error
+      if (response.data.message === 'user_already_did_it') {
+        onOpenErrorModal()
+      }
+    }
+  }
+
+  const [onConfirmSubmit] = useModal(<ConfirmModal onConfirm={sendingQuestionRequest} />)
   const [onRewardAlert] = useModal(
     <SubmitAlert
       type="success"
@@ -81,11 +123,11 @@ const CourseLearning = () => {
       if (data.data.isAnswered) {
         setResultData(data.data)
         setIsAnswered(true)
-      } else {
-        fetchQuestionData()
+        setLoadingComplete(true)
       }
     }
 
+    fetchQuestionData()
     checkQuestionData()
   }, [query, account])
 
@@ -131,26 +173,9 @@ const CourseLearning = () => {
   }
 
   const onSubmitQuestion = async (event) => {
+    handleReCaptchaVerify()
     event.preventDefault()
     onConfirmSubmit()
-  }
-
-  const sendingQuestionRequest = async (captcha: string) => {
-    const body = {
-      wallet_address: account,
-      question_id: String(query.courseId),
-      answers: answerData,
-      captcha,
-    }
-    try {
-      const response = await createAnswerQuestionMutation(body)
-      onOpenSuccessModal()
-    } catch (error: any) {
-      const { response } = error
-      if (response.data.message === 'user_already_did_it') {
-        onOpenErrorModal()
-      }
-    }
   }
 
   const renderNextOrSubmitButton = () => {
@@ -166,91 +191,93 @@ const CourseLearning = () => {
       question_id: query.courseId,
     }
 
-    const response = await claimRewardMutation(body)
-    if (response) {
-      onRewardAlert()
+    try {
+      const response = await claimRewardMutation(body)
+      if (response) {
+        onRewardAlert()
+      }
+    } catch (error: any) {
+      if (error.response.data.message === 'loading_reward') {
+        setIsLoadingReward(true)
+      }
     }
   }
 
   return (
-    <GoogleReCaptchaProvider
-      reCaptchaKey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
-      scriptProps={{
-        async: false,
-        defer: false,
-        appendTo: 'head',
-        nonce: undefined,
-      }}
-    >
-      <Page>
-        <LearningContainer>
-          <NavigateHeader>
-            <div className="navigate-back" onClick={onBack} onKeyDown={onBack}>
-              <ChevronLeft size={24} />
-              Learn and Earn
+    <Page>
+      <LearningContainer>
+        <NavigateHeader>
+          <div className="navigate-back" onClick={onBack} onKeyDown={onBack}>
+            <ChevronLeft size={24} />
+            Learn and Earn
+          </div>
+        </NavigateHeader>
+
+        {isAnswered && resultData && loadingComplete && (
+          <ResultContainer>
+            <h4>Congratulations! You've completed the quiz</h4>
+            <p>Correct answer {resultData.correctAnswers}</p>
+            <p>Reward BNB: {resultData.rewardToken.rewardBnb}</p>
+            <p>Reward SVC: {resultData.rewardToken.rewardSvc}</p>
+
+            <div className="claimBtn">
+              {resultData.isClaimed ? (
+                <Button disabled>Claimed</Button>
+              ) : (
+                <>
+                  {isLoadingReward ? (
+                    <Button disabled>Reward being transferred</Button>
+                  ) : (
+                    <Button onClick={onClaimReward}>Claim</Button>
+                  )}
+                </>
+              )}
             </div>
-          </NavigateHeader>
+          </ResultContainer>
+        )}
 
-          {listQuestion && (
-            <>
-              <div className="question">
-                <h4 className="question__name">{questionData?.name}</h4>
-                <p className="total-question">
-                  {currentQuestion + 1}/{listQuestion.length}
-                </p>
+        {!isAnswered && listQuestion && loadingComplete && (
+          <>
+            <div className="question">
+              <h4 className="question__name">{questionData?.name}</h4>
+              <p className="total-question">
+                {currentQuestion + 1}/{listQuestion.length}
+              </p>
+            </div>
+
+            <div className="options">
+              {questionData &&
+                Object.keys(questionData.answer).map((key) => (
+                  <div className="answer-item">
+                    <input
+                      type="radio"
+                      value={key}
+                      id={`answer${key}`}
+                      onChange={onSelectAnswer}
+                      checked={answerChecked === key}
+                      className="answer-input"
+                      name="answer"
+                    />
+                    <label
+                      htmlFor={`answer${key}`}
+                      className={`answer-label ${answerChecked === key ? 'answer-checked' : ''}`}
+                    >
+                      <span>{questionData?.answer[key]}</span>
+                    </label>
+                  </div>
+                ))}
+            </div>
+
+            <div className="control-button">
+              <div className="previous">
+                <Button onClick={onPreQuestion}>Previous</Button>
               </div>
-
-              <div className="options">
-                {questionData &&
-                  Object.keys(questionData.answer).map((key) => (
-                    <div className="answer-item">
-                      <input
-                        type="radio"
-                        value={key}
-                        id={`answer${key}`}
-                        onChange={onSelectAnswer}
-                        checked={answerChecked === key}
-                        className="answer-input"
-                        name="answer"
-                      />
-                      <label
-                        htmlFor={`answer${key}`}
-                        className={`answer-label ${answerChecked === key ? 'answer-checked' : ''}`}
-                      >
-                        <span>{questionData?.answer[key]}</span>
-                      </label>
-                    </div>
-                  ))}
-              </div>
-
-              <div className="control-button">
-                <div className="previous">
-                  <Button onClick={onPreQuestion}>Previous</Button>
-                </div>
-                <div className="next">{renderNextOrSubmitButton()}</div>
-              </div>
-            </>
-          )}
-
-          {isAnswered && resultData && (
-            <ResultContainer>
-              <h4>Congratulations! You've completed the quiz</h4>
-              <p>Correct answer {resultData.correctAnswers}</p>
-              <p>Reward BNB: {resultData.rewardToken.rewardBnb}</p>
-              <p>Reward SVC: {resultData.rewardToken.rewardSvc}</p>
-
-              <div className="claimBtn">
-                {resultData.isClaimed ? (
-                  <Button disabled>Claimed</Button>
-                ) : (
-                  <Button onClick={onClaimReward}>Claim</Button>
-                )}
-              </div>
-            </ResultContainer>
-          )}
-        </LearningContainer>
-      </Page>
-    </GoogleReCaptchaProvider>
+              <div className="next">{renderNextOrSubmitButton()}</div>
+            </div>
+          </>
+        )}
+      </LearningContainer>
+    </Page>
   )
 }
 
