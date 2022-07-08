@@ -52,7 +52,7 @@ export interface RoiCalculatorReducerState {
 
 const defaultState: RoiCalculatorReducerState = {
   controls: {
-    compounding: true,
+    compounding: false, // TODO: Disable compouding
     compoundingFrequency: 1, // how many compound in a day , e.g. 1 = once a day, 0.071 - once per 2 weeks
     activeCompoundingIndex: 0, // active compounding selected in
     stakingDuration: 3,

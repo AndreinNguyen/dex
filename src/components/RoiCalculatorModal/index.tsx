@@ -89,7 +89,7 @@ const RoiCalculatorModal: React.FC<RoiCalculatorModalProps> = ({
   stakingTokenPrice,
   multiplier,
   initialValue,
-  earningTokenSymbol = 'CAKE',
+  earningTokenSymbol = 'SVC',
   autoCompoundFrequency = 0,
   performanceFee = 0,
   isFarm = false,
@@ -247,7 +247,7 @@ const RoiCalculatorModal: React.FC<RoiCalculatorModalProps> = ({
               </FullWidthButtonMenu>
             </>
           )}
-          {autoCompoundFrequency === 0 && (
+          {/* {autoCompoundFrequency === 0 && (
             <>
               <Text mt="24px" color="secondary" bold fontSize="12px" textTransform="uppercase">
                 {t('Compounding every')}
@@ -271,7 +271,7 @@ const RoiCalculatorModal: React.FC<RoiCalculatorModalProps> = ({
                 </Flex>
               </Flex>
             </>
-          )}
+          )} */}
         </Flex>
         <AnimatedArrow calculatorState={state} />
         <Flex>
