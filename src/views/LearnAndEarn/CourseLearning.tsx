@@ -120,10 +120,10 @@ const CourseLearning = () => {
     async function checkQuestionData() {
       const body = { wallet_address: account, question_id: String(query.courseId) }
       const data = await checkQuestionInfoMutation(body)
+      setLoadingComplete(true)
       if (data.data.isAnswered) {
         setResultData(data.data)
         setIsAnswered(true)
-        setLoadingComplete(true)
       }
     }
 
