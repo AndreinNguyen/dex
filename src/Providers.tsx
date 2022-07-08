@@ -18,35 +18,25 @@ const StyledThemeProvider = (props) => {
 const Providers: React.FC<{ store: Store }> = ({ children, store }) => {
   return (
     <Web3ReactProvider getLibrary={getLibrary}>
-      <GoogleReCaptchaProvider
-        reCaptchaKey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
-        scriptProps={{
-          async: false,
-          defer: false,
-          appendTo: 'head',
-          nonce: undefined,
-        }}
-      >
-        <Provider store={store}>
-          <MatchBreakpointsProvider>
-            <ToastsProvider>
-              <NextThemeProvider>
-                <StyledThemeProvider>
-                  <LanguageProvider>
-                    <SWRConfig
-                      value={{
-                        use: [fetchStatusMiddleware],
-                      }}
-                    >
-                      <ModalProvider>{children}</ModalProvider>
-                    </SWRConfig>
-                  </LanguageProvider>
-                </StyledThemeProvider>
-              </NextThemeProvider>
-            </ToastsProvider>
-          </MatchBreakpointsProvider>
-        </Provider>
-      </GoogleReCaptchaProvider>
+      <Provider store={store}>
+        <MatchBreakpointsProvider>
+          <ToastsProvider>
+            <NextThemeProvider>
+              <StyledThemeProvider>
+                <LanguageProvider>
+                  <SWRConfig
+                    value={{
+                      use: [fetchStatusMiddleware],
+                    }}
+                  >
+                    <ModalProvider>{children}</ModalProvider>
+                  </SWRConfig>
+                </LanguageProvider>
+              </StyledThemeProvider>
+            </NextThemeProvider>
+          </ToastsProvider>
+        </MatchBreakpointsProvider>
+      </Provider>
     </Web3ReactProvider>
   )
 }
