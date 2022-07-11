@@ -70,6 +70,7 @@ const CourseLearning = () => {
       if (response) {
         onRewardAlert()
         setIsClaimed(true)
+        setIsAnswered(true)
       }
     } catch (error: any) {
       if (error.response.data.message === 'loading_reward') {
@@ -214,7 +215,7 @@ const CourseLearning = () => {
     <Page>
       <LearningContainer>
         <NavigateHeader>
-          <div className="navigate-back" onClick={onBack} onKeyDown={onBack}>
+          <div className="navigate-back" onClick={onBack} onKeyDown={onBack} role="presentation">
             <ChevronLeft size={24} />
             Learn and Earn
           </div>
@@ -222,7 +223,7 @@ const CourseLearning = () => {
 
         {isAnswered && resultData && loadingComplete && (
           <ResultContainer>
-            <h4>Congratulations! You've completed the quiz</h4>
+            <h4>Congratulations! You&apos;ve completed the quiz</h4>
             <p>Correct answer {resultData.correctAnswers}</p>
             <p>Reward BNB: {resultData.rewardToken.rewardBnb}</p>
             <p>Reward SVC: {resultData.rewardToken.rewardSvc}</p>
