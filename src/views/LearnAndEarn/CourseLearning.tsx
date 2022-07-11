@@ -54,10 +54,33 @@ const CourseLearning = () => {
   const [captcha, setCaptcha] = useState<string>()
   const [isLoadingReward, setIsLoadingReward] = useState<boolean>(false)
   const [loadingComplete, setLoadingComplete] = useState(false)
+  const [isClaimed, setIsClaimed] = useState(false)
 
   const [onOpenErrorModal] = useModal(<SubmitAlert type="error" message="You already did it." />)
+  const [onOpenErrorRobot] = useModal(<SubmitAlert type="error" message="You're a robot." />)
+
+  const onClaimReward = async () => {
+    const body = {
+      wallet_address: account,
+      question_id: query.courseId,
+    }
+
+    try {
+      const response = await claimRewardMutation(body)
+      if (response) {
+        onRewardAlert()
+        setIsClaimed(true)
+        setIsAnswered(true)
+      }
+    } catch (error: any) {
+      if (error.response.data.message === 'loading_reward') {
+        setIsLoadingReward(true)
+      }
+    }
+  }
+
   const [onOpenSuccessModal] = useModal(
-    <SubmitAlert type="success" message="Your question has been successfully submitted" />,
+    <SubmitAlert type="success" message="Your answer has been successfully submitted" onClaim={onClaimReward} />,
   )
 
   const { executeRecaptcha } = useGoogleReCaptcha()
@@ -68,7 +91,7 @@ const CourseLearning = () => {
       return
     }
 
-    const token = await executeRecaptcha('MS_Pyme_DatosEmpresa')
+    const token = await executeRecaptcha()
     setCaptcha(token)
   }, [executeRecaptcha])
 
@@ -94,6 +117,8 @@ const CourseLearning = () => {
       const { response } = error
       if (response.data.message === 'user_already_did_it') {
         onOpenErrorModal()
+      } else if (response.data.message === 'user_might_be_a_robot') {
+        onOpenErrorRobot()
       }
     }
   }
@@ -185,29 +210,11 @@ const CourseLearning = () => {
     return <Button onClick={onNextQuestion}>Next</Button>
   }
 
-  const onClaimReward = async () => {
-    const body = {
-      wallet_address: account,
-      question_id: query.courseId,
-    }
-
-    try {
-      const response = await claimRewardMutation(body)
-      if (response) {
-        onRewardAlert()
-      }
-    } catch (error: any) {
-      if (error.response.data.message === 'loading_reward') {
-        setIsLoadingReward(true)
-      }
-    }
-  }
-
   return (
     <Page>
       <LearningContainer>
         <NavigateHeader>
-          <div className="navigate-back" onClick={onBack} onKeyDown={onBack}>
+          <div className="navigate-back" onClick={onBack} onKeyDown={onBack} role="presentation">
             <ChevronLeft size={24} />
             Learn and Earn
           </div>
@@ -215,13 +222,13 @@ const CourseLearning = () => {
 
         {isAnswered && resultData && loadingComplete && (
           <ResultContainer>
-            <h4>Congratulations! You've completed the quiz</h4>
+            <h4>Congratulations! You&apos;ve completed the quiz</h4>
             <p>Correct answer {resultData.correctAnswers}</p>
             <p>Reward BNB: {resultData.rewardToken.rewardBnb}</p>
             <p>Reward SVC: {resultData.rewardToken.rewardSvc}</p>
 
             <div className="claimBtn">
-              {resultData.isClaimed ? (
+              {resultData.isClaimed || isClaimed ? (
                 <Button disabled>Claimed</Button>
               ) : (
                 <>
