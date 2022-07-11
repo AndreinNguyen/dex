@@ -58,6 +58,9 @@ const CourseLearning = () => {
 
   const [onOpenErrorModal] = useModal(<SubmitAlert type="error" message="You already did it." />)
   const [onOpenErrorRobot] = useModal(<SubmitAlert type="error" message="You're a robot." />)
+  const [onOpenErrorMaxReward] = useModal(
+    <SubmitAlert type="error" message="Too many request claims on this day, please go back in tomorrow." />,
+  )
 
   const onClaimReward = async () => {
     const body = {
@@ -73,8 +76,17 @@ const CourseLearning = () => {
         setIsAnswered(true)
       }
     } catch (error: any) {
-      if (error.response.data.message === 'loading_reward') {
-        setIsLoadingReward(true)
+      const { response } = error
+      switch (response.data.message) {
+        case 'max_reward_in_day':
+          onOpenErrorMaxReward()
+          break
+        case 'loading_reward':
+          setIsLoadingReward(true)
+          break
+        default:
+          console.log(response.data.message)
+          break
       }
     }
   }
@@ -115,10 +127,17 @@ const CourseLearning = () => {
       onOpenSuccessModal()
     } catch (error: any) {
       const { response } = error
-      if (response.data.message === 'user_already_did_it') {
-        onOpenErrorModal()
-      } else if (response.data.message === 'user_might_be_a_robot') {
-        onOpenErrorRobot()
+
+      switch (response.data.message) {
+        case 'user_already_did_it':
+          onOpenErrorModal()
+          break
+        case 'user_might_be_a_robot':
+          onOpenErrorRobot()
+          break
+        default:
+          console.log(response.data.message)
+          break
       }
     }
   }
