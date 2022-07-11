@@ -45,7 +45,7 @@
     },
     {
       "name": "Savvycoin Token",
-      "symbol": "SCV",
+      "symbol": "SVC",
       "address": "0xfa4Fb5daC36439e467707a11eD0e41965A01974c",
       "chainId": 97,
       "decimals": 18,
