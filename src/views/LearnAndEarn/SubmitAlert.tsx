@@ -1,13 +1,14 @@
-import { ErrorIcon, Flex, InjectedModalProps } from '@pancakeswap/uikit'
+import { Button, ErrorIcon, Flex, InjectedModalProps } from '@pancakeswap/uikit'
 import { Done } from '@styled-icons/material/Done'
 import { StyledModalContainer } from './style'
 
 interface Props extends InjectedModalProps {
   type: 'error' | 'success'
   message: string
+  onClaim?: () => void
 }
 
-const SubmitAlert = ({ onDismiss, type, message }: Props) => {
+const SubmitAlert = ({ onDismiss, type, message, onClaim }: Props) => {
   return (
     <StyledModalContainer
       title="Notify"
@@ -20,6 +21,11 @@ const SubmitAlert = ({ onDismiss, type, message }: Props) => {
         {type === 'success' && <Done size={60} color="#4BB543" />}
         <p className="message">{message}</p>
       </Flex>
+      {onClaim && (
+        <Flex justifyContent="center">
+          <Button onClick={onClaim}>Claim reward</Button>
+        </Flex>
+      )}
     </StyledModalContainer>
   )
 }
