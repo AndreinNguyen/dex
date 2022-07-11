@@ -92,7 +92,6 @@ const CourseLearning = () => {
     }
 
     const token = await executeRecaptcha()
-    console.log('token', token)
     setCaptcha(token)
   }, [executeRecaptcha])
 
