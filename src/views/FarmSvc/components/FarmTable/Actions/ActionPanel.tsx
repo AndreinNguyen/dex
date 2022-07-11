@@ -150,10 +150,11 @@ const ActionPanel: React.FunctionComponent<ActionPanelProps> = ({
                 <Text>{t('APR')}</Text>
                 <Apr {...apr} />
               </ValueWrapper>
-              <ValueWrapper>
+              {/* Disable multiflier */}
+              {/* <ValueWrapper>
                 <Text>{t('Multiplier')}</Text>
                 <Multiplier {...multiplier} />
-              </ValueWrapper>
+              </ValueWrapper> */}
               <ValueWrapper>
                 <Text>{t('Liquidity')}</Text>
                 <Liquidity {...liquidity} />
