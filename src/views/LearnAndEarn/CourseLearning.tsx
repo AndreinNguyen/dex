@@ -97,22 +97,20 @@ const CourseLearning = () => {
 
   const { executeRecaptcha } = useGoogleReCaptcha()
 
-  const handleReCaptchaVerify = useCallback(async () => {
+  const handleReCaptchaVerify = async (): Promise<string> => {
     if (!executeRecaptcha) {
       console.log('Execute recaptcha not yet available')
       return
     }
 
     const token = await executeRecaptcha()
-    setCaptcha(token)
-  }, [executeRecaptcha])
-
-  useEffect(() => {
-    handleReCaptchaVerify()
-  }, [handleReCaptchaVerify])
-
+    // eslint-disable-next-line consistent-return
+    return token
+  }
   const sendingQuestionRequest = async () => {
-    if (!captcha) {
+    const token = await handleReCaptchaVerify()
+
+    if (!token) {
       console.log('captcha undefine')
       return
     }
@@ -120,7 +118,7 @@ const CourseLearning = () => {
       wallet_address: account,
       question_id: String(query.courseId),
       answers: answerData,
-      captcha,
+      captcha: token,
     }
     try {
       const response = await createAnswerQuestionMutation(body)
@@ -217,7 +215,6 @@ const CourseLearning = () => {
   }
 
   const onSubmitQuestion = async (event) => {
-    handleReCaptchaVerify()
     event.preventDefault()
     onConfirmSubmit()
   }
