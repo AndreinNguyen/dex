@@ -61,7 +61,9 @@ const PriceChart = ({
           )}
           {inputCurrency && (
             <Text color="text" bold>
-              {outputCurrency ? `${inputCurrency.symbol}/${outputCurrency.symbol}` : inputCurrency.symbol}
+              {/* TODO: Temploraty just show busd/case */}
+              {/* {outputCurrency ? `${inputCurrency.symbol}/${outputCurrency.symbol}` : inputCurrency.symbol} */}
+              BUSD/CAKE
             </Text>
           )}
           <IconButton variant="text" onClick={onSwitchTokens}>
