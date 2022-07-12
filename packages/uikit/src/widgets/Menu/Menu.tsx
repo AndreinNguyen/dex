@@ -7,6 +7,7 @@ import Flex from "../../components/Box/Flex";
 import CakePrice from "../../components/CakePrice/CakePrice";
 import Footer from "../../components/Footer";
 import MenuItems from "../../components/MenuItems/MenuItems";
+import { SubMenuItems } from "../../components/SubMenuItems";
 import { useMatchBreakpoints } from "../../hooks";
 import Logo from "./components/Logo";
 import { MENU_HEIGHT, MOBILE_MENU_HEIGHT, TOP_BANNER_HEIGHT, TOP_BANNER_HEIGHT_MOBILE } from "./config";
@@ -133,6 +134,9 @@ const Menu: React.FC<NavProps> = ({
   // Find the home link if provided
   const homeLink = links.find((link) => link.label === "Home");
 
+  const subLinksWithoutMobile = subLinks?.filter((subLink) => !subLink.isMobileOnly);
+  const subLinksMobileOnly = subLinks?.filter((subLink) => subLink.isMobileOnly);
+
   return (
     <MenuContext.Provider value={{ linkComponent }}>
       <Wrapper>
@@ -157,6 +161,20 @@ const Menu: React.FC<NavProps> = ({
             </StyledNav>
           </StyledNavContainer>
         </FixedContainer>
+
+        <Flex justifyContent="space-around">
+          <SubMenuItems items={subLinksWithoutMobile} mt={`${totalTopMenuHeight + 1}px`} activeItem={activeSubItem} />
+
+          {subLinksMobileOnly?.length > 0 && (
+            <SubMenuItems
+              items={subLinksMobileOnly}
+              mt={`${totalTopMenuHeight + 1}px`}
+              activeItem={activeSubItem}
+              isMobileOnly
+            />
+          )}
+        </Flex>
+
         <BodyWrapper mt={!subLinks ? `${totalTopMenuHeight + 1}px` : "0"}>
           <Inner isPushed={false} showMenu={showMenu}>
             {children}

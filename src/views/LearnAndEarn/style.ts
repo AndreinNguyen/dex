@@ -9,8 +9,7 @@ export const RootContainer = styled.div`
   color: #fff;
 
   .header {
-    max-width: 464px;
-    margin-bottom: 30px;
+    margin-bottom: 50px;
     h1.title {
       font-family: 'Space Grotesk';
       font-size: 48px;
@@ -58,6 +57,10 @@ export const CourseCardContainer = styled.div`
   .about-course {
     margin-inline-start: 40px;
     width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding-bottom: 10px;
     .head-desc {
       font-size: 20px;
       font-weight: 400;

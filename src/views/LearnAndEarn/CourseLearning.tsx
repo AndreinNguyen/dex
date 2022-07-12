@@ -51,7 +51,6 @@ const CourseLearning = () => {
   const [answerData, setAnswerData] = useState([])
   const [isAnswered, setIsAnswered] = useState<boolean>(false)
   const [resultData, setResultData] = useState<any>()
-  const [captcha, setCaptcha] = useState<string>()
   const [isLoadingReward, setIsLoadingReward] = useState<boolean>(false)
   const [loadingComplete, setLoadingComplete] = useState(false)
   const [isClaimed, setIsClaimed] = useState(false)
@@ -171,7 +170,7 @@ const CourseLearning = () => {
 
     fetchQuestionData()
     checkQuestionData()
-  }, [query, account])
+  }, [query, account, isClaimed])
 
   useEffect(() => {
     if (listQuestion) {
