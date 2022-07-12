@@ -85,8 +85,8 @@ const PriceChart = ({
       </Flex>
       {chartView === ChartViewMode.BASIC && (
         <BasicChart
-          token0Address={token0Address}
-          token1Address={token1Address}
+          // token0Address={token0Address} //  // TODO: Temporaty not passing token 0, token1 to show chart
+          // token1Address={token1Address}
           isChartExpanded={isChartExpanded}
           inputCurrency={inputCurrency}
           outputCurrency={outputCurrency}

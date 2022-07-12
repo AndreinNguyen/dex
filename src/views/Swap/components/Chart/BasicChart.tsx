@@ -13,8 +13,8 @@ const SwapLineChart = dynamic(() => import('./SwapLineChart'), {
 })
 
 const BasicChart = ({
-  token0Address,
-  token1Address,
+  token0Address = '0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56', // TODO: Mock data token0 = BUSD mainnet
+  token1Address = '0x0E09FaBB73Bd3Ade0a17ECC321fD13a19e81cE82', // TODO: Mock data token1 = BUSD mainnet
   isChartExpanded,
   inputCurrency,
   outputCurrency,
