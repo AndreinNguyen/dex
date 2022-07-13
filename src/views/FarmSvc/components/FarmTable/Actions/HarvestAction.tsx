@@ -55,7 +55,7 @@ const HarvestAction: React.FunctionComponent<HarvestActionProps> = ({ pid, userD
         <div>
           <Heading>{displayBalance}</Heading>
           {earningsBusd > 0 && (
-            <Balance fontSize="12px" color="textSubtle" decimals={2} value={earningsBusd} unit=" USD" prefix="~" />
+            <Balance fontSize="12px" color="textSubtle" decimals={2} value={earningsBusd} unit=" BUSD" prefix="~" />
           )}
         </div>
         <Button
