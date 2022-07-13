@@ -2,6 +2,12 @@ import styled from 'styled-components'
 
 export const BannerBox = styled.div`
   position: relative;
+  overflow: hidden;
+
+  ${({ theme }) => theme.mediaQueries.xl} {
+    overflow: visible;
+  }
+
   .about-box {
     display: flex;
     flex-direction: column;
