@@ -30,7 +30,8 @@ const Details: React.FC<DetailsProps> = ({ actionPanelToggled }) => {
   return (
     <Container>
       {!isDesktop && t('Details')}
-      <ArrowIcon color="primary" toggled={actionPanelToggled} />
+      {/* TODO: Templorary disable arrowIcon because we just have one pool */}
+      {/* <ArrowIcon color="primary" toggled={actionPanelToggled} /> */}
     </Container>
   )
 }

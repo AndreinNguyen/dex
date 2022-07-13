@@ -90,6 +90,9 @@ const ActionContainer = styled.div`
 
 const InfoContainer = styled.div`
   min-width: 200px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
 `
 
 const ValueContainer = styled.div``
@@ -130,7 +133,7 @@ const ActionPanel: React.FunctionComponent<ActionPanelProps> = ({
 
   return (
     <Container expanded={expanded}>
-      <InfoContainer>
+      <InfoContainer className="InfoContainer__Farm">
         <ValueContainer>
           {farm.isCommunity && farm.auctionHostingEndDate && (
             <ValueWrapper>
@@ -170,7 +173,8 @@ const ActionPanel: React.FunctionComponent<ActionPanelProps> = ({
           </StakeContainer>
         )}
         <StyledLinkExternal href={bsc}>{t('View Contract')}</StyledLinkExternal>
-        <StyledLinkExternal href={info}>{t('See Pair Info')}</StyledLinkExternal>
+        {/* TODO: Templorary disable arrowIcon because we don't have info tab */}
+        {/* <StyledLinkExternal href={info}>{t('See Pair Info')}</StyledLinkExternal> */}
       </InfoContainer>
       <ActionContainer>
         <HarvestAction {...farm} userDataReady={userDataReady} />
