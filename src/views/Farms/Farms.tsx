@@ -372,7 +372,8 @@ const Farms: React.FC = ({ children }) => {
             </ToggleWrapper> */}
             {/* <FarmTabButtons hasStakeInFinishedFarms={stakedInactiveFarms.length > 0} /> */}
           </ViewControls>
-          <FilterContainer>
+          {/* TODO: Templorary disable arrowIcon because we just have one pool */}
+          {/* <FilterContainer>
             <LabelWrapper>
               <Text textTransform="uppercase">{t('Sort by')}</Text>
               <Select
@@ -409,7 +410,7 @@ const Farms: React.FC = ({ children }) => {
               <Text textTransform="uppercase">{t('Search')}</Text>
               <SearchInput onChange={handleChangeQuery} placeholder="Search Farms" />
             </LabelWrapper>
-          </FilterContainer>
+          </FilterContainer> */}
         </ControlContainer>
         {isInactive && (
           <FinishedTextContainer>
