@@ -23,6 +23,7 @@ import styled from 'styled-components'
 import { computeTradePriceBreakdown, warningSeverity } from 'utils/exchange'
 import { maxAmountSpend } from 'utils/maxAmountSpend'
 import shouldShowSwapWarning from 'utils/shouldShowSwapWarning'
+import UnsupportedCurrencyFooter from 'components/UnsupportedCurrencyFooter'
 import { AppBody } from '../../components/App'
 import { GreyCard } from '../../components/Card'
 import ConnectWalletButton from '../../components/ConnectWalletButton'
@@ -30,6 +31,7 @@ import CurrencyInputPanel from '../../components/CurrencyInputPanel'
 import Column, { AutoColumn } from '../../components/Layout/Column'
 import { AutoRow, RowBetween } from '../../components/Layout/Row'
 import AddressInputPanel from './components/AddressInputPanel'
+import AdvancedSwapDetailsDropdown from './components/AdvancedSwapDetailsDropdown'
 import confirmPriceImpactWithoutFee from './components/confirmPriceImpactWithoutFee'
 import ConfirmSwapModal from './components/ConfirmSwapModal'
 import ProgressSteps from './components/ProgressSteps'
@@ -603,6 +605,11 @@ export default function Swap() {
                   </Box>
                 </Wrapper>
               </AppBody>
+              {!swapIsUnsupported ? (
+                trade && <AdvancedSwapDetailsDropdown trade={trade} />
+              ) : (
+                <UnsupportedCurrencyFooter currencies={[currencies.INPUT, currencies.OUTPUT]} />
+              )}
             </StyledInputCurrencyWrapper>
           </StyledSwapContainer>
         </Flex>
