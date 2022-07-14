@@ -8,11 +8,10 @@ const StyledPage = styled.div<{ $removePadding: boolean; $noMinHeight }>`
   flex-direction: column;
   align-items: center;
   width: 100%;
-  min-height: ${({ $noMinHeight }) => ($noMinHeight ? 'initial' : 'calc(100vh - 64px)')};
   background: ${({ theme }) => theme.colors.backgroundAlt};
   margin: auto;
   margin-top: 85px;
-  padding-top: 80px;
+  padding-top: 20px;
   padding-bottom: 50px;
 
   ${({ theme }) => theme.mediaQueries.xs} {
@@ -20,6 +19,8 @@ const StyledPage = styled.div<{ $removePadding: boolean; $noMinHeight }>`
   }
 
   ${({ theme }) => theme.mediaQueries.sm} {
+    padding-top: 80px;
+    min-height: ${({ $noMinHeight }) => ($noMinHeight ? 'initial' : 'calc(100vh - 64px)')};
   }
 
   ${({ theme }) => theme.mediaQueries.lg} {

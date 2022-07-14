@@ -3,11 +3,15 @@ import React from 'react'
 import styled from 'styled-components'
 
 const StyledFeatureBox = styled.div<{ color: string }>`
-  width: 32%;
+  width: 100%;
   background: rgba(255, 255, 255, 0.08);
   border-radius: 32px;
   padding: 24px;
   min-width: '250px';
+
+  ${({ theme }) => theme.mediaQueries.sm} {
+    width: 32%;
+  }
 
   .icon {
     display: flex;

@@ -1,3 +1,4 @@
+import { Flex } from '@pancakeswap/uikit'
 import styled from 'styled-components'
 
 export const BannerBox = styled.div`
@@ -14,7 +15,7 @@ export const BannerBox = styled.div`
     max-width: 592px;
     position: relative;
     z-index: 3;
-    min-height: 60vh;
+    min-height: 300px;
     margin-top: 60px;
 
     h1.hero-title {
@@ -34,17 +35,29 @@ export const BannerBox = styled.div`
       line-height: 24px;
       color: rgba(255, 255, 255, 0.65);
     }
+
+    ${({ theme }) => theme.mediaQueries.md} {
+      min-height: 50vh;
+    }
   }
 
   img.chainBanner {
     position: absolute;
-    right: -200px;
-    top: -120px;
     z-index: 2;
-    max-width: 1050px;
+    max-width: 700px;
+    right: -110px;
+    top: 50px;
   }
 
-  @media screen and (max-width: 576px) {
+  ${({ theme }) => theme.mediaQueries.xl} {
+    img.chainBanner {
+      right: -200px;
+      top: -120px;
+      max-width: 1050px;
+    }
+  }
+
+  /* @media screen and (max-width: 576px) {
     .about-box {
       align-items: center;
       margin-bottom: 50px;
@@ -58,5 +71,16 @@ export const BannerBox = styled.div`
       }
       padding: 0 30px;
     }
+  } */
+`
+
+export const FeatureBoxWrapper = styled(Flex)`
+  flex-direction: column;
+  gap: 10px;
+  padding: 10px;
+
+  ${({ theme }) => theme.mediaQueries.sm} {
+    flex-direction: row;
+    padding: 0px;
   }
 `

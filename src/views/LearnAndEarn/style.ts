@@ -1,10 +1,15 @@
-import { Modal, ModalContainer } from '@pancakeswap/uikit'
+import { Modal } from '@pancakeswap/uikit'
 import styled from 'styled-components'
 
 export const RootContainer = styled.div`
   max-width: 944px;
   min-height: 60vh;
   width: 100%;
+  padding: 0 20px;
+
+  ${({ theme }) => theme.mediaQueries.md} {
+    padding: 0;
+  }
 
   color: #fff;
 
@@ -37,14 +42,14 @@ export const CourseCardContainer = styled.div`
   padding: 18px;
   display: flex;
   color: #fff;
+  flex-direction: column;
 
   &:not(:last-child) {
     border-bottom: 1px solid #383241;
   }
 
   .cover-image {
-    width: 400px;
-    height: 225px;
+    max-width: 100%;
     border-radius: 8px;
     overflow: hidden;
 
@@ -55,12 +60,12 @@ export const CourseCardContainer = styled.div`
   }
 
   .about-course {
-    margin-inline-start: 40px;
-    width: 50%;
+    width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     padding-bottom: 10px;
+    margin-top: 12px;
     .head-desc {
       font-size: 20px;
       font-weight: 400;
@@ -79,6 +84,20 @@ export const CourseCardContainer = styled.div`
       font-size: 16px;
       line-height: 24px;
       color: ${({ theme }) => theme.colors.textGrey};
+    }
+  }
+
+  ${({ theme }) => theme.mediaQueries.sm} {
+    flex-direction: row;
+    .about-course {
+      width: 50%;
+      margin-inline-start: 40px;
+      margin-top: 0;
+    }
+
+    .cover-image {
+      width: 400px;
+      height: 225px;
     }
   }
 `

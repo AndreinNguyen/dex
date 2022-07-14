@@ -16,7 +16,7 @@ import { useExchangeChartManager } from 'state/user/hooks'
 import styled from 'styled-components'
 import PriceChartContainer from 'views/Swap/components/Chart/PriceChartContainer'
 import FeatureBox from './components/FeatureSection/FeatureBox'
-import { BannerBox } from './style'
+import { BannerBox, FeatureBoxWrapper } from './style'
 
 const Home: React.FC = () => {
   const { theme } = useTheme()
@@ -117,7 +117,7 @@ const Home: React.FC = () => {
           {isDesktop && <img src="/images/home/chainBanner.png" alt="chain" className="chainBanner" />}
         </BannerBox>
 
-        <Flex justifyContent="space-between">
+        <FeatureBoxWrapper justifyContent="space-between">
           {featureBoxData.map((feature, index) => (
             <FeatureBox
               key={`${feature.title}-${feature.color}`}
@@ -127,7 +127,7 @@ const Home: React.FC = () => {
               color={feature.color}
             />
           ))}
-        </Flex>
+        </FeatureBoxWrapper>
 
         <Flex mt="124px" alignItems="center" justifyContent="space-between">
           <ChartInfo>
