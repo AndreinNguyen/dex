@@ -1,9 +1,9 @@
-import { Modal } from '@pancakeswap/uikit'
+import { Flex, Modal } from '@pancakeswap/uikit'
 import styled from 'styled-components'
 
 export const RootContainer = styled.div`
   max-width: 944px;
-  min-height: 60vh;
+  min-height: 50vh;
   width: 100%;
   padding: 0 20px;
 
@@ -145,24 +145,28 @@ export const LearningContainer = styled.div`
   max-width: 944px;
   min-height: 60vh;
   width: 100%;
+  padding: 0 12px;
 
   .question {
     display: flex;
+    flex-direction: column-reverse;
     justify-content: space-between;
-
     .question__name {
       margin-top: 8px;
       margin: 0;
       font-size: 28px;
+      font-size: 22px;
       font-weight: 400;
       color: ${({ theme }) => theme.colors.text};
     }
 
     .total-question {
+      text-align: center;
       font-size: 28px;
       font-weight: bold;
       margin: 0;
       color: ${({ theme }) => theme.colors.text};
+      margin-bottom: 12px;
     }
   }
 
@@ -170,11 +174,11 @@ export const LearningContainer = styled.div`
     display: flex;
     flex-wrap: wrap;
     margin: 0 auto;
-    gap: 30px;
-    margin-top: 30px;
+    gap: 24px;
+    margin-top: 24px;
 
     .answer-item {
-      width: calc(100% / 2 - 30px);
+      width: 100%;
       display: flex;
       overflow: hidden;
 
@@ -210,9 +214,22 @@ export const LearningContainer = styled.div`
   }
 
   .control-button {
-    margin-top: 30px;
+    margin-top: 20px;
     display: flex;
     justify-content: space-between;
+  }
+
+  ${({ theme }) => theme.mediaQueries.sm} {
+    .question {
+      .total-question {
+        text-align: right;
+      }
+    }
+    .options {
+      .answer-item {
+        width: calc(100% / 2 - 30px);
+      }
+    }
   }
 `
 
@@ -268,5 +285,33 @@ export const ResultContainer = styled.div`
 
   .claimBtn {
     margin-top: 12px;
+  }
+`
+
+export const PaginationWrapper = styled(Flex)`
+  justify-content: center;
+  gap: 5px;
+  margin-top: 12px;
+
+  ${({ theme }) => theme.mediaQueries.md} {
+    margin-top: 0;
+  }
+
+  .items {
+    width: 25px;
+    height: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    background-color: ${({ theme }) => theme.colors.inputSecondary};
+    color: ${({ theme }) => theme.colors.text};
+    cursor: pointer;
+    border: 0;
+    outline: 0;
+  }
+
+  .active {
+    background-color: ${({ theme }) => theme.colors.primaryYellow};
   }
 `
