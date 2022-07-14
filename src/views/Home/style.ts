@@ -57,7 +57,7 @@ export const BannerBox = styled.div`
     }
   }
 
-  /* @media screen and (max-width: 576px) {
+  @media screen and (max-width: 576px) {
     .about-box {
       align-items: center;
       margin-bottom: 50px;
@@ -69,9 +69,8 @@ export const BannerBox = styled.div`
         line-height: 1.2;
         margin-bottom: 20px;
       }
-      padding: 0 30px;
     }
-  } */
+  }
 `
 
 export const FeatureBoxWrapper = styled(Flex)`
@@ -82,5 +81,40 @@ export const FeatureBoxWrapper = styled(Flex)`
   ${({ theme }) => theme.mediaQueries.sm} {
     flex-direction: row;
     padding: 0px;
+  }
+`
+
+export const ChartWrapper = styled(Flex)`
+  flex-direction: column;
+  margin-top: 30px;
+
+  ${({ theme }) => theme.mediaQueries.xl} {
+    flex-direction: row;
+    margin-top: 124px;
+  }
+`
+
+export const ChartInfo = styled.div`
+  padding-bottom: 30px;
+  h1.title {
+    font-family: 'Space Grotesk';
+    font-weight: 600;
+    font-size: 40px;
+    line-height: 44px;
+    color: #ffffff;
+  }
+
+  p.description {
+    margin-top: 16px;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    color: rgba(255, 255, 255, 0.65);
+  }
+
+  ${({ theme }) => theme.mediaQueries.xl} {
+    max-width: 341px;
   }
 `

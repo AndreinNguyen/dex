@@ -6,13 +6,13 @@ import styled from 'styled-components'
 import Container from './Container'
 
 const StyledPage = styled(Container)`
-  min-height: calc(100vh - 64px);
   padding-bottom: 16px;
   padding-top: 85px;
 
   ${({ theme }) => theme.mediaQueries.sm} {
     padding-top: 80px;
     padding-bottom: 24px;
+    min-height: calc(85vh - 64px);
   }
 
   ${({ theme }) => theme.mediaQueries.lg} {

@@ -9,17 +9,12 @@ const StyledFeatureBox = styled.div<{ color: string }>`
   padding: 24px;
   min-width: '250px';
 
-  ${({ theme }) => theme.mediaQueries.sm} {
-    width: 32%;
-  }
-
   .icon {
     display: flex;
     justify-content: flex-end;
   }
 
   .info {
-    margin-top: 50px;
     h4.title {
       font-family: 'Space Grotesk';
       font-weight: 600;
@@ -35,6 +30,14 @@ const StyledFeatureBox = styled.div<{ color: string }>`
       font-size: 16px;
       line-height: 24px;
       color: rgba(255, 255, 255, 0.65);
+    }
+  }
+
+  ${({ theme }) => theme.mediaQueries.sm} {
+    width: 32%;
+
+    .info {
+      margin-top: 50px;
     }
   }
 `

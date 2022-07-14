@@ -70,10 +70,12 @@ export const CourseCardContainer = styled.div`
       font-size: 20px;
       font-weight: 400;
       line-height: 28px;
+      display: flex;
+      gap: 14px;
 
       img {
-        width: 30px;
-        height: 30px;
+        width: 24px;
+        height: 24px;
       }
 
       .reward-info {
@@ -84,7 +86,6 @@ export const CourseCardContainer = styled.div`
     }
 
     .course-title {
-      margin-top: 16px;
       font-weight: 600;
       font-size: 28px;
       line-height: 36px;

@@ -1,4 +1,4 @@
-import { BottomDrawer, Flex, useMatchBreakpointsContext } from '@pancakeswap/uikit'
+import { BottomDrawer, Button, Flex, useMatchBreakpointsContext } from '@pancakeswap/uikit'
 import { useWeb3React } from '@web3-react/core'
 import ConnectWalletButton from 'components/ConnectWalletButton'
 import { PageMeta } from 'components/Layout/Page'
@@ -12,11 +12,9 @@ import useTheme from 'hooks/useTheme'
 import { useState } from 'react'
 import { Field } from 'state/swap/actions'
 import { useDerivedSwapInfo, useSingleTokenSwapInfo, useSwapState } from 'state/swap/hooks'
-import { useExchangeChartManager } from 'state/user/hooks'
-import styled from 'styled-components'
 import PriceChartContainer from 'views/Swap/components/Chart/PriceChartContainer'
 import FeatureBox from './components/FeatureSection/FeatureBox'
-import { BannerBox, FeatureBoxWrapper } from './style'
+import { BannerBox, ChartInfo, ChartWrapper, FeatureBoxWrapper } from './style'
 
 const Home: React.FC = () => {
   const { theme } = useTheme()
@@ -28,29 +26,8 @@ const Home: React.FC = () => {
     maxWidth: theme.mediaQueries.lg ? '1216px' : '968px',
     minHeight: '60vh',
     color: '#ffff',
-    padding: '0',
+    padding: theme.mediaQueries.lg ? '0 20px' : '0',
   }
-
-  const ChartInfo = styled.div`
-    max-width: 384px;
-    h1.title {
-      font-family: 'Space Grotesk';
-      font-weight: 600;
-      font-size: 40px;
-      line-height: 44px;
-      color: #ffffff;
-    }
-
-    p.description {
-      margin-top: 16px;
-      font-family: 'Inter';
-      font-style: normal;
-      font-weight: 400;
-      font-size: 16px;
-      line-height: 24px;
-      color: rgba(255, 255, 255, 0.65);
-    }
-  `
 
   const { t } = useTranslation()
   const featureBoxData = [
@@ -74,10 +51,9 @@ const Home: React.FC = () => {
     },
   ]
 
-  const { isMobile, isDesktop } = useMatchBreakpointsContext()
+  const { isMobile, isTablet, isDesktop } = useMatchBreakpointsContext()
   const [isChartExpanded, setIsChartExpanded] = useState(false)
-  const [userChartPreference, setUserChartPreference] = useExchangeChartManager(isMobile)
-  const [isChartDisplayed, setIsChartDisplayed] = useState(userChartPreference)
+  const [isChartDisplayed, setIsChartDisplayed] = useState<boolean>(isDesktop)
 
   // swap state & price data
   const {
@@ -129,7 +105,7 @@ const Home: React.FC = () => {
           ))}
         </FeatureBoxWrapper>
 
-        <Flex mt="124px" alignItems="center" justifyContent="space-between">
+        <ChartWrapper alignItems="center" justifyContent="space-between">
           <ChartInfo>
             <h1 className="title">Real-time chart</h1>
             <p className="description">
@@ -137,6 +113,13 @@ const Home: React.FC = () => {
               hendrerit feugiat donec rhoncus auctor amet.
             </p>
           </ChartInfo>
+
+          {(isMobile || isTablet) && (
+            <Flex>
+              <Button onClick={() => setIsChartDisplayed(true)}>Open Chart</Button>
+            </Flex>
+          )}
+
           <>
             {!isMobile && (
               <PriceChartContainer
@@ -168,7 +151,7 @@ const Home: React.FC = () => {
               setIsOpen={setIsChartDisplayed}
             />
           </>
-        </Flex>
+        </ChartWrapper>
       </PageSection>
     </>
   )
