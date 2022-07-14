@@ -53,7 +53,7 @@ const Home: React.FC = () => {
 
   const { isMobile, isTablet, isDesktop } = useMatchBreakpointsContext()
   const [isChartExpanded, setIsChartExpanded] = useState(false)
-  const [isChartDisplayed, setIsChartDisplayed] = useState<boolean>(isDesktop)
+  const [isChartDisplayed, setIsChartDisplayed] = useState<boolean>(isDesktop || isTablet)
 
   // swap state & price data
   const {
@@ -114,7 +114,7 @@ const Home: React.FC = () => {
             </p>
           </ChartInfo>
 
-          {(isMobile || isTablet) && (
+          {isMobile && (
             <Flex>
               <Button onClick={() => setIsChartDisplayed(true)}>Open Chart</Button>
             </Flex>
