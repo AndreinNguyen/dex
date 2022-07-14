@@ -5,12 +5,13 @@ import axios from 'axios'
 import camelcaseKeys from 'camelcase-keys'
 import { SAVVYDEX_API } from 'config/constants/endpoints'
 import { useRouter } from 'next/router'
-import { useCallback, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useGoogleReCaptcha } from 'react-google-recaptcha-v3'
 import { useMutation } from 'react-query'
 import Page from 'views/Page'
 import ConfirmModal from './ConfirmModal'
 import { Metadata } from './interface'
+import PaginationQuestion from './PaginationQuestion'
 import { LearningContainer, NavigateHeader, ResultContainer } from './style'
 import SubmitAlert from './SubmitAlert'
 
@@ -296,6 +297,8 @@ const CourseLearning = () => {
               </div>
               <div className="next">{renderNextOrSubmitButton()}</div>
             </div>
+
+            <PaginationQuestion total={listQuestion.length} current={currentQuestion} setCurrent={setCurrentQuestion} />
           </>
         )}
       </LearningContainer>
