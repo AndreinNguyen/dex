@@ -70,6 +70,17 @@ export const CourseCardContainer = styled.div`
       font-size: 20px;
       font-weight: 400;
       line-height: 28px;
+
+      img {
+        width: 30px;
+        height: 30px;
+      }
+
+      .reward-info {
+        margin-bottom: 10px;
+        display: flex;
+        gap: 10px;
+      }
     }
 
     .course-title {
@@ -84,6 +95,12 @@ export const CourseCardContainer = styled.div`
       font-size: 16px;
       line-height: 24px;
       color: ${({ theme }) => theme.colors.textGrey};
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      line-clamp: 2;
+      -webkit-box-orient: vertical;
     }
   }
 
@@ -106,10 +123,10 @@ export const StartCourseButton = styled.button`
   transition: background-color 0.2s, opacity 0.2s;
   font-family: 'Space Grotesk';
   font-weight: 500;
-  font-size: 18px;
+  font-size: 16px;
   line-height: 24px;
   padding: 10px 16px;
-  border-radius: 12px;
+  border-radius: 8px;
   background-color: #f6b24f;
   box-shadow: none;
   border: 0;
