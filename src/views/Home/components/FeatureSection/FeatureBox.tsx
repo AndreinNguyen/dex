@@ -3,7 +3,7 @@ import React from 'react'
 import styled from 'styled-components'
 
 const StyledFeatureBox = styled.div<{ color: string }>`
-  width: 32%;
+  width: 100%;
   background: rgba(255, 255, 255, 0.08);
   border-radius: 32px;
   padding: 24px;
@@ -15,7 +15,6 @@ const StyledFeatureBox = styled.div<{ color: string }>`
   }
 
   .info {
-    margin-top: 50px;
     h4.title {
       font-family: 'Space Grotesk';
       font-weight: 600;
@@ -31,6 +30,14 @@ const StyledFeatureBox = styled.div<{ color: string }>`
       font-size: 16px;
       line-height: 24px;
       color: rgba(255, 255, 255, 0.65);
+    }
+  }
+
+  ${({ theme }) => theme.mediaQueries.sm} {
+    width: 32%;
+
+    .info {
+      margin-top: 50px;
     }
   }
 `

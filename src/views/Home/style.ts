@@ -1,3 +1,4 @@
+import { Flex } from '@pancakeswap/uikit'
 import styled from 'styled-components'
 
 export const BannerBox = styled.div`
@@ -14,7 +15,7 @@ export const BannerBox = styled.div`
     max-width: 592px;
     position: relative;
     z-index: 3;
-    min-height: 60vh;
+    min-height: 300px;
     margin-top: 60px;
 
     h1.hero-title {
@@ -34,14 +35,26 @@ export const BannerBox = styled.div`
       line-height: 24px;
       color: rgba(255, 255, 255, 0.65);
     }
+
+    ${({ theme }) => theme.mediaQueries.md} {
+      min-height: 50vh;
+    }
   }
 
   img.chainBanner {
     position: absolute;
-    right: -200px;
-    top: -120px;
     z-index: 2;
-    max-width: 1050px;
+    max-width: 700px;
+    right: -110px;
+    top: 50px;
+  }
+
+  ${({ theme }) => theme.mediaQueries.xl} {
+    img.chainBanner {
+      right: -200px;
+      top: -120px;
+      max-width: 1050px;
+    }
   }
 
   @media screen and (max-width: 576px) {
@@ -56,7 +69,52 @@ export const BannerBox = styled.div`
         line-height: 1.2;
         margin-bottom: 20px;
       }
-      padding: 0 30px;
     }
+  }
+`
+
+export const FeatureBoxWrapper = styled(Flex)`
+  flex-direction: column;
+  gap: 10px;
+  padding: 10px;
+
+  ${({ theme }) => theme.mediaQueries.sm} {
+    flex-direction: row;
+    padding: 0px;
+  }
+`
+
+export const ChartWrapper = styled(Flex)`
+  flex-direction: column;
+  margin-top: 30px;
+
+  ${({ theme }) => theme.mediaQueries.xl} {
+    flex-direction: row;
+    margin-top: 124px;
+  }
+`
+
+export const ChartInfo = styled.div`
+  padding-bottom: 30px;
+  h1.title {
+    font-family: 'Space Grotesk';
+    font-weight: 600;
+    font-size: 40px;
+    line-height: 44px;
+    color: #ffffff;
+  }
+
+  p.description {
+    margin-top: 16px;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    color: rgba(255, 255, 255, 0.65);
+  }
+
+  ${({ theme }) => theme.mediaQueries.xl} {
+    max-width: 341px;
   }
 `

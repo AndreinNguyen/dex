@@ -94,6 +94,7 @@ export const FooterRoot = styled.div`
       justify-content: center;
       gap: 42px;
       flex-wrap: wrap;
+      padding-bottom: 30px;
     }
 
     .social-item {

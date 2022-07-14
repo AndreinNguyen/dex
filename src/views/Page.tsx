@@ -8,18 +8,19 @@ const StyledPage = styled.div<{ $removePadding: boolean; $noMinHeight }>`
   flex-direction: column;
   align-items: center;
   width: 100%;
-  min-height: ${({ $noMinHeight }) => ($noMinHeight ? 'initial' : 'calc(100vh - 64px)')};
   background: ${({ theme }) => theme.colors.backgroundAlt};
   margin: auto;
   margin-top: 85px;
-  padding-top: 80px;
+  padding-top: 20px;
   padding-bottom: 50px;
+  min-height: 400px;
 
   ${({ theme }) => theme.mediaQueries.xs} {
     background-size: auto;
   }
 
   ${({ theme }) => theme.mediaQueries.sm} {
+    padding-top: 80px;
   }
 
   ${({ theme }) => theme.mediaQueries.lg} {

@@ -134,7 +134,6 @@ const Menu: React.FC<NavProps> = ({
   // Find the home link if provided
   const homeLink = links.find((link) => link.label === "Home");
 
-  const subLinksWithoutMobile = subLinks?.filter((subLink) => !subLink.isMobileOnly);
   const subLinksMobileOnly = subLinks?.filter((subLink) => subLink.isMobileOnly);
 
   return (
@@ -163,7 +162,7 @@ const Menu: React.FC<NavProps> = ({
         </FixedContainer>
 
         <Flex justifyContent="space-around">
-          {subLinksMobileOnly?.length > 0 && (
+          {isMobile && (
             <SubMenuItems
               items={subLinksMobileOnly}
               mt={`${totalTopMenuHeight + 1}px`}
