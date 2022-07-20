@@ -1,3 +1,5 @@
+import { EXCHANGE_DOCS_URLS } from 'config/constants'
+import Footer from 'components/Menu/Footer'
 import { CurrencyAmount, Token, Trade } from '@savvydex/sdk'
 import {
   ArrowDownIcon,
@@ -612,6 +614,9 @@ export default function Swap() {
               )}
             </StyledInputCurrencyWrapper>
           </StyledSwapContainer>
+          <Box display={['none', null, null, 'block']} width="100%" height="100%">
+            <Footer helpUrl={EXCHANGE_DOCS_URLS} />
+          </Box>
         </Flex>
       </Flex>
     </Page>
