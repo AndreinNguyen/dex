@@ -1,1 +1,1 @@
-SavvyCoin
+SavvyDex

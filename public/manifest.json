@@ -1,6 +1,6 @@
 {
-  "short_name": "Savvycoin",
-  "name": "Savvycoin",
+  "short_name": "SavvyDex",
+  "name": "SavvyDex",
   "description": "Farm SVC with Pancake LP Tokens",
   "homepage_url": "https://lab-dex.savvycom.xyz/",
   "start_url": ".",
