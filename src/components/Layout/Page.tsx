@@ -8,6 +8,7 @@ import Container from './Container'
 const StyledPage = styled(Container)`
   padding-bottom: 16px;
   padding-top: 85px;
+  position: relative;
 
   ${({ theme }) => theme.mediaQueries.sm} {
     padding-top: 80px;

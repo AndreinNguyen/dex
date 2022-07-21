@@ -5,6 +5,7 @@ import styled from 'styled-components'
 
 const StyledPage = styled.div<{ $removePadding: boolean; $noMinHeight }>`
   display: flex;
+  position: relative;
   flex-direction: column;
   align-items: center;
   width: 100%;

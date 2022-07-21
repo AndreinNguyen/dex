@@ -45,6 +45,12 @@ export const FARM_AUCTION_HOSTING_IN_SECONDS = 604800
 // Gelato uses this address to define a native currency in all chains
 export const GELATO_NATIVE = '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'
 
-export const EXCHANGE_DOCS_URLS = 'https://savvycom.gitbook.io/savvydex/products/exchange/how-to-trade'
+export const EXCHANGE_DOCS_URLS = 'https://savvycom.gitbook.io/savvydex/products/exchange'
+export const LIQUIDITY_DOCS_URLS = 'https://savvycom.gitbook.io/savvydex/products/exchange/liquidity-pools'
+export const ADD_LIQUIDITY_DOCS_URLS =
+  'https://savvycom.gitbook.io/savvydex/products/exchange/how-to-add-remove-liquidity'
+
+export const FARM_DOCS_URL = 'https://savvycom.gitbook.io/savvydex/products/yield-farming/how-to-use-farms'
+export const POOL_DOCS_URL = 'https://savvycom.gitbook.io/savvydex/products/syrup-pools-stake-svc'
 
 export const GALAXY_NFT_CAMPAIGN_ID = 'GCpp2UUxqQ'

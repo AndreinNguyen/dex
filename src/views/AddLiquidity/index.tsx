@@ -1,45 +1,47 @@
-import { useCallback, useEffect, useState } from 'react'
 import { BigNumber } from '@ethersproject/bignumber'
 import { TransactionResponse } from '@ethersproject/providers'
+import { AddIcon, Button, CardBody, Message, Text, TooltipText, useModal, useTooltip } from '@pancakeswap/uikit'
 import { Currency, currencyEquals, ETHER, TokenAmount, WETH } from '@savvydex/sdk'
-import { Button, Text, AddIcon, CardBody, Message, useModal, TooltipText, useTooltip } from '@pancakeswap/uikit'
-import { logError } from 'utils/sentry'
-import { useIsTransactionUnsupported, useIsTransactionWarning } from 'hooks/Trades'
-import { useTranslation } from 'contexts/Localization'
 import UnsupportedCurrencyFooter from 'components/UnsupportedCurrencyFooter'
+import { ROUTER_ADDRESS } from 'config/constants/exchange'
+import { CHAIN_ID } from 'config/constants/networks'
+import { useTranslation } from 'contexts/Localization'
+import { useIsTransactionUnsupported, useIsTransactionWarning } from 'hooks/Trades'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import { useRouter } from 'next/router'
-import { CHAIN_ID } from 'config/constants/networks'
+import { useCallback, useEffect, useState } from 'react'
 import { useLPApr } from 'state/swap/hooks'
-import { ROUTER_ADDRESS } from 'config/constants/exchange'
+import { logError } from 'utils/sentry'
+import { AppBody, AppHeader } from '../../components/App'
 import { LightCard } from '../../components/Card'
-import { AutoColumn, ColumnCenter } from '../../components/Layout/Column'
-import CurrencyInputPanel from '../../components/CurrencyInputPanel'
-import { AppHeader, AppBody } from '../../components/App'
-import { MinimalPositionCard } from '../../components/PositionCard'
-import { RowBetween } from '../../components/Layout/Row'
 import ConnectWalletButton from '../../components/ConnectWalletButton'
+import CurrencyInputPanel from '../../components/CurrencyInputPanel'
+import { AutoColumn, ColumnCenter } from '../../components/Layout/Column'
+import { RowBetween } from '../../components/Layout/Row'
+import { MinimalPositionCard } from '../../components/PositionCard'
 
-import { PairState } from '../../hooks/usePairs'
 import { useCurrency } from '../../hooks/Tokens'
 import { ApprovalState, useApproveCallback } from '../../hooks/useApproveCallback'
+import { PairState } from '../../hooks/usePairs'
 import useTransactionDeadline from '../../hooks/useTransactionDeadline'
 import { Field, resetMintState } from '../../state/mint/actions'
 import { useDerivedMintInfo, useMintActionHandlers, useMintState } from '../../state/mint/hooks'
 
+import { BubbleHelper } from '../../components/BubbleHelper'
+import Dots from '../../components/Loader/Dots'
+import { ADD_LIQUIDITY_DOCS_URLS } from '../../config/constants'
+import { useAppDispatch } from '../../state'
 import { useTransactionAdder } from '../../state/transactions/hooks'
 import { useGasPrice, useIsExpertMode, useUserSlippageTolerance } from '../../state/user/hooks'
 import { calculateGasMargin } from '../../utils'
-import { getRouterContract, calculateSlippageAmount } from '../../utils/exchange'
+import { currencyId } from '../../utils/currencyId'
+import { calculateSlippageAmount, getRouterContract } from '../../utils/exchange'
+import { formatAmount } from '../../utils/formatInfoNumbers'
 import { maxAmountSpend } from '../../utils/maxAmountSpend'
 import { wrappedCurrency } from '../../utils/wrappedCurrency'
-import Dots from '../../components/Loader/Dots'
-import { currencyId } from '../../utils/currencyId'
-import PoolPriceBar from './PoolPriceBar'
 import Page from '../Page'
 import ConfirmAddLiquidityModal from '../Swap/components/ConfirmAddLiquidityModal'
-import { formatAmount } from '../../utils/formatInfoNumbers'
-import { useAppDispatch } from '../../state'
+import PoolPriceBar from './PoolPriceBar'
 
 export default function AddLiquidity() {
   const router = useRouter()
@@ -453,6 +455,8 @@ export default function AddLiquidity() {
       ) : (
         <UnsupportedCurrencyFooter currencies={[currencies.CURRENCY_A, currencies.CURRENCY_B]} />
       )}
+
+      <BubbleHelper helpUrl={ADD_LIQUIDITY_DOCS_URLS} />
     </Page>
   )
 }

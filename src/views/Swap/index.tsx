@@ -1,6 +1,3 @@
-import { EXCHANGE_DOCS_URLS } from 'config/constants'
-import Footer from 'components/Menu/Footer'
-import { CurrencyAmount, Token, Trade } from '@savvydex/sdk'
 import {
   ArrowDownIcon,
   ArrowUpDownIcon,
@@ -10,11 +7,16 @@ import {
   Flex,
   IconButton,
   Skeleton,
+  Svg,
   Text,
   useMatchBreakpointsContext,
   useModal,
 } from '@pancakeswap/uikit'
+import { CurrencyAmount, Token, Trade } from '@savvydex/sdk'
 import { useWeb3React } from '@web3-react/core'
+import Footer from 'components/Menu/Footer'
+import UnsupportedCurrencyFooter from 'components/UnsupportedCurrencyFooter'
+import { EXCHANGE_DOCS_URLS } from 'config/constants'
 import { BIG_INT_ZERO } from 'config/constants/exchange'
 import { useTranslation } from 'contexts/Localization'
 import { useIsTransactionUnsupported } from 'hooks/Trades'
@@ -25,7 +27,6 @@ import styled from 'styled-components'
 import { computeTradePriceBreakdown, warningSeverity } from 'utils/exchange'
 import { maxAmountSpend } from 'utils/maxAmountSpend'
 import shouldShowSwapWarning from 'utils/shouldShowSwapWarning'
-import UnsupportedCurrencyFooter from 'components/UnsupportedCurrencyFooter'
 import { AppBody } from '../../components/App'
 import { GreyCard } from '../../components/Card'
 import ConnectWalletButton from '../../components/ConnectWalletButton'
@@ -65,6 +66,7 @@ import PriceChartContainer from './components/Chart/PriceChartContainer'
 import CurrencyInputHeader from './components/CurrencyInputHeader'
 import SwapWarningModal from './components/SwapWarningModal'
 import { StyledInputCurrencyWrapper, StyledSwapContainer } from './styles'
+import { BubbleHelper } from '../../components/BubbleHelper/index'
 
 const Label = styled(Text)`
   font-size: 12px;
@@ -618,6 +620,10 @@ export default function Swap() {
             <Footer helpUrl={EXCHANGE_DOCS_URLS} />
           </Box>
         </Flex>
+      </Flex>
+
+      <Flex alignItems="center" justifyContent={['center', 'center', 'center', 'flex-end']}>
+        <BubbleHelper helpUrl={EXCHANGE_DOCS_URLS} />
       </Flex>
     </Page>
   )

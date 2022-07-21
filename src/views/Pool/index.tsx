@@ -1,15 +1,17 @@
+import { AddIcon, Button, CardBody, CardFooter, Flex, Text } from '@pancakeswap/uikit'
+import { useWeb3React } from '@web3-react/core'
+import { BubbleHelper } from 'components/BubbleHelper'
+import { LIQUIDITY_DOCS_URLS } from 'config/constants'
+import { useTranslation } from 'contexts/Localization'
+import Link from 'next/link'
 import { useMemo } from 'react'
 import styled from 'styled-components'
-import { Text, Flex, CardBody, CardFooter, Button, AddIcon } from '@pancakeswap/uikit'
-import Link from 'next/link'
-import { useTranslation } from 'contexts/Localization'
-import { useWeb3React } from '@web3-react/core'
-import FullPositionCard from '../../components/PositionCard'
-import { useTokenBalancesWithLoadingIndicator } from '../../state/wallet/hooks'
-import { usePairs, PairState } from '../../hooks/usePairs'
-import { toV2LiquidityToken, useTrackedTokenPairs } from '../../state/user/hooks'
+import { AppBody, AppHeader } from '../../components/App'
 import Dots from '../../components/Loader/Dots'
-import { AppHeader, AppBody } from '../../components/App'
+import FullPositionCard from '../../components/PositionCard'
+import { PairState, usePairs } from '../../hooks/usePairs'
+import { toV2LiquidityToken, useTrackedTokenPairs } from '../../state/user/hooks'
+import { useTokenBalancesWithLoadingIndicator } from '../../state/wallet/hooks'
 import Page from '../Page'
 
 const Body = styled(CardBody)`
@@ -111,6 +113,7 @@ export default function Pool() {
           </Link>
         </CardFooter>
       </AppBody>
+      <BubbleHelper helpUrl={LIQUIDITY_DOCS_URLS} />
     </Page>
   )
 }
