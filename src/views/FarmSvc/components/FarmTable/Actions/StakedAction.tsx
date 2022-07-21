@@ -202,7 +202,7 @@ const Staked: React.FunctionComponent<StackedActionProps> = ({
             variant="secondary"
             disabled={['history', 'archived'].some((item) => router.pathname.includes(item))}
           >
-            {t('Stake LP')}
+            {t('Stake SVC')}
           </Button>
         </ActionContent>
       </ActionContainer>
@@ -228,7 +228,7 @@ const Staked: React.FunctionComponent<StackedActionProps> = ({
     <ActionContainer>
       <ActionTitles>
         <Text bold textTransform="uppercase" color="textSubtle" fontSize="12px">
-          {t('Enable Farm')}
+          {t('Enable Pool')}
         </Text>
       </ActionTitles>
       <ActionContent>
