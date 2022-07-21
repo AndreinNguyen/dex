@@ -22,7 +22,7 @@ type FooterVariant = 'default' | 'side'
 const Footer: React.FC<{ variant?: FooterVariant; helpUrl?: string }> = ({ variant = 'default' }) => {
   const { t } = useTranslation()
   const isSide = variant === 'side'
-  return <Wrapper $isSide={isSide}>deprecated</Wrapper>
+  return <Wrapper $isSide={isSide}></Wrapper>
 }
 
 export default memo(Footer)

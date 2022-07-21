@@ -616,9 +616,6 @@ export default function Swap() {
               )}
             </StyledInputCurrencyWrapper>
           </StyledSwapContainer>
-          <Box display={['none', null, null, 'block']} width="100%" height="100%">
-            <Footer helpUrl={EXCHANGE_DOCS_URLS} />
-          </Box>
         </Flex>
       </Flex>
 
