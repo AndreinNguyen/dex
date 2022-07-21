@@ -52,5 +52,6 @@ export const ADD_LIQUIDITY_DOCS_URLS =
 
 export const FARM_DOCS_URL = 'https://savvycom.gitbook.io/savvydex/products/yield-farming/how-to-use-farms'
 export const POOL_DOCS_URL = 'https://savvycom.gitbook.io/savvydex/products/syrup-pools-stake-svc'
+export const LEARN_DOCS_URL = 'https://savvycom.gitbook.io/savvydex/products/learn-to-earn'
 
 export const GALAXY_NFT_CAMPAIGN_ID = 'GCpp2UUxqQ'

@@ -9,10 +9,7 @@ const BubbleWrapperContainer = styled.div`
   position: absolute;
 
   ${({ theme }) => theme.mediaQueries.sm} {
-    bottom: 5%;
-  }
-  ${({ theme }) => theme.mediaQueries.lg} {
-    bottom: 10%;
+    bottom: 3%;
   }
 `
 
