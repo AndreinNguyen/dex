@@ -1,8 +1,9 @@
 import axios from 'axios'
 import camelcaseKeys from 'camelcase-keys'
+import { BubbleHelper } from 'components/BubbleHelper'
+import { LEARN_DOCS_URL } from 'config/constants'
 import { SAVVYDEX_API } from 'config/constants/endpoints'
 import { useEffect, useState } from 'react'
-import { GoogleReCaptchaProvider } from 'react-google-recaptcha-v3'
 import { useMutation } from 'react-query'
 import Page from 'views/Page'
 import CourseCard from './CourseCard'
@@ -36,6 +37,7 @@ const LearnAndEarn = () => {
           {questionData && questionData?.data.map((data, index) => <CourseCard data={data} key={`${data.id}`} />)}
         </div>
       </RootContainer>
+      <BubbleHelper helpUrl={LEARN_DOCS_URL} />
     </Page>
   )
 }
