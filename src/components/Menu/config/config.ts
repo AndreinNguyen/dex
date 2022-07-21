@@ -1,4 +1,14 @@
-import { EarnFillIcon, EarnIcon, MenuItemsType, NftFillIcon, NftIcon, SwapFillIcon, SwapIcon } from '@pancakeswap/uikit'
+import {
+  EarnFillIcon,
+  EarnIcon,
+  MenuItemsType,
+  NftFillIcon,
+  NftIcon,
+  SwapFillIcon,
+  SwapIcon,
+  DropdownMenuItemType,
+  MoreIcon,
+} from '@pancakeswap/uikit'
 import { DropdownMenuItems } from '@pancakeswap/uikit/src/components/DropdownMenu/types'
 import { ContextApi } from 'contexts/Localization/types'
 
@@ -52,6 +62,19 @@ const config: (t: ContextApi['t'], languageCode?: string) => ConfigMenuItemsType
     icon: NftIcon,
     fillIcon: NftFillIcon,
     items: [],
+  },
+  {
+    label: '',
+    href: '/',
+    icon: MoreIcon,
+    hideSubNav: true,
+    items: [
+      {
+        label: t('Docs'),
+        href: 'https://savvycom.gitbook.io/savvydex/',
+        type: DropdownMenuItemType.EXTERNAL_LINK,
+      },
+    ],
   },
 ]
 
