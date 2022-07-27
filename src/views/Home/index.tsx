@@ -81,10 +81,10 @@ const Home: React.FC = () => {
       >
         <BannerBox>
           <div className="about-box">
-            <h1 className="hero-title">Win 200% per year with Savvycoin</h1>
+            <h1 className="hero-title">Win 200% per year with SVC</h1>
 
             <p className="desc">
-              Savvy Coin is the solution for the Savvy Community, providing freedom, fast payments, rewards, and high
+              Savvy token is the solution for the Savvy Community, providing freedom, fast payments, rewards, and high
               profit.
             </p>
 
