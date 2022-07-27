@@ -52,7 +52,7 @@ export const BannerBox = styled.div`
   ${({ theme }) => theme.mediaQueries.xl} {
     img.chainBanner {
       right: -200px;
-      top: -120px;
+      top: -95px;
       max-width: 1050px;
     }
   }
