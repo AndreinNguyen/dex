@@ -64,17 +64,11 @@ const config: (t: ContextApi['t'], languageCode?: string) => ConfigMenuItemsType
     items: [],
   },
   {
-    label: '',
-    href: '/',
-    icon: MoreIcon,
-    hideSubNav: true,
-    items: [
-      {
-        label: t('Docs'),
-        href: 'https://savvycom.gitbook.io/savvydex/',
-        type: DropdownMenuItemType.EXTERNAL_LINK,
-      },
-    ],
+    label: 'Docs',
+    href: `https://savvycom.gitbook.io/savvydex/`,
+    icon: NftIcon,
+    fillIcon: NftFillIcon,
+    items: [],
   },
 ]
 
