@@ -122,7 +122,8 @@ export default function CurrencySearchModal({
         ) : (
           ''
         )}
-        {modalView === CurrencyModalView.search && (
+        {/* TODO: Temporary disable button magage token */}
+        {/* {modalView === CurrencyModalView.search && (
           <Footer>
             <Button
               scale="sm"
@@ -133,7 +134,7 @@ export default function CurrencySearchModal({
               {t('Manage Tokens')}
             </Button>
           </Footer>
-        )}
+        )} */}
       </StyledModalBody>
     </StyledModalContainer>
   )
