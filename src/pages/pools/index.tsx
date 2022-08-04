@@ -3,10 +3,13 @@ import { useContext } from 'react'
 import { FarmsContext, FarmsPageLayout } from 'views/FarmSvc'
 import FarmCard from 'views/FarmSvc/components/FarmCard/FarmCard'
 import { getDisplayApr } from 'views/FarmSvc/Farms'
+import { usePriceCakeBusd } from 'state/farms/hooks'
 
 const FarmsPage = () => {
   const { account } = useWeb3React()
   const { chosenFarmsMemoized } = useContext(FarmsContext)
+
+  const cakePrice = usePriceCakeBusd()
 
   return (
     <>
