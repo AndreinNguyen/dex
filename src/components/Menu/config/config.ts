@@ -23,7 +23,6 @@ const config: (t: ContextApi['t'], languageCode?: string) => ConfigMenuItemsType
     icon: SwapIcon,
     fillIcon: SwapFillIcon,
     href: '/swap',
-    showItemsOnMobile: false,
     items: [
       {
         label: t('Swap'),
@@ -61,6 +60,7 @@ const config: (t: ContextApi['t'], languageCode?: string) => ConfigMenuItemsType
     href: `/transfer`,
     icon: NftIcon,
     fillIcon: NftFillIcon,
+    showItemsOnMobile: false,
     items: [],
   },
   {
@@ -68,6 +68,7 @@ const config: (t: ContextApi['t'], languageCode?: string) => ConfigMenuItemsType
     href: `https://savvycom.gitbook.io/savvydex/`,
     icon: NftIcon,
     fillIcon: NftFillIcon,
+    showItemsOnMobile: false,
     items: [],
   },
 ]
