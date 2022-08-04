@@ -3,7 +3,9 @@ import { BigNumber } from 'bignumber.js'
 import Balance from 'components/Balance'
 import { useMemo } from 'react'
 import { useLpTokenPrice } from 'state/farms/hooks'
+import { useUserFarmsViewMode } from 'state/user/hooks'
 import { formatLpBalance, getBalanceNumber } from 'utils/formatBalance'
+import { ViewMode } from 'state/user/actions'
 
 interface StackedLPProps {
   stakedBalance: BigNumber
@@ -30,6 +32,8 @@ const StakedLP: React.FunctionComponent<StackedLPProps> = ({
     return formatLpBalance(stakedBalance)
   }, [stakedBalance])
 
+  const [viewMode] = useUserFarmsViewMode()
+
   return (
     <Flex flexDirection="column" alignItems="flex-start">
       <Heading color={stakedBalance.eq(0) ? 'textDisabled' : 'text'}>{displayBalance}</Heading>
@@ -43,24 +47,45 @@ const StakedLP: React.FunctionComponent<StackedLPProps> = ({
             unit=" BUSD"
             prefix="~"
           />
-          <Flex style={{ gap: '4px' }}>
-            <Balance
-              fontSize="12px"
-              color="textSubtle"
-              decimals={2}
-              value={stakedBalance.div(lpTotalSupply).times(tokenAmountTotal).toNumber()}
-              unit={` ${tokenSymbol}`}
-            />
-          </Flex>
-          <Flex style={{ gap: '4px' }}>
-            <Balance
-              fontSize="12px"
-              color="textSubtle"
-              decimals={2}
-              value={stakedBalance.div(lpTotalSupply).times(quoteTokenAmountTotal).toNumber()}
-              unit={` ${quoteTokenSymbol}`}
-            />
-          </Flex>
+          {viewMode === ViewMode.CARD ? (
+            <>
+              <Flex style={{ gap: '4px' }}>
+                <Balance
+                  fontSize="12px"
+                  color="textSubtle"
+                  decimals={2}
+                  value={stakedBalance.div(lpTotalSupply).times(tokenAmountTotal).toNumber()}
+                  unit={` ${tokenSymbol}`}
+                />
+              </Flex>
+              <Flex style={{ gap: '4px' }}>
+                <Balance
+                  fontSize="12px"
+                  color="textSubtle"
+                  decimals={2}
+                  value={stakedBalance.div(lpTotalSupply).times(quoteTokenAmountTotal).toNumber()}
+                  unit={` ${quoteTokenSymbol}`}
+                />
+              </Flex>
+            </>
+          ) : (
+            <Flex style={{ gap: '4px' }}>
+              <Balance
+                fontSize="12px"
+                color="textSubtle"
+                decimals={2}
+                value={stakedBalance.div(lpTotalSupply).times(tokenAmountTotal).toNumber()}
+                unit={` ${tokenSymbol}`}
+              />
+              <Balance
+                fontSize="12px"
+                color="textSubtle"
+                decimals={2}
+                value={stakedBalance.div(lpTotalSupply).times(quoteTokenAmountTotal).toNumber()}
+                unit={` ${quoteTokenSymbol}`}
+              />
+            </Flex>
+          )}
         </>
       )}
     </Flex>
