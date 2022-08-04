@@ -7,6 +7,7 @@ const BubbleWrapperContainer = styled.div`
   bottom: 0;
   right: 0;
   position: absolute;
+  transform: translateY(50px);
 
   ${({ theme }) => theme.mediaQueries.sm} {
     bottom: 3%;
