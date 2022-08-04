@@ -51,6 +51,8 @@ const StakedLP: React.FunctionComponent<StackedLPProps> = ({
               value={stakedBalance.div(lpTotalSupply).times(tokenAmountTotal).toNumber()}
               unit={` ${tokenSymbol}`}
             />
+          </Flex>
+          <Flex style={{ gap: '4px' }}>
             <Balance
               fontSize="12px"
               color="textSubtle"
