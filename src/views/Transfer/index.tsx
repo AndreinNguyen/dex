@@ -30,6 +30,8 @@ const Transfer = () => {
   const [onPresentSuccess] = useModal(<Notification txHash={transferHash} />)
   function openSuccess() {
     onPresentSuccess()
+    values.amount = ''
+    values.address = ''
   }
   const validAmount = useCallback(
     (e: { target: HTMLInputElement }) => {

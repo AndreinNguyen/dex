@@ -72,6 +72,7 @@ export const TransferHeaderStyle = styled.div`
 `
 export const ConfirmModalBox = styled.div`
   min-width: 592px;
+  color: #fff;
   .blur {
     position: absolute;
     top: 0;
