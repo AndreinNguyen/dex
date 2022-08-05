@@ -106,7 +106,7 @@ const DepositModal: React.FC<DepositModalProps> = ({
         apr={apr}
         multiplier={multiplier}
         displayApr={displayApr}
-        linkHref={addLiquidityUrl}
+        linkHref="/swap"
         isFarm
         initialValue={val}
         onBack={() => setShowRoiCalculator(false)}
