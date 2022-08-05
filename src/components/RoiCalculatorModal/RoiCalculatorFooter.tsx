@@ -91,7 +91,7 @@ const RoiCalculatorFooter: React.FC<RoiCalculatorFooterProps> = ({
                 </Text>
               </>
             )}
-            {!Number.isFinite(apy) ? (
+            {/* {!Number.isFinite(apy) ? (
               <Text color="textSubtle" small>
                 {isFarm ? t('Base APR (SVC yield only)') : t('APR')}
               </Text>
@@ -133,7 +133,7 @@ const RoiCalculatorFooter: React.FC<RoiCalculatorFooterProps> = ({
                   {multiplierTooltipVisible && multiplierTooltip}
                 </Flex>
               </>
-            )}
+            )} */}
           </Grid>
           <BulletList>
             <li>

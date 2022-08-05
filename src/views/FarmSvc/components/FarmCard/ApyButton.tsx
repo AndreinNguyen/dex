@@ -50,7 +50,7 @@ const ApyButton: React.FC<ApyButtonProps> = ({
       multiplier={multiplier}
       displayApr={displayApr}
       linkHref="/swap"
-      isFarm
+      isFarm={false}
     />,
   )
 
