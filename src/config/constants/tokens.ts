@@ -2142,7 +2142,7 @@ export const testnetTokens = defineTokens({
   ),
   busd: new Token(
     TESTNET,
-    '0x4B91F2053804c058a8a4bE6F1d9EbC49400EFb7D',
+    process.env.NEXT_PUBLIC_BUSD_ADDRESS,
     18,
     'BUSD',
     'Binance USD',

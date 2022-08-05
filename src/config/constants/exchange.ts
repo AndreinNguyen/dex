@@ -85,7 +85,7 @@ export const BASE_FEE = new Percent(JSBI.BigInt(25), BIPS_BASE)
 export const INPUT_FRACTION_AFTER_FEE = ONE_HUNDRED_PERCENT.subtract(BASE_FEE)
 
 // BNB
-export const DEFAULT_INPUT_CURRENCY = 'BNB'
+export const DEFAULT_INPUT_CURRENCY = process.env.NEXT_PUBLIC_BUSD_ADDRESS
 // CAKE
 export const DEFAULT_OUTPUT_CURRENCY = process.env.NEXT_PUBLIC_SVC_ADDRESS
 
