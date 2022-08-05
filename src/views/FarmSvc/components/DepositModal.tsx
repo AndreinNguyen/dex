@@ -168,7 +168,7 @@ const DepositModal: React.FC<DepositModalProps> = ({
           </Button>
         )}
       </ModalActions>
-      <LinkExternal href={addLiquidityUrl} style={{ alignSelf: 'center' }}>
+      <LinkExternal href="/swap" style={{ alignSelf: 'center' }}>
         {t('Get %symbol%', { symbol: tokenName })}
       </LinkExternal>
     </Modal>
