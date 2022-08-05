@@ -81,16 +81,15 @@ const RoiCalculatorFooter: React.FC<RoiCalculatorFooterProps> = ({
       {isExpanded && (
         <Box px="8px">
           <Grid gridTemplateColumns="2.5fr 1fr" gridRowGap="8px" gridTemplateRows={`repeat(${gridRowCount}, auto)`}>
-            {isFarm && (
-              <>
-                <Text color="textSubtle" small>
-                  {t('APR (incl. LP rewards)')}
-                </Text>
-                <Text small textAlign="right">
-                  {displayApr}%
-                </Text>
-              </>
-            )}
+            <>
+              <Text color="textSubtle" small>
+                {t('APR (incl. LP rewards)')}
+              </Text>
+              <Text small textAlign="right">
+                {displayApr}%
+              </Text>
+            </>
+
             {/* {!Number.isFinite(apy) ? (
               <Text color="textSubtle" small>
                 {isFarm ? t('Base APR (SVC yield only)') : t('APR')}
