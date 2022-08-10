@@ -9,8 +9,8 @@ const Container = styled.div`
   display: flex;
   bottom: 0;
   right: 0;
-  z-index: 100;
-  transform: translate(130px, 200px);
+  z-index: 1;
+  transform: translate(130px, 110px);
   display: none;
   ${({ theme }) => theme.mediaQueries.md} {
     display: flex;
@@ -66,7 +66,7 @@ const BubbleHelper = ({ helpUrl }: Props) => {
           </Svg>
         </BubbleWrapper>
       </BubbleWrapperContainer>
-      <ImageWrapper src={lotteryImage} width={200} height={340} alt="LotteryBanner" placeholder="blur" />
+      <ImageWrapper src={lotteryImage} width={180} height={180} alt="LotteryBanner" placeholder="blur" />
     </Container>
   )
 }
