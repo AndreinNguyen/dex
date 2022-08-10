@@ -40,7 +40,7 @@ export default function CurrencyLogo({
     return <BinanceIcon width={size} style={style} />
   }
 
-  if (currency.symbol === 'SVC') {
+  if (currency?.symbol === 'SVC') {
     return (
       <img
         alt={`${currency?.symbol ?? 'token'} logo`}
