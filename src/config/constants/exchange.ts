@@ -5,7 +5,7 @@ import { ChainTokenList } from './types'
 
 export const ROUTER_ADDRESS = {
   [ChainId.MAINNET]: '0x10ED43C718714eb63d5aA57B78B54704E256024E',
-  [ChainId.TESTNET]: '0xf8EA355a54825b91aE330664398390164932E447',
+  [ChainId.TESTNET]: process.env.NEXT_PUBLIC_ROUTER_ADDRESS,
 }
 
 // used to construct intermediary pairs for trading
