@@ -15,14 +15,15 @@ export interface ITableProps {
 const Container = styled.div`
   width: 100%;
   background: ${({ theme }) => theme.card.background};
-  border-radius: 16px;
+
   margin: 16px 0px;
-  border: 1px solid ${({ theme }) => theme.colors.cardBorder};
 `
 
 const TableWrapper = styled.div`
   overflow: visible;
   scroll-margin-top: 64px;
+  border-radius: 16px;
+  border: 1px solid ${({ theme }) => theme.colors.cardBorder};
 
   &::-webkit-scrollbar {
     display: none;

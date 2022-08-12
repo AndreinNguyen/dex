@@ -54,6 +54,7 @@ const Container = styled.div<{ expanded }>`
   width: 100%;
   flex-direction: column-reverse;
   padding: 24px;
+  border-radius: 0 0 16px 16px;
 
   ${({ theme }) => theme.mediaQueries.lg} {
     flex-direction: row;
@@ -132,7 +133,7 @@ const ActionPanel: React.FunctionComponent<ActionPanelProps> = ({
   const info = `/info/pool/${lpAddress}`
 
   return (
-    <Container expanded={expanded}>
+    <Container expanded={expanded} className="actionpanel-container">
       <InfoContainer className="InfoContainer__Farm">
         <ValueContainer>
           {farm.isCommunity && farm.auctionHostingEndDate && (
