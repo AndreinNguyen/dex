@@ -3,6 +3,7 @@ import { BigNumber } from 'bignumber.js'
 import Balance from 'components/Balance'
 import { useMemo } from 'react'
 import { usePriceCakeBusd } from 'state/farms/hooks'
+import styled from 'styled-components'
 import { formatLpBalance, getBalanceNumber } from 'utils/formatBalance'
 
 interface StackedLPProps {
@@ -14,6 +15,10 @@ interface StackedLPProps {
   tokenAmountTotal: BigNumber
   quoteTokenAmountTotal: BigNumber
 }
+
+const HeadingWrapper = styled(Heading)`
+  word-break: break-all;
+`
 
 const StakedLP: React.FunctionComponent<StackedLPProps> = ({
   stakedBalance,
@@ -32,7 +37,7 @@ const StakedLP: React.FunctionComponent<StackedLPProps> = ({
 
   return (
     <Flex flexDirection="column" alignItems="flex-start">
-      <Heading color={stakedBalance.eq(0) ? 'textDisabled' : 'text'}>{displayBalance}</Heading>
+      <HeadingWrapper color={stakedBalance.eq(0) ? 'textDisabled' : 'text'}>{displayBalance}</HeadingWrapper>
       {stakedBalance.gt(0) && cakePrice.gt(0) && (
         <>
           <Balance
