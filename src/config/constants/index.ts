@@ -1,5 +1,6 @@
 // used to construct the list of all pairs we consider by default in the frontend
-import { ChainId, Token } from '@savvydex/sdk'
+// import { ChainId, Token } from '@pancakeswap/sdk'
+import { ChainId, Token } from '@pancakeswap/sdk'
 import { mainnetTokens, testnetTokens } from './tokens'
 import { ChainTokenList } from './types'
 

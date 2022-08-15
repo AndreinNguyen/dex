@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { JSBI, Pair, Percent } from '@savvydex/sdk'
+import { JSBI, Pair, Percent } from '@pancakeswap/sdk'
 import {
   Button,
   Text,

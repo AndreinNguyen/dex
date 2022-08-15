@@ -1,7 +1,7 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { TransactionResponse } from '@ethersproject/providers'
 import { AddIcon, Button, CardBody, Message, Text, TooltipText, useModal, useTooltip } from '@pancakeswap/uikit'
-import { Currency, currencyEquals, ETHER, TokenAmount, WETH } from '@savvydex/sdk'
+import { Currency, currencyEquals, ETHER, TokenAmount, WETH } from '@pancakeswap/sdk'
 import UnsupportedCurrencyFooter from 'components/UnsupportedCurrencyFooter'
 import { ROUTER_ADDRESS } from 'config/constants/exchange'
 import { CHAIN_ID } from 'config/constants/networks'

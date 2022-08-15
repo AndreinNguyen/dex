@@ -1,4 +1,4 @@
-import { ChainId } from '@savvydex/sdk'
+import { ChainId } from '@pancakeswap/sdk'
 import getLpAddress from 'utils/getLpAddress'
 import { CHAIN_ID } from './networks'
 import tokens from './tokens'

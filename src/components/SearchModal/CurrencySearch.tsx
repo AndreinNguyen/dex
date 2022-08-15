@@ -1,6 +1,6 @@
 /* eslint-disable no-restricted-syntax */
 import { Box, Input, Text } from '@pancakeswap/uikit'
-import { Currency, ETHER, Token } from '@savvydex/sdk'
+import { Currency, ETHER, Token } from '@pancakeswap/sdk'
 import { useTranslation } from 'contexts/Localization'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import useDebounce from 'hooks/useDebounce'

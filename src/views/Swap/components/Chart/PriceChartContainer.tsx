@@ -1,4 +1,4 @@
-import { Currency } from '@savvydex/sdk'
+import { Currency } from '@pancakeswap/sdk'
 import useTheme from 'hooks/useTheme'
 import { useCallback, useState } from 'react'
 import BnbWbnbNotice from './BnbWbnbNotice'
