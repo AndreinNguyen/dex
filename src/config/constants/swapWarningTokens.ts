@@ -1,4 +1,4 @@
-import { Token } from '@pancakeswap/sdk'
+import { Token } from '@savvydex/sdk'
 import tokens from 'config/constants/tokens'
 import rugPullTokens from 'config/constants/rugPullTokens'
 

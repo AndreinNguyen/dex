@@ -12,7 +12,7 @@ import {
   useMatchBreakpointsContext,
   useModal,
 } from '@pancakeswap/uikit'
-import { CurrencyAmount, Token, Trade } from '@pancakeswap/sdk'
+import { CurrencyAmount, Token, Trade } from '@savvydex/sdk'
 import { useWeb3React } from '@web3-react/core'
 import Footer from 'components/Menu/Footer'
 import UnsupportedCurrencyFooter from 'components/UnsupportedCurrencyFooter'
