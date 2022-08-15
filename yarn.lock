@@ -2138,10 +2138,10 @@
     redux-thunk "^2.4.1"
     reselect "^4.1.5"
 
-"@savvydex/sdk@^2.4.8":
-  version "2.4.8"
-  resolved "https://registry.yarnpkg.com/@savvydex/sdk/-/sdk-2.4.8.tgz#1950e1475c1653bd0b051c873f9301b91e8a1f76"
-  integrity sha512-vLlzpqo6Xdbf/x1heCbHyixgI6ILxESxOVtC1vlqGQVOnam92nv8hhs5Nj898ujGuR8+7a7l05EwuVl319FHRQ==
+"@savvydex/sdk@^2.4.9":
+  version "2.4.9"
+  resolved "https://registry.yarnpkg.com/@savvydex/sdk/-/sdk-2.4.9.tgz#35cecfcc113f4a76ed0bae156c4bf79f34910aac"
+  integrity sha512-CUAQa7wRCp+oEqG0Ul3x01i/Y7CTJJrz0LM+oSFp2VsdFEW91fi3M+zKhUrVevOvguAeQnM52Lpc4q7uF406Zw==
   dependencies:
     big.js "^5.2.2"
     decimal.js-light "^2.5.0"
