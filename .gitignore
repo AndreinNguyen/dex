@@ -46,5 +46,3 @@ debug.log*
 # turbo
 .turbo
 
-yarn.lock
-package-lock.json
