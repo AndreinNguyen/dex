@@ -1,5 +1,7 @@
+import Link from 'next/link'
 import styled from 'styled-components'
-import { Flex, Heading, Skeleton } from '@pancakeswap/uikit'
+import { Flex, Heading, Skeleton, Button, Text } from '@pancakeswap/uikit'
+import Page from 'components/Layout/Page'
 import PageSection from 'components/PageSection'
 import { GET_TICKETS_BG, FINISHED_ROUNDS_BG_DARK } from './pageSectionStyles'
 import Hero from './components/Hero'
@@ -7,6 +9,16 @@ import Countdown from './components/Countdown'
 import { PageMeta } from '../../components/Layout/Page'
 import NextUnlockCard from './components/NextUnlockCard'
 import YourHistoryCard from './components/YourHistoryCard'
+import useFetchUserPresaleInfo from './hooks/useFetchUserInfo'
+import usePresale, { ReleaseStatus } from './hooks/usePresale'
+
+const StyledNotFound = styled.div`
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 64px);
+  justify-content: center;
+`
 
 const PresalePage = styled.div`
   min-height: calc(100vh - 64px);
@@ -17,6 +29,28 @@ const StyledHeading = styled(Heading)`
 `
 
 const Presale = () => {
+  // useFetchUserPresaleInfo()
+  const { endtime, status } = usePresale()
+
+  const userInWhiteList = true
+
+  if (!userInWhiteList) {
+    return (
+      <>
+        <Page>
+          <StyledNotFound>
+            <Text mb="16px">Oops, you are not in whitelist.</Text>
+            <Button as="a" scale="sm">
+              <Link href="/" passHref>
+                Back Home
+              </Link>
+            </Button>
+          </StyledNotFound>
+        </Page>
+      </>
+    )
+  }
+
   return (
     <>
       <PageMeta />
@@ -33,20 +67,23 @@ const Presale = () => {
           index={2}
         >
           <Flex alignItems="center" justifyContent="center" flexDirection="column" pt="24px">
-            {true && (
-              <StyledHeading scale="xl" color="#ffffff" mb="24px" textAlign="center" className="presale--heading">
-                Your presale infomation!
-              </StyledHeading>
-            )}
+            <StyledHeading scale="xl" color="#ffffff" mb="24px" textAlign="center" className="presale--heading">
+              Your presale infomation!
+            </StyledHeading>
+
             <Flex alignItems="center" justifyContent="center" mb="48px" className="presale-countdown">
-              {true ? (
-                <Countdown nextEventTime={1} postCountdownText="until the next unlock" preCountdownText="" />
+              {status === ReleaseStatus.DONE ? (
+                <Heading mb="24px" scale="md">
+                  All presale token sent to you!
+                </Heading>
+              ) : endtime ? (
+                <Countdown nextEventTime={endtime} postCountdownText="until the next unlock" preCountdownText="" />
               ) : (
                 <Skeleton height="41px" width="250px" />
               )}
             </Flex>
           </Flex>
-          <NextUnlockCard />
+          {status !== ReleaseStatus.DONE && <NextUnlockCard />}
         </PageSection>
         <PageSection
           innerProps={{ style: { margin: '0', width: '100%' } }}
@@ -56,9 +93,9 @@ const Presale = () => {
         >
           <Flex width="100%" flexDirection="column" alignItems="center" justifyContent="center">
             <Heading mb="24px" scale="xl">
-              Finished Rounds
+              Yours History
             </Heading>
-            <YourHistoryCard handleShowMoreClick={() => {}} numUserRoundsRequested={1} />
+            <YourHistoryCard numUserRoundsRequested={1} />
           </Flex>
         </PageSection>
       </PresalePage>

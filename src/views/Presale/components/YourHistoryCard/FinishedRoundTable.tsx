@@ -1,6 +1,5 @@
 import styled from 'styled-components'
 import { Text, Box, Flex, Button } from '@pancakeswap/uikit'
-import { LotteryStatus } from 'config/constants/types'
 import FinishedRoundRow from './FinishedRoundRow'
 
 const Grid = styled(Box)`
@@ -9,16 +8,36 @@ const Grid = styled(Box)`
 `
 
 interface FinishedRoundTableProps {
-  handleHistoryRowClick: (string) => void
-  handleShowMoreClick: () => void
   numUserRoundsRequested: number
 }
 
-const FinishedRoundTable: React.FC<React.PropsWithChildren<FinishedRoundTableProps>> = ({
-  handleShowMoreClick,
-  numUserRoundsRequested,
-  handleHistoryRowClick,
-}) => {
+const FinishedRoundTable: React.FC<React.PropsWithChildren<FinishedRoundTableProps>> = () => {
+  const fakeData = [
+    {
+      transactionId: 'jsadfklajsdlf',
+      timestamp: '1723886908',
+      transactionHash: '0x13dd33b0e34e97b0f16d749f692e34a62883221cb94b3347561477f8077963df',
+      claimed: true,
+    },
+    {
+      transactionId: 'jsadfklajsdlf',
+      timestamp: '1723886908',
+      transactionHash: '0x13dd33b0e34e97b0f16d749f692e34a62883221cb94b3347561477f8077963df',
+      claimed: true,
+    },
+    {
+      transactionId: 'jsadfklajsdlf',
+      timestamp: '1723886908',
+      transactionHash: '0x13dd33b0e34e97b0f16d749f692e34a62883221cb94b3347561477f8077963df',
+      claimed: true,
+    },
+    {
+      transactionId: 'jsadfklajsdlf',
+      timestamp: '1723886908',
+      transactionHash: '0x13dd33b0e34e97b0f16d749f692e34a62883221cb94b3347561477f8077963df',
+      claimed: true,
+    },
+  ]
   return (
     <>
       <Grid px="24px" pt="24px" mb="8px">
@@ -29,29 +48,27 @@ const FinishedRoundTable: React.FC<React.PropsWithChildren<FinishedRoundTablePro
           Date
         </Text>
         <Text bold fontSize="12px" color="secondary" textTransform="uppercase">
-          Your Tickets
+          Transaction
         </Text>
         <Box width="20px" />
       </Grid>
       <Flex px="24px" pb="24px" flexDirection="column" overflowY="scroll" height="240px">
-        {true &&
-          [].map((finishedRound) => (
+        {fakeData &&
+          fakeData.map((finishedRound) => (
             <FinishedRoundRow
-              key={finishedRound.lotteryId}
-              roundId={finishedRound.lotteryId}
-              hasWon={finishedRound.claimed}
-              numberTickets={finishedRound.totalTickets}
-              endTime={finishedRound.endTime}
-              onClick={handleHistoryRowClick}
+              key={finishedRound.transactionId}
+              transactionId={finishedRound.transactionId}
+              transactionHash={finishedRound.transactionHash}
+              timestamp={finishedRound.timestamp}
             />
           ))}
-        {true && (
+        {/* {true && (
           <Flex justifyContent="center">
             <Button mt="12px" variant="text" width="fit-content" onClick={handleShowMoreClick}>
               Show More
             </Button>
           </Flex>
-        )}
+        )} */}
       </Flex>
     </>
   )

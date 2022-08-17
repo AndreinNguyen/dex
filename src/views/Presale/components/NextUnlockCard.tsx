@@ -1,8 +1,8 @@
-import { useState } from 'react'
 import styled from 'styled-components'
 import { Card, CardHeader, CardBody, Flex, Heading, Text } from '@pancakeswap/uikit'
 
 import { dateTimeOptions } from '../helpers'
+import usePresale from '../hooks/usePresale'
 
 const Grid = styled.div`
   display: grid;
@@ -26,36 +26,13 @@ const StyledCard = styled(Card)`
   }
 `
 
-const NextDrawWrapper = styled.div`
-  background: ${({ theme }) => theme.colors.background};
-  padding: 24px;
-`
-
 const NextUnlockCard = () => {
-  const TIME_DEPLOY_LAB_DEX = 1660721607
-  const endTime = TIME_DEPLOY_LAB_DEX + 365 * 24 * 60 * 60
-  const endTimeMs = parseInt(endTime.toString(), 10) * 1000
-  const endDate = new Date(endTimeMs)
-
-  const getNextDrawId = () => {
-    if (true) {
-      return `text`
-    }
-    if (true) {
-      return ''
-    }
-    return 1
-  }
+  const { endtime } = usePresale()
+  const endDate = new Date(endtime)
 
   const getNextDrawDateTime = () => {
-    if (true) {
-      return `${endDate.toLocaleString(navigator.language, dateTimeOptions)}`
-    }
-    return ''
+    return `${endDate.toLocaleString(navigator.language, dateTimeOptions)}`
   }
-
-  const ticketRoundText = 'ticketRoundText'
-  const [youHaveText, ticketsThisRoundText] = ticketRoundText.split(''.toString())
 
   return (
     <StyledCard>

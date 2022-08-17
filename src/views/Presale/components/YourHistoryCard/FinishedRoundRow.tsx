@@ -1,12 +1,13 @@
 import styled from 'styled-components'
 import { Text, Flex, ChevronRightIcon, Box, SmallDotIcon, PrizeIcon } from '@pancakeswap/uikit'
+import Transaction from 'components/App/Transactions/Transaction'
+import { TransactionDetails } from 'state/transactions/reducer'
 import { dateOptions, timeOptions } from '../../helpers'
 
-interface FinishedRoundRowProps {
-  roundId: string
-  numberTickets: string
-  endTime: string
-  onClick: (string) => void
+export interface FinishedRoundRowProps {
+  transactionId: string
+  transactionHash: string
+  timestamp: string
   hasWon?: boolean
 }
 
@@ -17,27 +18,27 @@ const Grid = styled(Box)`
   cursor: pointer;
 `
 
-const StyledSmallDotIcon = styled(SmallDotIcon)`
-  path {
-    fill: ${({ theme }) => theme.colors.textDisabled};
-  }
-`
-
 const FinishedRoundRow: React.FC<React.PropsWithChildren<FinishedRoundRowProps>> = ({
-  roundId,
-  numberTickets,
-  endTime,
-  onClick,
-  hasWon = false,
+  transactionId,
+  transactionHash,
+  timestamp,
 }) => {
-  const endTimeInMs = parseInt(endTime, 10) * 1000
+  const endTimeInMs = parseInt(timestamp, 10) * 1000
   const endTimeAsDate = new Date(endTimeInMs)
 
+  const tx: TransactionDetails = {
+    hash: transactionHash,
+    addedTime: parseInt(timestamp),
+    from: '',
+    receipt: true,
+    summary: `${transactionHash.slice(0, 15)}...`,
+  }
+
   return (
-    <Grid onClick={() => onClick(roundId)}>
+    <Grid onClick={() => {}}>
       <Flex alignItems="center">
         <Text fontSize="16px" color="textSubtle">
-          {roundId}
+          {transactionId}
         </Text>
       </Flex>
       <Flex
@@ -54,8 +55,7 @@ const FinishedRoundRow: React.FC<React.PropsWithChildren<FinishedRoundRowProps>>
         </Text>
       </Flex>
       <Flex mx="6px" alignItems="center" justifyContent="space-between">
-        <Text>{numberTickets}</Text>
-        {hasWon ? <PrizeIcon color="warning" /> : <StyledSmallDotIcon />}
+        <Transaction tx={tx} />
       </Flex>
       <Flex alignItems="center" justifyContent="center">
         <ChevronRightIcon color="primary" />

@@ -39,7 +39,7 @@ const Wrapper: React.FC<React.PropsWithChildren<TimerProps>> = ({
   wrapperClassName,
 }) => {
   return (
-    <StyledTimerFlex alignItems="flex-end" className={wrapperClassName} className="StyledTimerFlex">
+    <StyledTimerFlex alignItems="flex-end" className={wrapperClassName}>
       {Boolean(days) && (
         <>
           <StyledTimerText mb="-4px" scale="xl" mr="4px" className="StyledTimerText">

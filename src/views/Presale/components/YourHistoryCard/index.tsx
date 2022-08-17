@@ -13,7 +13,6 @@ import {
 import FinishedRoundTable from './FinishedRoundTable'
 
 interface YourHistoryCardProps {
-  handleShowMoreClick: () => void
   numUserRoundsRequested: number
 }
 
@@ -33,36 +32,13 @@ const StyledCardBody = styled(CardBody)`
   min-height: 240px;
 `
 
-const YourHistoryCard: React.FC<React.PropsWithChildren<YourHistoryCardProps>> = ({
-  handleShowMoreClick,
-  numUserRoundsRequested,
-}) => {
+const YourHistoryCard: React.FC<React.PropsWithChildren<YourHistoryCardProps>> = ({ numUserRoundsRequested }) => {
   const getHeader = () => {
-    if (true) {
-      return (
-        <Flex alignItems="center">
-          <ArrowBackIcon cursor="pointer" onClick={() => {}} mr="20px" />
-          <Flex flexDirection="column" alignItems="flex-start" justifyContent="center">
-            <Heading scale="md" mb="4px">
-              text
-            </Heading>
-            {true ? <Text fontSize="14px">text</Text> : <Skeleton width="185px" height="21px" />}
-          </Flex>
-        </Flex>
-      )
-    }
-
-    return <Heading scale="md">Rounds</Heading>
+    return <Heading scale="md">Transaction</Heading>
   }
 
   const getBody = () => {
-    return (
-      <FinishedRoundTable
-        handleHistoryRowClick={() => {}}
-        handleShowMoreClick={handleShowMoreClick}
-        numUserRoundsRequested={numUserRoundsRequested}
-      />
-    )
+    return <FinishedRoundTable numUserRoundsRequested={numUserRoundsRequested} />
   }
 
   const getFooter = () => {
@@ -70,7 +46,7 @@ const YourHistoryCard: React.FC<React.PropsWithChildren<YourHistoryCardProps>> =
       <CardFooter>
         <Flex flexDirection="column" justifyContent="center" alignItems="center">
           <Text fontSize="12px" color="textSubtle">
-            Only showing data for Lottery V2
+            Only showing data for presale
           </Text>
         </Flex>
       </CardFooter>
