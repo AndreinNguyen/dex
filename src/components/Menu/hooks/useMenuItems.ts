@@ -1,19 +1,33 @@
+import { usePresaleInfo } from 'state/presale/hooks'
 import { useMemo } from 'react'
-import { menuStatus } from '@pancakeswap/uikit'
+import { menuStatus, NftFillIcon, NftIcon } from '@pancakeswap/uikit'
 import { useTranslation } from '../../../contexts/Localization'
 import { useMenuItemsStatus } from './useMenuItemsStatus'
 import config, { ConfigMenuItemsType } from '../config/config'
 
 export const useMenuItems = (): ConfigMenuItemsType[] => {
+  const { isInWhiteList } = usePresaleInfo()
+
   const {
     t,
     currentLanguage: { code: languageCode },
   } = useTranslation()
   const menuItemsStatus = useMenuItemsStatus()
 
-  const menuItems = useMemo(() => {
-    return config(t, languageCode)
-  }, [t, languageCode])
+  const menuItems = useMemo((): ConfigMenuItemsType[] => {
+    if (!isInWhiteList) {
+      return config(t, languageCode)
+    }
+    const presale: ConfigMenuItemsType = {
+      label: 'Presale',
+      href: `/presale`,
+      icon: NftIcon,
+      fillIcon: NftFillIcon,
+      showItemsOnMobile: false,
+      items: [],
+    }
+    return [...config(t, languageCode), presale]
+  }, [isInWhiteList, t, languageCode])
 
   return useMemo(() => {
     if (menuItemsStatus && Object.keys(menuItemsStatus).length) {

@@ -1,6 +1,6 @@
+import { useEffect } from 'react'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import { useSelector } from 'react-redux'
-import { useSlowRefreshEffect } from 'hooks/useRefreshEffect'
 import { AppState, useAppDispatch } from '../index'
 import { fetchPresaleDataAsync } from '.'
 
@@ -12,7 +12,7 @@ export const useFetchPresaleInfo = () => {
   const { account } = useActiveWeb3React()
   const dispatch = useAppDispatch()
 
-  useSlowRefreshEffect(() => {
+  useEffect(() => {
     dispatch(fetchPresaleDataAsync(account))
-  })
+  }, [account, dispatch])
 }

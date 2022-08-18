@@ -23,6 +23,7 @@ const StyledNotFound = styled.div`
 
 const PresalePage = styled.div`
   min-height: calc(100vh - 64px);
+  padding-top: 84px;
 `
 
 const StyledHeading = styled(Heading)`
@@ -62,7 +63,7 @@ const Presale = () => {
           containerProps={{ style: { marginTop: '-30px' } }}
           background={GET_TICKETS_BG}
           concaveDivider
-          clipFill={{ light: '#7645D9' }}
+          clipFill={{ light: '#1f0c46' }}
           dividerPosition="top"
           index={2}
         >
