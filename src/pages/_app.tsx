@@ -18,6 +18,7 @@ import { PersistGate } from 'redux-persist/integration/react'
 import { persistor, useStore } from 'state'
 import { usePollBlockNumber } from 'state/block/hooks'
 import { usePollCoreFarmData } from 'state/farms/hooks'
+import { useFetchPresaleInfo } from 'state/presale/hooks'
 import { Blocklist, Updaters } from '..'
 import ErrorBoundary from '../components/ErrorBoundary'
 import Menu from '../components/Menu'
@@ -39,6 +40,7 @@ function GlobalHooks() {
   useUserAgent()
   useAccountEventListener()
   useSentryUser()
+  useFetchPresaleInfo()
   return null
 }
 

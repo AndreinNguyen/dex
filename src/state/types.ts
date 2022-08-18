@@ -639,3 +639,12 @@ export interface State {
   lottery: LotteryState
   nftMarket: NftMarketState
 }
+
+export interface PresaleState {
+  isInWhiteList: boolean
+  totalAmount: string
+  lockedAmount: string
+  pendingAmount: string
+  receivedAmount: string
+  isLoading: boolean
+}
