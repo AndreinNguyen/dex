@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import { ResPartner, PresaleState } from 'state/types'
+import { PresaleState } from 'state/types'
 import fetchUserPresaleInfo from './fetchUserPresaleInfo'
 
 const initialState: PresaleState = {
@@ -19,8 +19,8 @@ export const fetchPresaleDataAsync = createAsyncThunk<
     receivedAmount: string
   },
   string
->('presale/fetchPresaleDataAsync', async (acount: string) => {
-  const res = await fetchUserPresaleInfo(acount)
+>('presale/fetchPresaleDataAsync', async (account: string) => {
+  const res = await fetchUserPresaleInfo(account)
 
   return {
     totalAmount: res.totalCoin.toString(),

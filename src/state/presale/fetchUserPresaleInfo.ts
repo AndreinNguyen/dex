@@ -3,10 +3,12 @@ import camelcaseKeys from 'camelcase-keys'
 import { SAVVYDEX_API } from 'config/constants/endpoints'
 import { ResPartner } from 'state/types'
 
-const fetchUserPresaleInfo = async (acount: string): Promise<ResPartner> => {
+const fetchUserPresaleInfo = async (account: string): Promise<ResPartner> => {
+  if (!account) throw new Error()
+
   const response = await axios.get(`${SAVVYDEX_API}/partners`, {
-    headers: {
-      wallet_address: acount,
+    params: {
+      wallet_address: account,
     },
   })
 
