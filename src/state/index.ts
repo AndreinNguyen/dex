@@ -16,6 +16,7 @@ import storage from 'redux-persist/lib/storage'
 import IndexedDBStorage from 'utils/IndexedDBStorage'
 import burn from './burn/reducer'
 import farmsReducer from './farms'
+import presaleReducer from './presale'
 import farmsReducerV1 from './farmsV1'
 import { updateVersion } from './global/actions'
 import infoReducer from './info'
@@ -80,6 +81,9 @@ const persistedReducer = persistReducer(
     burn,
     multicall,
     lists: persistReducer(ListsConfig, lists),
+
+    // Presale
+    presale: presaleReducer,
   }),
 )
 

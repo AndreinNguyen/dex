@@ -1,8 +1,10 @@
 import styled from 'styled-components'
 import { Card, CardHeader, CardBody, Flex, Heading, Text } from '@pancakeswap/uikit'
 
+import { usePresaleInfo } from 'state/presale/hooks'
+import Balance from 'components/Balance'
 import { dateTimeOptions } from '../helpers'
-import usePresale from '../hooks/usePresale'
+import usePresaleTime from '../hooks/usePresaleTime'
 
 const Grid = styled.div`
   display: grid;
@@ -26,8 +28,15 @@ const StyledCard = styled(Card)`
   }
 `
 
+const PrizeTotalBalance = styled(Balance)`
+  background: ${({ theme }) => theme.colors.gradients.gold};
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+`
+
 const NextUnlockCard = () => {
-  const { endtime } = usePresale()
+  const { pendingAmount, receivedAmount, lockedAmount } = usePresaleInfo()
+  const { endtime } = usePresaleTime()
   const endDate = new Date(endtime)
 
   const getNextDrawDateTime = () => {
@@ -45,28 +54,22 @@ const NextUnlockCard = () => {
       <CardBody>
         <Grid>
           <Flex justifyContent={['center', null, null, 'flex-start']}>
-            <Heading>Total amount</Heading>
+            <Heading>Next unlock amount</Heading>
           </Flex>
           <Flex flexDirection="column" mb="18px">
-            <Heading scale="xl" color="secondary" textAlign={['center', null, null, 'left']}>
-              10.000.000 SVC
-            </Heading>
+            <PrizeTotalBalance fontSize="24px" bold unit=" SVC" value={Number(pendingAmount)} decimals={0} />
           </Flex>
           <Flex justifyContent={['center', null, null, 'flex-start']}>
             <Heading>Unlocked amount</Heading>
           </Flex>
           <Flex flexDirection="column" mb="18px">
-            <Heading scale="xl" color="secondary" textAlign={['center', null, null, 'left']}>
-              500.000 SVC
-            </Heading>
+            <PrizeTotalBalance fontSize="24px" bold unit=" SVC" value={Number(lockedAmount)} decimals={0} />
           </Flex>
           <Flex justifyContent={['center', null, null, 'flex-start']}>
-            <Heading>Lock amount</Heading>
+            <Heading>Received amount</Heading>
           </Flex>
           <Flex flexDirection="column" mb="18px">
-            <Heading scale="xl" color="secondary" textAlign={['center', null, null, 'left']}>
-              9.500.000 SVC
-            </Heading>
+            <PrizeTotalBalance fontSize="24px" bold unit=" SVC" value={Number(receivedAmount)} decimals={0} />
           </Flex>
         </Grid>
       </CardBody>

@@ -1,9 +1,8 @@
 import styled, { keyframes } from 'styled-components'
 import { Box, Flex, Heading, Skeleton } from '@pancakeswap/uikit'
-import { LotteryStatus } from 'config/constants/types'
-import { usePriceCakeBusd } from 'state/farms/hooks'
-import { getBalanceNumber } from 'utils/formatBalance'
 import Balance from 'components/Balance'
+import { usePresaleInfo } from 'state/presale/hooks'
+import usePresaleTime, { ReleaseStatus } from '../hooks/usePresaleTime'
 
 const StyledHeading = styled(Heading)`
   font-family: 'Kanit', sans-serif;
@@ -212,17 +211,17 @@ const StarsDecorations = styled(Box)`
 `
 
 const Hero = () => {
-  const cakePriceBusd = usePriceCakeBusd()
-  // const prizeTotal = getBalanceNumber(prizeInBusd)
+  const { isLoading, totalAmount } = usePresaleInfo()
+  const { status } = usePresaleTime()
 
   const getHeroHeading = () => {
-    if (true) {
+    if (status === ReleaseStatus.NOTYET) {
       return (
         <>
-          {false ? (
+          {isLoading ? (
             <Skeleton my="7px" height={60} width={190} />
           ) : (
-            <PrizeTotalBalance fontSize="64px" bold unit=" SVC" value={50000000} mb="8px" decimals={0} />
+            <PrizeTotalBalance fontSize="64px" bold unit=" SVC" value={Number(totalAmount)} mb="8px" decimals={0} />
           )}
           <StyledHeading mb="32px" scale="lg" color="#ffffff">
             in total!
@@ -232,7 +231,7 @@ const Hero = () => {
     }
     return (
       <StyledHeading mb="24px" scale="xl" color="#ffffff">
-        Tickets on sale soon
+        Presale on sale soon
       </StyledHeading>
     )
   }
@@ -248,7 +247,7 @@ const Hero = () => {
         <img src="/images/lottery/ticket-r.png" width="121px" height="72px" alt="" />
       </StarsDecorations> */}
       <StyledHeading mb="8px" scale="md" color="#ffffff" id="lottery-hero-title">
-        The SavvyCoin Presale
+        Your presale SavvyCoin
       </StyledHeading>
       {getHeroHeading()}
       <TicketContainer

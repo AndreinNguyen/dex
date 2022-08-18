@@ -2,6 +2,7 @@ import Link from 'next/link'
 import styled from 'styled-components'
 import { Flex, Heading, Skeleton, Button, Text } from '@pancakeswap/uikit'
 import Page from 'components/Layout/Page'
+import { usePresaleInfo } from 'state/presale/hooks'
 import PageSection from 'components/PageSection'
 import { GET_TICKETS_BG, FINISHED_ROUNDS_BG_DARK } from './pageSectionStyles'
 import Hero from './components/Hero'
@@ -10,7 +11,7 @@ import { PageMeta } from '../../components/Layout/Page'
 import NextUnlockCard from './components/NextUnlockCard'
 import YourHistoryCard from './components/YourHistoryCard'
 import useFetchUserPresaleInfo from './hooks/useFetchUserInfo'
-import usePresale, { ReleaseStatus } from './hooks/usePresale'
+import usePresaleTime, { ReleaseStatus } from './hooks/usePresaleTime'
 
 const StyledNotFound = styled.div`
   align-items: center;
@@ -29,12 +30,11 @@ const StyledHeading = styled(Heading)`
 `
 
 const Presale = () => {
-  // useFetchUserPresaleInfo()
-  const { endtime, status } = usePresale()
+  useFetchUserPresaleInfo()
+  const { endtime, status } = usePresaleTime()
+  const { isInWhiteList } = usePresaleInfo()
 
-  const userInWhiteList = true
-
-  if (!userInWhiteList) {
+  if (!isInWhiteList) {
     return (
       <>
         <Page>

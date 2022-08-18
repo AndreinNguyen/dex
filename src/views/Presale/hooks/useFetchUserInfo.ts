@@ -1,11 +1,7 @@
-import useActiveWeb3React from 'hooks/useActiveWeb3React'
-import fetchUserPresaleInfo from 'state/presale/fetchUserPresaleInfo'
-import useSWR from 'swr'
+import { useFetchPresaleInfo } from 'state/presale/hooks'
 
 const useFetchUserPresaleInfo = () => {
-  const { account } = useActiveWeb3React()
-  const { data: userPresaleInfo } = useSWR(['FetchUserPresaleInfo'], async () => fetchUserPresaleInfo())
-  console.log({ userPresaleInfo })
+  useFetchPresaleInfo()
 }
 
 export default useFetchUserPresaleInfo

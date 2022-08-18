@@ -4,7 +4,7 @@ export enum ReleaseStatus {
   DONE = 'done',
 }
 
-const usePresale = () => {
+const usePresaleTime = () => {
   const DAY_RELEASE_TOKEN = 10
   const START_TIME_RELEASE_TOKEN = new Date(2022, 9, 1)
   const nowTimestamp = Date.now()
@@ -53,4 +53,4 @@ const usePresale = () => {
   return { endtime, status }
 }
 
-export default usePresale
+export default usePresaleTime
