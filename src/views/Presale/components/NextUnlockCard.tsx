@@ -35,7 +35,7 @@ const PrizeTotalBalance = styled(Balance)`
 `
 
 const NextUnlockCard = () => {
-  const { pendingAmount, receivedAmount, lockedAmount } = usePresaleInfo()
+  const { receivedAmount, lockedAmount, totalAmount } = usePresaleInfo()
   const { endtime } = usePresaleTime()
   const endDate = new Date(endtime)
 
@@ -57,7 +57,7 @@ const NextUnlockCard = () => {
             <Heading>Next unlock amount</Heading>
           </Flex>
           <Flex flexDirection="column" mb="18px">
-            <PrizeTotalBalance fontSize="24px" bold unit=" SVC" value={Number(pendingAmount)} decimals={0} />
+            <PrizeTotalBalance fontSize="24px" bold unit=" SVC" value={Number(totalAmount) / 20} decimals={0} />
           </Flex>
           <Flex justifyContent={['center', null, null, 'flex-start']}>
             <Heading>Unlocked amount</Heading>

@@ -13,7 +13,7 @@ export interface FinishedRoundRowProps {
 
 const Grid = styled(Box)`
   display: grid;
-  grid-template-columns: repeat(3, 1fr) auto;
+  grid-template-columns: 10% 40% 40% 10%;
   margin-bottom: 8px;
   cursor: pointer;
 `
@@ -31,11 +31,11 @@ const FinishedRoundRow: React.FC<React.PropsWithChildren<FinishedRoundRowProps>>
     addedTime: parseInt(timestamp),
     from: '',
     receipt: true,
-    summary: `${transactionHash.slice(0, 15)}...`,
+    summary: `${transactionHash.slice(0, 25)}...`,
   }
 
   return (
-    <Grid onClick={() => {}}>
+    <Grid>
       <Flex alignItems="center">
         <Text fontSize="16px" color="textSubtle">
           {transactionId}
