@@ -22,7 +22,7 @@ const farms: SerializedFarmConfig[] = [
   {
     pid: 1,
     v1pid: 251,
-    lpSymbol: 'SVC-BUSD LP',
+    lpSymbol: 'SVC-USDT LP',
     lpAddresses: {
       97: process.env.NEXT_PUBLIC_LP_SVC_BUSD,
       56: '',
