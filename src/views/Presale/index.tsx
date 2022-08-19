@@ -69,7 +69,7 @@ const Presale = () => {
         >
           <Flex alignItems="center" justifyContent="center" flexDirection="column" pt="24px">
             <StyledHeading scale="xl" color="#ffffff" mb="24px" textAlign="center" className="presale--heading">
-              Your presale infomation!
+              Your presale information!
             </StyledHeading>
 
             <Flex alignItems="center" justifyContent="center" mb="48px" className="presale-countdown">
