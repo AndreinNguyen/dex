@@ -2144,8 +2144,8 @@ export const testnetTokens = defineTokens({
     TESTNET,
     process.env.NEXT_PUBLIC_BUSD_ADDRESS,
     18,
-    'BUSD',
-    'Binance USD',
+    'USDT',
+    'Binance USDT',
     'https://www.paxos.com/busd/',
   ),
   syrup: new Token(
