@@ -30,6 +30,7 @@ const StyledCard = styled(Card)`
 
 const PrizeTotalBalance = styled(Balance)`
   background: ${({ theme }) => theme.colors.gradients.gold};
+  text-align: center;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 `
