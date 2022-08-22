@@ -94,7 +94,7 @@ const Presale = () => {
         >
           <Flex width="100%" flexDirection="column" alignItems="center" justifyContent="center">
             <Heading mb="24px" scale="xl">
-              Yours History
+              Your History
             </Heading>
             <YourHistoryCard numUserRoundsRequested={1} />
           </Flex>
