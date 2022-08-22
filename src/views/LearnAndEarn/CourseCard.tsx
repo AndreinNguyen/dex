@@ -28,7 +28,7 @@ const CourseCard = ({ data }: Props) => {
           <div className="head-desc">
             <div className="reward-info">
               <img src="/images/tokens/SVC.png" alt="svc" />
-              <p> 5000 SVC</p>
+              <p> 100 SVC</p>
             </div>
             <div className="reward-info">
               <img src="/images/tokens/WBNB.png" alt="bnb" />
