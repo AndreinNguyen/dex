@@ -5,7 +5,7 @@ import { ResTransaction } from 'state/types'
 
 const fetchUserPresaleTransaction = async (acount: string): Promise<ResTransaction[]> => {
   const response = await axios.get(`${SAVVYDEX_API}/transactions`, {
-    headers: {
+    params: {
       receiver: acount,
     },
   })
