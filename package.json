@@ -8,7 +8,7 @@
   "scripts": {
     "copy": "cp .env.production.local .env.development",
     "analyze": "ANALYZE=true yarn build",
-    "dev": "npm run copy && next dev",
+    "dev": "next dev -p 8080",
     "build": "next build",
     "start": "next start",
     "test": "jest",
@@ -54,7 +54,7 @@
     "@next/bundle-analyzer": "^12.0.7",
     "@pancakeswap/uikit": "file:packages/uikit",
     "@reduxjs/toolkit": "^1.8.2",
-    "@savvydex/sdk": "^2.4.6",
+    "@savvydex/sdk": "^2.4.9",
     "@sentry/nextjs": "6.19.6",
     "@types/uuid": "^8.3.4",
     "@uniswap/token-lists": "^1.0.0-beta.19",

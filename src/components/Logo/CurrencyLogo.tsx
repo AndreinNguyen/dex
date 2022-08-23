@@ -40,17 +40,19 @@ export default function CurrencyLogo({
     return <BinanceIcon width={size} style={style} />
   }
 
-  if (currency.symbol === 'SVC') {
+  if (currency?.symbol) {
     return (
       <img
         alt={`${currency?.symbol ?? 'token'} logo`}
-        src="https://lab-dex.savvycom.xyz/images/tokens/SVC.png"
-        width="24px"
-        height="24px"
+        src={`https://lab-dex.savvycom.xyz/images/tokens/${currency?.symbol}.png`}
+        width="20px"
+        height="20px"
         style={{ marginRight: '8px' }}
       />
     )
   }
+
+  // console.log({ srcs })
 
   return <StyledLogo size={size} srcs={srcs} alt={`${currency?.symbol ?? 'token'} logo`} style={style} />
 }

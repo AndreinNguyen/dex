@@ -15,14 +15,15 @@ export interface ITableProps {
 const Container = styled.div`
   width: 100%;
   background: ${({ theme }) => theme.card.background};
-  border-radius: 16px;
   margin: 16px 0px;
-  border: 1px solid ${({ theme }) => theme.colors.cardBorder};
 `
 
 const TableWrapper = styled.div`
   overflow: visible;
   scroll-margin-top: 64px;
+  height: 100%;
+  border: 1px solid ${({ theme }) => theme.colors.cardBorder};
+  border-radius: 16px;
 
   &::-webkit-scrollbar {
     display: none;
@@ -74,9 +75,9 @@ const FarmTable: React.FC<ITableProps> = (props) => {
   return (
     <Container id="farms-table">
       <TableContainer id="table-container">
-        <TableWrapper ref={tableWrapperEl}>
+        <TableWrapper ref={tableWrapperEl} id="table-wrapper">
           <StyledTable>
-            <TableBody>
+            <TableBody id="table-body">
               {rows.map((row) => {
                 return <Row {...row.original} userDataReady={userDataReady} key={`table-row-${row.id}`} />
               })}

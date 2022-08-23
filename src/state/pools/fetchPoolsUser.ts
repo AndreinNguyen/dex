@@ -73,7 +73,7 @@ export const fetchUserStakeBalances = async (account) => {
   )
 }
 
-export const fetchUserPendingRewards = async (account) => {
+export const fetchUserPendingRewards = async (account: string) => {
   const calls = nonMasterPools.map((p) => ({
     address: getAddress(p.contractAddress),
     name: 'pendingReward',

@@ -639,3 +639,32 @@ export interface State {
   lottery: LotteryState
   nftMarket: NftMarketState
 }
+
+export interface PresaleState {
+  isInWhiteList: boolean
+  totalAmount: string
+  lockedAmount: string
+  pendingAmount: string
+  receivedAmount: string
+  isLoading: boolean
+}
+
+export interface ResPartner {
+  fromTime: string
+  toTime: number
+  id: string
+  locked: number
+  name: string
+  pendingTransfer: number
+  totalCash: number
+  totalCoin: number
+  walletAddress: string
+}
+
+export interface ResTransaction {
+  amountBnb: number
+  amountSvc: number
+  txtHash: string
+  id: string
+  createdAt: string
+}
