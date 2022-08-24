@@ -72,16 +72,37 @@ deploy_all_develop:
   tags:
     - local
 
+build_frontend_production:
+  stage: build
+  script:
+    - cp .env.production .env
+    - yarn build
+  only:
+    - savvydex-v1
+  dependencies:
+    - install_node_modules
+  tags:
+    - local
+
 deploy_all_production:
   stage: deploy
+  before_script:
+    - 'command -v ssh-agent >/dev/null || ( apt-get update -y && apt-get install openssh-client -y )'
+    - eval $(ssh-agent -s)
+    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
   script:
-    - echo "TODO deploy to production"
+    - scp -o StrictHostKeyChecking=no -r .next savvycom@172.105.122.187:/opt/dex/dex-savvy-fe/
+    - scp -o StrictHostKeyChecking=no -r .env savvycom@172.105.122.187:/opt/dex/dex-savvy-fe/
+    - scp -o StrictHostKeyChecking=no -r public savvycom@172.105.122.187:/opt/dex/dex-savvy-fe/
+    - ssh -tt -o StrictHostKeyChecking=no savvycom@172.105.122.187 "cd dex-savvy-fe && git pull && yarn install && pm2 reload dex && exit"
   only:
-    - master
+    - savvydex-v1
   environment:
     name: production
   dependencies:
     - install_node_modules
-    - build_frontend
+    - build_frontend_production
   tags:
     - local
