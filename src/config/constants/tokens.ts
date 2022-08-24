@@ -77,11 +77,11 @@ export const mainnetTokens = defineTokens({
   ),
   busd: new Token(
     MAINNET,
-    '0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56',
+    '0x55d398326f99059fF775485246999027B3197955',
     18,
-    'BUSD',
-    'Binance USD',
-    'https://www.paxos.com/busd/',
+    'USDT',
+    'Binance USDT',
+    'https://www.paxos.com/usdt/',
   ),
   dai: new Token(
     MAINNET,

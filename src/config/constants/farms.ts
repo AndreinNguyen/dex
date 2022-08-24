@@ -14,7 +14,7 @@ const farms: SerializedFarmConfig[] = [
     lpSymbol: 'SVC',
     lpAddresses: {
       97: process.env.NEXT_PUBLIC_SVC_ADDRESS,
-      56: '',
+      56: process.env.NEXT_PUBLIC_SVC_ADDRESS,
     },
     token: serializedTokens.svc,
     quoteToken: serializedTokens.svc,
@@ -25,7 +25,7 @@ const farms: SerializedFarmConfig[] = [
     lpSymbol: 'SVC-USDT LP',
     lpAddresses: {
       97: process.env.NEXT_PUBLIC_LP_SVC_BUSD,
-      56: '',
+      56: process.env.NEXT_PUBLIC_SVC_ADDRESS,
     },
     token: serializedTokens.svc,
     quoteToken: serializedTokens.busd,
@@ -36,7 +36,7 @@ const farms: SerializedFarmConfig[] = [
     lpSymbol: 'BUSD-BNB LP',
     lpAddresses: {
       97: process.env.NEXT_PUBLIC_LP_WBNB_BUSD,
-      56: '0x58F876857a02D6762E0101bb5C46A8c1ED44Dc16',
+      56: '0x16b9a82891338f9bA80E2D6970FddA79D1eb0daE',
     },
     token: serializedTokens.busd,
     quoteToken: serializedTokens.wbnb,
