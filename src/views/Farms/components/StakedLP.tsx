@@ -44,7 +44,7 @@ const StakedLP: React.FunctionComponent<StackedLPProps> = ({
             color="textSubtle"
             decimals={2}
             value={getBalanceNumber(lpPrice.times(stakedBalance))}
-            unit=" BUSD"
+            unit=" USDT"
             prefix="~"
           />
           {viewMode === ViewMode.CARD ? (
