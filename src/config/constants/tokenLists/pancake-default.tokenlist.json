@@ -21,7 +21,7 @@
     {
       "name": "Savvycoin Token",
       "symbol": "SVC",
-      "address": "0x0E09FaBB73Bd3Ade0a17ECC321fD13a19e81cE82",
+      "address": "0x341F1B7bA5A83a24a492FD92DEFedbf59ff8f3ED",
       "chainId": 56,
       "decimals": 18,
       "logoURI": "https://lab-dex.savvycom.xyz/images/tokens/0x6dd1f1917443530e3adf9011e71b19d25943a21e.png"
