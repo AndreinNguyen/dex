@@ -61,7 +61,7 @@ const NextUnlockCard = () => {
             <PrizeTotalBalance fontSize="24px" bold unit=" SVC" value={Number(totalAmount) / 20} decimals={0} />
           </Flex>
           <Flex justifyContent={['center', null, null, 'flex-start']}>
-            <Heading>Unlocked amount</Heading>
+            <Heading>Locked amount</Heading>
           </Flex>
           <Flex flexDirection="column" mb="18px">
             <PrizeTotalBalance fontSize="24px" bold unit=" SVC" value={Number(lockedAmount)} decimals={0} />
