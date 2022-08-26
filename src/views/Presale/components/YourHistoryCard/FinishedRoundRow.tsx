@@ -57,9 +57,6 @@ const FinishedRoundRow: React.FC<React.PropsWithChildren<FinishedRoundRowProps>>
       <Flex mx="6px" alignItems="center" justifyContent="space-between">
         <Transaction tx={tx} />
       </Flex>
-      <Flex alignItems="center" justifyContent="center">
-        <ChevronRightIcon color="primary" />
-      </Flex>
     </Grid>
   )
 }

@@ -6,6 +6,9 @@ import usePresaleTime, { ReleaseStatus } from '../hooks/usePresaleTime'
 
 const StyledHeading = styled(Heading)`
   font-family: 'Kanit', sans-serif;
+  ${({ theme }) => theme.mediaQueries.xs} {
+    font-size: 1.75rem;
+  }
 `
 
 const floatingStarsLeft = keyframes`
