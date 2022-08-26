@@ -12,14 +12,7 @@ interface TokenList {
 export const defineTokens = <T extends TokenList>(t: T) => t
 
 export const mainnetTokens = defineTokens({
-  svc: new Token(
-    MAINNET,
-    '0xcc6c2a4df8A88F1E0302cCF455d4023FA797b368',
-    18,
-    'SVC',
-    'Savvycoin',
-    'https://coin.savvycom.vn/',
-  ),
+  svc: new Token(MAINNET, process.env.NEXT_PUBLIC_SVC_ADDRESS, 18, 'SVC', 'Savvycoin', 'https://coin.savvycom.vn/'),
   wbnb: new Token(
     MAINNET,
     '0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c',
@@ -77,11 +70,11 @@ export const mainnetTokens = defineTokens({
   ),
   busd: new Token(
     MAINNET,
-    '0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56',
+    '0x55d398326f99059fF775485246999027B3197955',
     18,
-    'BUSD',
-    'Binance USD',
-    'https://www.paxos.com/busd/',
+    'USDT',
+    'Binance USDT',
+    'https://www.paxos.com/usdt/',
   ),
   dai: new Token(
     MAINNET,

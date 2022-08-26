@@ -45,7 +45,7 @@ const StakedLP: React.FunctionComponent<StackedLPProps> = ({
             color="textSubtle"
             decimals={2}
             value={getBalanceNumber(cakePrice.times(stakedBalance))}
-            unit=" BUSD"
+            unit=" USDT"
             prefix="~"
           />
           {/* <Flex style={{ gap: '4px' }}>

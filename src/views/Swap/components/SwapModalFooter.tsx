@@ -78,6 +78,7 @@ export default function SwapModalFooter({
                 'Your transaction will revert if there is a large, unfavorable price movement before it is confirmed.',
               )}
               ml="4px"
+              placement="top-start"
             />
           </RowFixed>
           <RowFixed>
@@ -99,6 +100,7 @@ export default function SwapModalFooter({
             <QuestionHelper
               text={t('The difference between the market price and your price due to trade size.')}
               ml="4px"
+              placement="top-start"
             />
           </RowFixed>
           <FormattedPriceImpact priceImpact={priceImpactWithoutFee} />
@@ -116,6 +118,7 @@ export default function SwapModalFooter({
                 </>
               }
               ml="4px"
+              placement="top-start"
             />
           </RowFixed>
           <Text fontSize="14px">

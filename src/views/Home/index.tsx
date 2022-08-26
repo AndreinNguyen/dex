@@ -81,7 +81,7 @@ const Home: React.FC = () => {
       >
         <BannerBox>
           <div className="about-box">
-            <h1 className="hero-title">Win 200% per year with SVC</h1>
+            <h1 className="hero-title">Win up to 150% per year with SVC</h1>
 
             <p className="desc">
               Savvy token is the solution for the Savvy Community, providing freedom, fast payments, rewards, and high
@@ -108,10 +108,7 @@ const Home: React.FC = () => {
         <ChartWrapper alignItems="center" justifyContent="space-between">
           <ChartInfo>
             <h1 className="title">Real-time chart</h1>
-            <p className="description">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Et sit sapien, morbi integer sed odio. Congue
-              hendrerit feugiat donec rhoncus auctor amet.
-            </p>
+            <p className="description">Review live SVC/USDT today as we update the price in real-time.</p>
           </ChartInfo>
 
           {isMobile && (

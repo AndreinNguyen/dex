@@ -5,7 +5,7 @@ const tokens = {
   svc: {
     symbol: "SVC",
     address: {
-      56: "",
+      56: process.env.NEXT_PUBLIC_SVC_ADDRESS,
       97: process.env.NEXT_PUBLIC_SVC_ADDRESS,
     },
     decimals: 18,

@@ -22,4 +22,6 @@ export const TC_MOD_SUBGRAPH = 'https://api.thegraph.com/subgraphs/name/pancakes
 
 export const GALAXY_NFT_CLAIMING_API = 'https://graphigo.prd.galaxy.eco/query'
 
-export const SAVVYDEX_API = 'https://lab-dex-api.savvycom.xyz/api'
+export const SAVVYDEX_API = process.env.NEXT_PUBLIC_END_POINT_API
+
+// export const SAVVYDEX_API = 'http://localhost:3005/api'

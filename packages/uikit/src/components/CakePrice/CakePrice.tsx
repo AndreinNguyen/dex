@@ -42,7 +42,7 @@ const CakePrice: React.FC<Props> = ({ svcBalance, showSkeleton = true }) => {
     : 0;
 
   return svcBalance ? (
-    <PriceLink href="#" target="_blank">
+    <PriceLink href="#">
       <SVCLogo width="24px" mr="8px" />
       <span>{balanceFormatted}</span>
     </PriceLink>

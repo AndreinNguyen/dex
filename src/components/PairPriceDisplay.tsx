@@ -42,9 +42,7 @@ const PairPriceDisplay: FC<TokenDisplayProps> = ({
         </TextLabel>
         {inputSymbol && outputSymbol && (
           <Text color="textSubtle" fontSize="20px" bold lineHeight={1.1}>
-            {/* TODO: Temploraty mock BUSD/CAKE */}
-            {/* {`${inputSymbol}/${outputSymbol}`} */}
-            BUSD/CAKE
+            {`${inputSymbol}/${outputSymbol}`}
           </Text>
         )}
       </Flex>

@@ -61,9 +61,7 @@ const PriceChart = ({
           )}
           {inputCurrency && (
             <Text color="text" bold>
-              {/* TODO: Temploraty just show busd/case */}
-              {/* {outputCurrency ? `${inputCurrency.symbol}/${outputCurrency.symbol}` : inputCurrency.symbol} */}
-              BUSD/CAKE
+              {outputCurrency ? `${inputCurrency.symbol}/${outputCurrency.symbol}` : inputCurrency.symbol}
             </Text>
           )}
           <IconButton variant="text" onClick={onSwitchTokens}>
@@ -87,8 +85,8 @@ const PriceChart = ({
       </Flex>
       {chartView === ChartViewMode.BASIC && (
         <BasicChart
-          // token0Address={token0Address} //  // TODO: Temporaty not passing token 0, token1 to show chart
-          // token1Address={token1Address}
+          token0Address={token0Address}
+          token1Address={token1Address}
           isChartExpanded={isChartExpanded}
           inputCurrency={inputCurrency}
           outputCurrency={outputCurrency}
