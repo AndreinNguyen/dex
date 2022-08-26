@@ -1,7 +1,7 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { TransactionResponse } from '@ethersproject/providers'
 import { AddIcon, Button, CardBody, Message, Text, TooltipText, useModal, useTooltip } from '@pancakeswap/uikit'
-import { Currency, currencyEquals, ETHER, TokenAmount, WETH } from '@savvydex/sdk'
+import { Currency, currencyEquals, ETHER, TokenAmount, Token, WETH } from '@savvydex/sdk'
 import UnsupportedCurrencyFooter from 'components/UnsupportedCurrencyFooter'
 import { ROUTER_ADDRESS } from 'config/constants/exchange'
 import { CHAIN_ID } from 'config/constants/networks'
@@ -270,6 +270,15 @@ export default function AddLiquidity() {
   const addIsUnsupported = useIsTransactionUnsupported(currencies?.CURRENCY_A, currencies?.CURRENCY_B)
   const addIsWarning = useIsTransactionWarning(currencies?.CURRENCY_A, currencies?.CURRENCY_B)
 
+  const overWriteLiquidityToken = new Token(
+    pair?.liquidityToken.chainId ?? 97,
+    pair?.liquidityToken.address ?? '0x24d16B91772066ADEf4ace74E4B4cF58c78cCfDd',
+    pair?.liquidityToken.decimals ?? 18,
+    'LP-Token',
+    pair?.liquidityToken.name,
+    pair?.liquidityToken.projectLink,
+  )
+
   const [onPresentAddLiquidityModal] = useModal(
     <ConfirmAddLiquidityModal
       title={noLiquidity ? t('You are creating a pool') : t('You will receive')}
@@ -277,7 +286,7 @@ export default function AddLiquidity() {
       attemptingTxn={attemptingTxn}
       hash={txHash}
       pendingText={pendingText}
-      currencyToAdd={pair?.liquidityToken}
+      currencyToAdd={overWriteLiquidityToken}
       allowedSlippage={allowedSlippage}
       onAdd={onAdd}
       parsedAmounts={parsedAmounts}
