@@ -78,7 +78,10 @@ const ModalInput: React.FC<ModalInputProps> = ({
     }
 
     const balanceUnits = parseUnits(balance, decimals)
-    return formatBigNumber(balanceUnits, decimals, decimals)
+    const balanceUnitsFormat = formatBigNumber(balanceUnits, decimals, decimals)
+    return Number(balanceUnitsFormat)
+      .toFixed(decimals)
+      .replace(/\d(?=(\d{3})+\.)/g, '$&,')
   }
 
   return (

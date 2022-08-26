@@ -77,6 +77,11 @@ export default function CurrencyInputPanel({
 }: CurrencyInputPanelProps) {
   const { account, library } = useActiveWeb3React()
   const selectedCurrencyBalance = useCurrencyBalance(account ?? undefined, currency ?? undefined)
+  const formatBalance = selectedCurrencyBalance?.toSignificant(6)
+    ? Number(selectedCurrencyBalance.toSignificant(6))
+        .toFixed(3)
+        .replace(/\d(?=(\d{3})+\.)/g, '$&,')
+    : 0
   const {
     t,
     currentLanguage: { locale },
@@ -159,9 +164,7 @@ export default function CurrencyInputPanel({
         </Flex>
         {account && (
           <Text onClick={onMax} color="textSubtle" fontSize="14px" style={{ display: 'inline', cursor: 'pointer' }}>
-            {!hideBalance && !!currency
-              ? t('Balance: %balance%', { balance: selectedCurrencyBalance?.toSignificant(6) ?? t('Loading') })
-              : ' -'}
+            {!hideBalance && !!currency ? t('Balance: %balance%', { balance: formatBalance ?? t('Loading') }) : ' -'}
           </Text>
         )}
       </Flex>
