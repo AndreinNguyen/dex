@@ -22,7 +22,7 @@ const AppHeaderContainer = styled(Flex)`
   border-bottom: 1px solid ${({ theme }) => theme.colors.cardBorder};
 `
 const WrapperText = styled(Text)`
-  font-size: 10px;
+  font-size: 8px;
   ${({ theme }) => theme.mediaQueries.md} {
     font-size: 14px;
   }

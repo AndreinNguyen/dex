@@ -45,9 +45,8 @@ export default function CurrencyLogo({
       <img
         alt={`${currency?.symbol ?? 'token'} logo`}
         src={`https://lab-dex.savvycom.xyz/images/tokens/${currency?.symbol}.png`}
-        width="20px"
-        height="20px"
-        style={{ marginRight: '8px' }}
+        width={size}
+        height={size}
       />
     )
   }

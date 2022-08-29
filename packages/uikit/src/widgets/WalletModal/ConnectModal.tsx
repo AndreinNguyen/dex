@@ -87,7 +87,7 @@ const ConnectModal: React.FC<Props> = ({ login, onDismiss = () => null, displayC
           </Text>
           <Button
             as="a"
-            href="https://docs.pancakeswap.finance/get-started/connection-guide"
+            href="https://savvycom.gitbook.io/savvydex/get-started/connect-your-wallet-to-savvydex"
             variant="subtle"
             width="100%"
             {...getExternalLinkProps()}
