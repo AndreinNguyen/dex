@@ -75,7 +75,7 @@ deploy_all_develop:
 build_frontend_production:
   stage: build
   script:
-    - cp .env.production .env
+    - cp .env.example.production .env.production
     - yarn build
   only:
     - savvydex-v1
