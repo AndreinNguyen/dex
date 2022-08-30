@@ -26,7 +26,7 @@ install_node_modules:
 build_frontend:
   stage: build
   script:
-    - cp .env.development .env
+    - cp .env.development .env.production
     - yarn build
   only:
     - develop
