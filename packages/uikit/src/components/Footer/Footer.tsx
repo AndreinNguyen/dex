@@ -65,8 +65,9 @@ const MenuItem: React.FC<FooterProps> = () => {
 
       <div className="description">
         <p>
-          Savvycom is a leading Software Development, Technology Consulting and Software Outsourcing Services Company.
-          We&apos;re specialized in End-to-End Software Development, Technology Consulting Services and Cloud Devops.
+          SavvycomAI is an ecosystem that seeks to promote and showcase innovative products made with blockchain and AI
+          technologies. Our projects venture beyond the business sphere, aspiring to enact changes on the societal
+          level.
         </p>
       </div>
 

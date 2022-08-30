@@ -62,6 +62,17 @@ const BorderCard = styled.div`
   padding: 16px;
 `
 
+export const BodyWrapper = styled.div`
+  border-radius: 24px;
+  width: 100%;
+  z-index: 1;
+  min-width: 352px;
+  max-width: 350px;
+  ${({ theme }) => theme.mediaQueries.md} {
+    max-width: 436px;
+  }
+`
+
 export default function RemoveLiquidity() {
   const router = useRouter()
   const [currencyIdA, currencyIdB] = router.query.currency || []
@@ -674,9 +685,11 @@ export default function RemoveLiquidity() {
       </AppBody>
 
       {pair ? (
-        <AutoColumn style={{ minWidth: '20rem', width: '100%', maxWidth: '400px', marginTop: '1rem' }}>
-          <MinimalPositionCard showUnwrapped={oneCurrencyIsWBNB} pair={pair} />
-        </AutoColumn>
+        <BodyWrapper>
+          <AutoColumn style={{ minWidth: '20rem', width: '100%', marginTop: '1rem' }}>
+            <MinimalPositionCard showUnwrapped={oneCurrencyIsWBNB} pair={pair} />
+          </AutoColumn>
+        </BodyWrapper>
       ) : null}
     </Page>
   )

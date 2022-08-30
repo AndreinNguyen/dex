@@ -4,6 +4,15 @@ import { Button, Modal, AutoRenewIcon } from '@pancakeswap/uikit'
 import { ModalActions, ModalInput } from 'components/Modal'
 import { useTranslation } from 'contexts/Localization'
 import { getFullDisplayBalance } from 'utils/formatBalance'
+import styled from 'styled-components'
+
+export const WrapperModal = styled(Modal)`
+  min-width: 320px;
+  max-width: 350px;
+  ${({ theme }) => theme.mediaQueries.md} {
+    max-width: 436px;
+  }
+`
 
 interface WithdrawModalProps {
   max: BigNumber
@@ -37,7 +46,7 @@ const WithdrawModal: React.FC<WithdrawModalProps> = ({ onConfirm, onDismiss, max
   }, [fullBalance, setVal])
 
   return (
-    <Modal title={t('Unstake LP tokens')} onDismiss={onDismiss}>
+    <WrapperModal title={t('Unstake LP tokens')} onDismiss={onDismiss}>
       <ModalInput
         onSelectMax={handleSelectMax}
         onChange={handleChange}
@@ -69,7 +78,7 @@ const WithdrawModal: React.FC<WithdrawModalProps> = ({ onConfirm, onDismiss, max
           </Button>
         )}
       </ModalActions>
-    </Modal>
+    </WrapperModal>
   )
 }
 

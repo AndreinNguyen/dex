@@ -78,6 +78,7 @@ export default function SwapModalFooter({
                 'Your transaction will revert if there is a large, unfavorable price movement before it is confirmed.',
               )}
               ml="4px"
+              placement="top-start"
             />
           </RowFixed>
           <RowFixed>
@@ -99,23 +100,25 @@ export default function SwapModalFooter({
             <QuestionHelper
               text={t('The difference between the market price and your price due to trade size.')}
               ml="4px"
+              placement="top-start"
             />
           </RowFixed>
           <FormattedPriceImpact priceImpact={priceImpactWithoutFee} />
         </RowBetween>
         <RowBetween>
           <RowFixed>
-            <Text fontSize="14px">{t('Liquidity Provider Fee')}</Text>
+            <Text fontSize="14px">{t('Liquidity Provider Fee')}</Text>``
             <QuestionHelper
               text={
                 <>
                   <Text mb="12px">{t('For each trade a %amount% fee is paid', { amount: '0.25%' })}</Text>
                   <Text>- {t('%amount% to LP token holders', { amount: '0.17%' })}</Text>
                   <Text>- {t('%amount% to the Treasury', { amount: '0.03%' })}</Text>
-                  <Text>- {t('%amount% towards CAKE buyback and burn', { amount: '0.05%' })}</Text>
+                  {/* <Text>- {t('%amount% towards CAKE buyback and burn', { amount: '0.05%' })}</Text> */}
                 </>
               }
               ml="4px"
+              placement="top-start"
             />
           </RowFixed>
           <Text fontSize="14px">

@@ -28,6 +28,9 @@ const PresalePage = styled.div`
 
 const StyledHeading = styled(Heading)`
   font-family: 'Kanit', sans-serif;
+  ${({ theme }) => theme.mediaQueries.xs} {
+    font-size: 1.75rem;
+  }
 `
 
 const Presale = () => {

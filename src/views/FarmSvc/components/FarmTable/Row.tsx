@@ -51,9 +51,11 @@ const CellInner = styled.div`
   }
 `
 
-const StyledTr = styled.tr`
+const StyledTr = styled.tr.attrs((props: { showBorderBottom: boolean }) => props)`
   cursor: pointer;
-  border-bottom: 2px solid ${({ theme }) => theme.colors.disabled};
+  border-bottom-style: solid;
+  border-bottom-width: ${(props) => (props.showBorderBottom ? '2px' : '0px')};
+  border-bottom-color: ${(props) => props.theme.colors.disabled};
 `
 
 const EarnedMobileCell = styled.td`
@@ -71,18 +73,14 @@ const FarmMobileCell = styled.td`
 
 const Row: React.FunctionComponent<RowPropsWithLoading> = (props) => {
   const { details, userDataReady } = props
-  const hasStakedAmount = !!useFarmUser(details.pid).stakedBalance.toNumber()
-  const [actionPanelExpanded, setActionPanelExpanded] = useState(hasStakedAmount)
+  // const hasStakedAmount = !!useFarmUser(details.pid).stakedBalance.toNumber()
+  const [actionPanelExpanded, setActionPanelExpanded] = useState(true)
   const shouldRenderChild = useDelayedUnmount(actionPanelExpanded, 300)
   const { t } = useTranslation()
 
   const toggleActionPanel = () => {
     setActionPanelExpanded(!actionPanelExpanded)
   }
-
-  useEffect(() => {
-    setActionPanelExpanded(hasStakedAmount)
-  }, [hasStakedAmount])
 
   const { isDesktop, isMobile } = useMatchBreakpointsContext()
 
@@ -93,7 +91,7 @@ const Row: React.FunctionComponent<RowPropsWithLoading> = (props) => {
   const handleRenderRow = () => {
     if (!isMobile) {
       return (
-        <StyledTr onClick={toggleActionPanel}>
+        <StyledTr showBorderBottom={actionPanelExpanded} onClick={toggleActionPanel}>
           {Object.keys(props).map((key) => {
             const columnIndex = columnNames.indexOf(key)
             if (columnIndex === -1) {

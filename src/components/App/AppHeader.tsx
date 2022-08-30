@@ -21,6 +21,12 @@ const AppHeaderContainer = styled(Flex)`
   width: 100%;
   border-bottom: 1px solid ${({ theme }) => theme.colors.cardBorder};
 `
+const WrapperText = styled(Text)`
+  font-size: 8px;
+  ${({ theme }) => theme.mediaQueries.md} {
+    font-size: 14px;
+  }
+`
 
 const AppHeader: React.FC<Props> = ({ title, subtitle, helper, backTo, noConfig = false }) => {
   const [expertMode] = useExpertModeManager()
@@ -41,9 +47,9 @@ const AppHeader: React.FC<Props> = ({ title, subtitle, helper, backTo, noConfig 
           </Heading>
           <Flex alignItems="center">
             {helper && <QuestionHelper text={helper} mr="4px" placement="top-start" />}
-            <Text color="textSubtle" fontSize="14px">
+            <WrapperText color="textSubtle" fontSize="14px">
               {subtitle}
-            </Text>
+            </WrapperText>
           </Flex>
         </Flex>
       </Flex>

@@ -84,13 +84,13 @@ const FarmTable: React.FC<ITableProps> = (props) => {
             </TableBody>
           </StyledTable>
         </TableWrapper>
-        <ScrollButtonContainer>
-          {/* TODO: Templorary disable arrowIcon because we just have one pool */}
-          {/* <Button variant="text" onClick={scrollToTop}>
+        {/* <ScrollButtonContainer> */}
+        {/* TODO: Templorary disable arrowIcon because we just have one pool */}
+        {/* <Button variant="text" onClick={scrollToTop}>
             {t('To Top')}
             <ChevronUpIcon color="primary" />
           </Button> */}
-        </ScrollButtonContainer>
+        {/* </ScrollButtonContainer> */}
       </TableContainer>
     </Container>
   )
