@@ -15,10 +15,12 @@ import { useDerivedSwapInfo, useSingleTokenSwapInfo, useSwapState } from 'state/
 import PriceChartContainer from 'views/Swap/components/Chart/PriceChartContainer'
 import FeatureBox from './components/FeatureSection/FeatureBox'
 import { BannerBox, ChartInfo, ChartWrapper, FeatureBoxWrapper } from './style'
+import { useDefaultsFromURLSearch } from '../../state/swap/hooks'
 
 const Home: React.FC = () => {
   const { theme } = useTheme()
   const { account } = useWeb3React()
+  useDefaultsFromURLSearch()
 
   const HomeSectionContainerStyles = {
     margin: '0',
@@ -63,6 +65,7 @@ const Home: React.FC = () => {
     [Field.INPUT]: { currencyId: inputCurrencyId },
     [Field.OUTPUT]: { currencyId: outputCurrencyId },
   } = useSwapState()
+
   const inputCurrency = useCurrency(inputCurrencyId)
   const outputCurrency = useCurrency(outputCurrencyId)
 
