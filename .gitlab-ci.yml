@@ -4,7 +4,6 @@ variables:
   GIT_STRATEGY: fetch
   GIT_CLEAN_FLAGS: -ffdx -e .cache_yarn -e .next -e node_modules -e yarn.lock -e .env
 
-
 stages:
   - install
   - build
@@ -15,13 +14,12 @@ install_node_modules:
   stage: install
   script:
     - yarn install --cache-folder .cache_yarn
+    - rm -rf node_modules/@pancakeswap/uikit .next &&  cp -r packages/uikit node_modules/@pancakeswap
   only:
     - develop
     - production
   tags:
     - local
-
-
 
 build_frontend:
   stage: build
@@ -35,7 +33,6 @@ build_frontend:
     - install_node_modules
   tags:
     - local
-
 
 test_client:
   stage: test
