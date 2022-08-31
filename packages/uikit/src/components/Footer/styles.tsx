@@ -59,7 +59,7 @@ export const StyledText = styled.span`
 export const FooterRoot = styled.div`
   width: 100%;
   background-color: #0f282a;
-  padding-top: 51px;
+  padding-top: 24px;
 
   .logo {
     display: flex;
@@ -67,7 +67,7 @@ export const FooterRoot = styled.div`
   }
 
   .description {
-    padding: 30px 30px 46px 30px;
+    padding: 20px 30px 30px 30px;
     border-bottom: 1px solid #ffffffa5;
 
     p {
