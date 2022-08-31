@@ -1,8 +1,8 @@
 {
   "short_name": "SavvyDex",
   "name": "SavvyDex",
-  "description": "Farm SVC with Pancake LP Tokens",
-  "homepage_url": "https://lab-dex.savvycom.xyz/",
+  "description": "SavvyDex",
+  "homepage_url": "https://dex.savvycom.ai/",
   "start_url": ".",
   "display": "standalone",
   "theme_color": "#1FC7D4",
@@ -13,11 +13,6 @@
       "src": "favicon.ico",
       "type": "image/x-icon",
       "sizes": "16x16"
-    },
-    {
-      "src": "logo.png",
-      "type": "image/png",
-      "sizes": "256x256"
     }
   ]
 }
