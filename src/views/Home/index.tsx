@@ -41,7 +41,7 @@ const Home: React.FC = () => {
     },
     {
       title: 'Convenient',
-      description: 'Convert currency, withdraw money to your wallet quickly.',
+      description: 'Convert and withdraw cryptocurrencies to your wallet quickly.',
       icon: <ConvertIcon />,
       color: '#00CB65',
     },
@@ -87,8 +87,8 @@ const Home: React.FC = () => {
             <h1 className="hero-title">Win up to 150% per year with SVC</h1>
 
             <p className="desc">
-              Savvy token is the solution for the Savvy Community, providing freedom, fast payments, rewards, and high
-              profit.
+              Savvycoin is a crypto token in multiple chains for SAVVY community providing flexible, fast and low
+              transaction fees for payments, rewards, and investments.
             </p>
 
             {!account && <ConnectWalletButton mt="24px" scale="md" maxWidth="176px" />}

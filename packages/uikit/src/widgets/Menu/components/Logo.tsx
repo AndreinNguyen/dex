@@ -43,7 +43,7 @@ const StyledLink = styled("a")`
   }
 
   svg {
-    width: 150px;
+    width: 120px;
   }
 `;
 

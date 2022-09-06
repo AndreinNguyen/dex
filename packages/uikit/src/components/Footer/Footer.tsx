@@ -60,14 +60,15 @@ const MenuItem: React.FC<FooterProps> = () => {
   return (
     <FooterRoot>
       <div className="logo">
-        <SavvycomLogo width={278} />
+        <SavvycomLogo />
       </div>
 
       <div className="description">
-        <p>
-          SavvycomAI is an ecosystem that seeks to promote and showcase innovative products made with blockchain and AI
-          technologies. Our projects venture beyond the business sphere, aspiring to enact changes on the societal
-          level.
+        <p>SAVVY is an ecosystem of innovative products made with blockchain and AI technologies.</p>
+        <p className="p2">
+          Savvydex is a demonstration (i.e., solely for non-commercial purposes to learn more about our blockchain
+          technologies and services) of being developed multi-chain technologies for Trading, Farming, Staking, etc.,
+          cryptocurrencies in a flexible and efficient way.”
         </p>
       </div>
 
