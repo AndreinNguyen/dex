@@ -78,7 +78,7 @@ function MyApp(props: AppProps) {
         /> */}
         <meta name="twitter:card" content="summary_large_image" />
         {/* <meta name="twitter:title" content="🥞 PancakeSwap - A next evolution DeFi exchange on BNB Smart Chain (BSC)" /> */}
-        <title>SavvyDex</title>
+        <title>Savvydex</title>
       </Head>
       <QueryClientProvider client={queryClientRef.current}>
         <Providers store={store}>

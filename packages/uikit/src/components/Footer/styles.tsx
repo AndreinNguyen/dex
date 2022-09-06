@@ -81,6 +81,10 @@ export const FooterRoot = styled.div`
       text-align: center;
       color: #ffffffa5;
     }
+
+    .p2 {
+      font-size: 12px;
+    }
   }
 
   .social {
