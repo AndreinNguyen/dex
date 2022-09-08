@@ -9,7 +9,7 @@ import request, { gql } from 'graphql-request'
 import { GALAXY_NFT_CAMPAIGN_ID } from 'config/constants'
 import useToast from 'hooks/useToast'
 import { GALAXY_NFT_CLAIMING_API } from 'config/constants/endpoints'
-import { useWeb3React } from '@web3-react/core'
+import { useWeb3React } from '@pancakeswap/wagmi'
 
 const NFTImage = styled.img`
   border-radius: 12px;

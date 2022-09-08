@@ -1,5 +1,5 @@
 import { ChainId } from '@savvydex/sdk'
-import { useWeb3React } from '@web3-react/core'
+import { useWeb3React } from '@pancakeswap/wagmi'
 import BigNumber from 'bignumber.js'
 import { farmsConfig, SLOW_INTERVAL } from 'config/constants'
 import { CHAIN_ID } from 'config/constants/networks'

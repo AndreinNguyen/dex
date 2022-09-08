@@ -1,6 +1,6 @@
 import { Button, useModal } from '@pancakeswap/uikit'
 import { ChevronLeft } from '@styled-icons/entypo/ChevronLeft'
-import { useWeb3React } from '@web3-react/core'
+import { useWeb3React } from '@pancakeswap/wagmi'
 import axios from 'axios'
 import camelcaseKeys from 'camelcase-keys'
 import { SAVVYDEX_API } from 'config/constants/endpoints'

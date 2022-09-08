@@ -1,6 +1,6 @@
 import { Flex, Image, Link, RowType, Text } from '@pancakeswap/uikit'
 import { ChainId } from '@savvydex/sdk'
-import { useWeb3React } from '@web3-react/core'
+import { useWeb3React } from '@pancakeswap/wagmi'
 import BigNumber from 'bignumber.js'
 import { BubbleHelper } from 'components/BubbleHelper'
 import FlexLayout from 'components/Layout/Flex'
