@@ -22,6 +22,7 @@
     "incremental": true,
     "paths": {
       "@savvydex/sdk": ["../packages/swap-sdk"],
+      "@pancakeswap/wagmi": ["../packages/wagmi"],
     }
   },
   "exclude": ["node_modules", "cypress"],
