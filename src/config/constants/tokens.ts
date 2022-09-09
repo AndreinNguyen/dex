@@ -13,6 +13,7 @@ export const defineTokens = <T extends TokenList>(t: T) => t
 
 export const mainnetTokens = defineTokens({
   svc: new Token(MAINNET, process.env.NEXT_PUBLIC_SVC_ADDRESS, 18, 'SVC', 'Savvycoin', 'https://coin.savvycom.vn/'),
+  svg: new Token(MAINNET, process.env.NEXT_PUBLIC_SVG_ADDRESS, 18, 'SVG', 'Savvygame', 'https://coin.savvycom.vn/svg'),
   wbnb: new Token(
     MAINNET,
     '0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c',
@@ -2117,6 +2118,7 @@ export const mainnetTokens = defineTokens({
 
 export const testnetTokens = defineTokens({
   svc: new Token(TESTNET, process.env.NEXT_PUBLIC_SVC_ADDRESS, 18, 'SVC', 'Savvycoin', 'https://coin.savvycom.vn/'),
+  svg: new Token(TESTNET, process.env.NEXT_PUBLIC_SVG_ADDRESS, 18, 'SVG', 'Savvygame', 'https://coin.savvycom.vn/svg'),
   wbnb: new Token(
     TESTNET,
     '0xae13d989daC2f0dEbFf460aC112a837C89BAa7cd',
