@@ -13,7 +13,7 @@ import { CurrencyLogo, DoubleCurrencyLogo } from '../Logo'
 import { Input as NumericalInput } from './NumericalInput'
 import { CopyButton } from '../CopyButton'
 
-const InputRow = styled.div<{ selected: boolean }>`
+export const InputRow = styled.div<{ selected: boolean }>`
   display: flex;
   flex-flow: row nowrap;
   align-items: center;
@@ -23,7 +23,7 @@ const InputRow = styled.div<{ selected: boolean }>`
 const CurrencySelectButton = styled(Button).attrs({ variant: 'text', scale: 'sm' })`
   padding: 0 0.5rem;
 `
-const LabelRow = styled.div`
+export const LabelRow = styled.div`
   display: flex;
   flex-flow: row nowrap;
   align-items: center;
@@ -32,7 +32,7 @@ const LabelRow = styled.div`
   line-height: 1rem;
   padding: 0.75rem 1rem 0 1rem;
 `
-const InputPanel = styled.div`
+export const InputPanel = styled.div`
   display: flex;
   flex-flow: column nowrap;
   position: relative;
@@ -40,7 +40,7 @@ const InputPanel = styled.div`
   background-color: ${({ theme }) => theme.colors.backgroundAlt};
   z-index: 1;
 `
-const Container = styled.div`
+export const Container = styled.div`
   border-radius: 16px;
   background-color: ${({ theme }) => theme.colors.input};
   box-shadow: ${({ theme }) => theme.shadows.inset};
