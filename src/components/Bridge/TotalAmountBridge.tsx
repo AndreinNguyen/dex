@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
 import { Button } from '@pancakeswap/uikit'
 import { Container, InputPanel, InputRow, LabelRow } from 'components/CurrencyInputPanel'
 import { Input as NumericalInput } from 'components/CurrencyInputPanel/NumericalInput'
@@ -8,7 +9,7 @@ import styled from 'styled-components'
 
 type Props = {
   data?: any
-  disableCurrencySelect
+  disableCurrencySelect?: boolean
 }
 
 const TotalAmountInputStyle = styled.div`

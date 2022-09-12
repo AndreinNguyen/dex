@@ -5,6 +5,7 @@ import styled from 'styled-components'
 type Props = {
   label: string
   data?: any
+  setDataToken
 }
 
 const SelectTokenStyle = styled.div`
@@ -71,7 +72,7 @@ const ChevronBottom = styled(ChevronDownIcon).attrs({ width: '24px' })`
   display: block;
 `
 
-const SelectTokenInput = ({ label }: Props) => {
+const SelectTokenInput = ({ label, setDataToken }: Props) => {
   return (
     <SelectTokenStyle>
       <label className="label">{label}</label>
