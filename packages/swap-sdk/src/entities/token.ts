@@ -1,26 +1,33 @@
+/* eslint-disable import/no-cycle */
 import invariant from 'tiny-invariant'
-import { ChainId } from '../constants'
 import { validateAndParseAddress } from '../utils'
+import { BaseCurrency } from './baseCurrency'
 import { Currency } from './currency'
 
 /**
  * Represents an ERC20 token with a unique address and some metadata.
  */
-export class Token extends Currency {
-  public readonly chainId: ChainId
+export class Token extends BaseCurrency {
+  public readonly isNative: false = false
+
+  public readonly isToken: true = true
+
+  /**
+   * The contract address on the chain on which this token lives
+   */
   public readonly address: string
+
   public readonly projectLink?: string
 
   public constructor(
-    chainId: ChainId,
+    chainId: number,
     address: string,
     decimals: number,
     symbol?: string,
     name?: string,
     projectLink?: string
   ) {
-    super(decimals, symbol, name)
-    this.chainId = chainId
+    super(chainId, decimals, symbol, name)
     this.address = validateAndParseAddress(address)
     this.projectLink = projectLink
   }
@@ -29,12 +36,8 @@ export class Token extends Currency {
    * Returns true if the two tokens are equivalent, i.e. have the same chainId and address.
    * @param other other token to compare
    */
-  public equals(other: Token): boolean {
-    // short circuit on reference equality
-    if (this === other) {
-      return true
-    }
-    return this.chainId === other.chainId && this.address === other.address
+  public equals(other: Currency): boolean {
+    return other.isToken && this.chainId === other.chainId && this.address === other.address
   }
 
   /**
@@ -48,77 +51,11 @@ export class Token extends Currency {
     invariant(this.address !== other.address, 'ADDRESSES')
     return this.address.toLowerCase() < other.address.toLowerCase()
   }
-}
 
-/**
- * Compares two currencies for equality
- */
-export function currencyEquals(currencyA: Currency, currencyB: Currency): boolean {
-  if (currencyA instanceof Token && currencyB instanceof Token) {
-    return currencyA.equals(currencyB)
-  } else if (currencyA instanceof Token) {
-    return false
-  } else if (currencyB instanceof Token) {
-    return false
-  } else {
-    return currencyA === currencyB
+  /**
+   * Return this token, which does not need to be wrapped
+   */
+  public get wrapped(): Token {
+    return this
   }
-}
-
-export const WETH9 = {
-  [ChainId.ETHEREUM]: new Token(
-    ChainId.ETHEREUM,
-    '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2',
-    18,
-    'WETH',
-    'Wrapped Ether',
-    'https://weth.io'
-  ),
-  [ChainId.RINKEBY]: new Token(
-    ChainId.RINKEBY,
-    '0xc778417E063141139Fce010982780140Aa0cD5Ab',
-    18,
-    'WETH',
-    'Wrapped Ether',
-    'https://weth.io'
-  ),
-  [ChainId.GOERLI]: new Token(
-    ChainId.GOERLI,
-    '0xc778417E063141139Fce010982780140Aa0cD5Ab',
-    18,
-    'WETH',
-    'Wrapped Ether',
-    'https://weth.io'
-  ),
-  [ChainId.POLYGON]: new Token(ChainId.POLYGON, '', 18, 'WMATIC', 'Wrapped Matic', 'https://weth.io'),
-  [ChainId.MUMBAI]: new Token(ChainId.MUMBAI, '', 18, 'WMATIC', 'Wrapped Matic', 'https://weth.io'),
-}
-
-export const WBNB = {
-  [ChainId.MAINNET]: new Token(
-    ChainId.MAINNET,
-    '0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c',
-    18,
-    'WBNB',
-    'Wrapped BNB',
-    'https://www.binance.org'
-  ),
-  [ChainId.TESTNET]: new Token(
-    ChainId.TESTNET,
-    '0xae13d989daC2f0dEbFf460aC112a837C89BAa7cd',
-    18,
-    'WBNB',
-    'Wrapped BNB',
-    'https://www.binance.org'
-  ),
-}
-
-export const WNATIVE = {
-  [ChainId.ETHEREUM]: WETH9[ChainId.ETHEREUM],
-  [ChainId.RINKEBY]: WETH9[ChainId.RINKEBY],
-  [ChainId.GOERLI]: WETH9[ChainId.GOERLI],
-  [ChainId.MAINNET]: WBNB[ChainId.MAINNET],
-  [ChainId.TESTNET]: WBNB[ChainId.TESTNET],
-  [ChainId.POLYGON]: WETH9[ChainId.POLYGON],
-  [ChainId.MUMBAI]: WETH9[ChainId.POLYGON],
 }

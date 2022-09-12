@@ -1,3 +1,4 @@
+/* eslint-disable import/no-cycle */
 import JSBI from 'jsbi'
 import { Token } from './entities/token'
 
@@ -27,10 +28,9 @@ export enum Rounding {
 
 export const FACTORY_ADDRESS = '0xcA143Ce32Fe78f1f7019d7d551a6402fC5350c73'
 
-// // TODO: ETH This is test version, do not depends on it
 const FACTORY_ADDRESS_ETH = '0xD93801d7D3a368D94A3A32E97A20f7aC1948a5dB'
 
-export const FACTORY_ADDRESS_MAP = {
+export const FACTORY_ADDRESS_MAP: Record<number, string> = {
   [ChainId.ETHEREUM]: FACTORY_ADDRESS_ETH,
   [ChainId.RINKEBY]: FACTORY_ADDRESS_ETH,
   [ChainId.GOERLI]: FACTORY_ADDRESS_ETH,
@@ -39,13 +39,10 @@ export const FACTORY_ADDRESS_MAP = {
   [ChainId.POLYGON]: '',
   [ChainId.MUMBAI]: '',
 }
-
 export const INIT_CODE_HASH = '0x00fb7f630766e6a796048ea87d01acd3068e8ff67d078148a3fa3f4a84f69bd5'
 
-// // TODO: ETH This is test version, do not depends on it
 const INIT_CODE_HASH_ETH = '0x57224589c67f3f30a6b0d7a1b54cf3153ab84563bc609ef41dfb34f8b2974d2d'
-
-export const INIT_CODE_HASH_MAP = {
+export const INIT_CODE_HASH_MAP: Record<number, string> = {
   [ChainId.ETHEREUM]: INIT_CODE_HASH_ETH,
   [ChainId.RINKEBY]: INIT_CODE_HASH_ETH,
   [ChainId.GOERLI]: INIT_CODE_HASH_ETH,
@@ -65,8 +62,10 @@ export const THREE = JSBI.BigInt(3)
 export const FIVE = JSBI.BigInt(5)
 export const TEN = JSBI.BigInt(10)
 export const _100 = JSBI.BigInt(100)
-export const FEES_NUMERATOR = JSBI.BigInt(9975)
-export const FEES_DENOMINATOR = JSBI.BigInt(10000)
+export const _9975 = JSBI.BigInt(9975)
+export const _10000 = JSBI.BigInt(10000)
+
+export const MaxUint256 = JSBI.BigInt('0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff')
 
 export enum SolidityType {
   uint8 = 'uint8',

@@ -1,26 +1,24 @@
 {
   "name": "@savvydex/sdk",
   "license": "MIT",
-  "version": "2.4.9",
-  "description": "🛠 An SDK for building applications on top of Savvydex.",
-  "main": "dist/index.js",
-  "typings": "dist/index.d.ts",
+  "version": "3.0.0-2",
+  "description": "🛠 An SDK for building applications on top of Pancakeswap.",
+  "main": "src/index.ts",
   "files": [
     "dist"
   ],
-  "repository": "https://github.com/AndreinNguyen/savvydex-sdk",
+  "repository": "https://github.com/pancakeswap/pancake-swap-sdk.git",
   "keywords": [
-    "savvydex",
     "pancakeswap",
     "bsc"
   ],
   "module": "dist/sdk.esm.js",
   "scripts": {
     "lint": "tsdx lint src test",
-    "build": "tsdx build",
-    "start": "tsdx watch",
-    "test": "tsdx test",
-    "prepublishOnly": "tsdx build"
+    "build": "tsup src/index.ts --format esm,cjs --dts",
+    "start": "tsup src/index.tsx --format esm,cjs --watch --dts",
+    "test": "jest",
+    "prepublishOnly": "yarn run build"
   },
   "dependencies": {
     "big.js": "^5.2.2",
@@ -38,15 +36,17 @@
     "@ethersproject/solidity": "^5.0.0"
   },
   "devDependencies": {
-    "@ethersproject/address": "^5.0.2",
-    "@ethersproject/contracts": "^5.0.2",
-    "@ethersproject/networks": "^5.0.2",
-    "@ethersproject/providers": "^5.0.5",
-    "@ethersproject/solidity": "^5.0.2",
+    "@ethersproject/address": "^5.5.0",
+    "@ethersproject/contracts": "^5.5.0",
+    "@ethersproject/networks": "^5.5.0",
+    "@ethersproject/providers": "^5.5.0",
+    "@ethersproject/solidity": "^5.5.0",
+    "@swc/core": "^1.2.215",
+    "@swc/jest": "^0.2.21",
     "@types/big.js": "^4.0.5",
     "@types/jest": "^24.0.25",
     "babel-plugin-transform-jsbi-to-bigint": "^1.3.1",
-    "tsdx": "^0.12.3"
+    "tsup": "^5.10.1"
   },
   "engines": {
     "node": ">=10"

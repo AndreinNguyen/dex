@@ -4,6 +4,8 @@ import JSBI from 'jsbi'
 import { getAddress } from '@ethersproject/address'
 
 import { BigintIsh, ZERO, ONE, TWO, THREE, SolidityType, SOLIDITY_TYPE_MAXIMA } from './constants'
+// eslint-disable-next-line import/no-cycle
+import { CurrencyAmount, Percent, Price, Currency } from '.'
 
 export function validateSolidityTypeInstance(value: JSBI, solidityType: SolidityType): void {
   invariant(JSBI.greaterThanOrEqual(value, ZERO), `${value} is not a ${solidityType}.`)
@@ -11,6 +13,7 @@ export function validateSolidityTypeInstance(value: JSBI, solidityType: Solidity
 }
 
 // warns if addresses are not checksummed
+// eslint-disable-next-line consistent-return
 export function validateAndParseAddress(address: string): string {
   try {
     const checksummedAddress = getAddress(address)
@@ -54,25 +57,42 @@ export function sortedInsert<T>(items: T[], add: T, maxSize: number, comparator:
   if (items.length === 0) {
     items.push(add)
     return null
-  } else {
-    const isFull = items.length === maxSize
-    // short circuit if full and the additional item does not come before the last item
-    if (isFull && comparator(items[items.length - 1], add) <= 0) {
-      return add
-    }
-
-    let lo = 0,
-      hi = items.length
-
-    while (lo < hi) {
-      const mid = (lo + hi) >>> 1
-      if (comparator(items[mid], add) <= 0) {
-        lo = mid + 1
-      } else {
-        hi = mid
-      }
-    }
-    items.splice(lo, 0, add)
-    return isFull ? items.pop()! : null
   }
+  const isFull = items.length === maxSize
+  // short circuit if full and the additional item does not come before the last item
+  if (isFull && comparator(items[items.length - 1], add) <= 0) {
+    return add
+  }
+
+  let lo = 0
+  let hi = items.length
+
+  while (lo < hi) {
+    // eslint-disable-next-line no-bitwise
+    const mid = (lo + hi) >>> 1
+    if (comparator(items[mid], add) <= 0) {
+      lo = mid + 1
+    } else {
+      hi = mid
+    }
+  }
+  items.splice(lo, 0, add)
+  return isFull ? items.pop()! : null
+}
+
+/**
+ * Returns the percent difference between the mid price and the execution price, i.e. price impact.
+ * @param midPrice mid price before the trade
+ * @param inputAmount the input amount of the trade
+ * @param outputAmount the output amount of the trade
+ */
+export function computePriceImpact<TBase extends Currency, TQuote extends Currency>(
+  midPrice: Price<TBase, TQuote>,
+  inputAmount: CurrencyAmount<TBase>,
+  outputAmount: CurrencyAmount<TQuote>
+): Percent {
+  const quotedOutputAmount = midPrice.quote(inputAmount)
+  // calculate price impact := (exactQuote - outputAmount) / exactQuote
+  const priceImpact = quotedOutputAmount.subtract(outputAmount).divide(quotedOutputAmount)
+  return new Percent(priceImpact.numerator, priceImpact.denominator)
 }
