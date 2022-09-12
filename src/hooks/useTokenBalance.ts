@@ -7,27 +7,30 @@ import { Zero } from '@ethersproject/constants'
 import useSWR from 'swr'
 import { BIG_ZERO } from 'utils/bigNumber'
 import { bscRpcProvider } from 'utils/providers'
+import { useMemo } from 'react'
 import { useCake, useTokenContract } from './useContract'
 import { useSWRContract } from './useSWRContract'
 
-// TODO: support switch network
-
-const useTokenBalance = (tokenAddress: string) => {
+const useTokenBalance = (tokenAddress: string, forceBSC?: boolean) => {
   const { account } = useWeb3React()
 
   const contract = useTokenContract(tokenAddress, false)
-  const { data, status, ...rest } = useSWRContract(
-    account
-      ? {
-          contract,
-          methodName: 'balanceOf',
-          params: [account],
-        }
-      : null,
-    {
-      refreshInterval: FAST_INTERVAL,
-    },
+
+  const key = useMemo(
+    () =>
+      account
+        ? {
+            contract: forceBSC ? contract.connect(bscRpcProvider) : contract,
+            methodName: 'balanceOf',
+            params: [account],
+          }
+        : null,
+    [account, contract, forceBSC],
   )
+
+  const { data, status, ...rest } = useSWRContract(key as any, {
+    refreshInterval: FAST_INTERVAL,
+  })
 
   return {
     ...rest,

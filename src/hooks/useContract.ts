@@ -1,5 +1,5 @@
 import { useMemo } from 'react'
-import useActiveWeb3React from 'hooks/useActiveWeb3React'
+import useActiveWeb3React, { useProviderOrSigner } from 'hooks/useActiveWeb3React'
 import {
   getBep20Contract,
   getCakeContract,
@@ -294,31 +294,25 @@ export const useErc721CollectionContract = (
 // Code below migrated from Exchange useContract.ts
 
 // returns null on errors
-function useContract<T extends Contract = Contract>(
+export function useContract<T extends Contract = Contract>(
   address: string | undefined,
   ABI: any,
   withSignerIfPossible = true,
 ): T | null {
-  const { library, account } = useActiveWeb3React()
-  const signer = useMemo(
-    () => (withSignerIfPossible ? getProviderOrSigner(library, account) : null),
-    [withSignerIfPossible, library, account],
-  )
+  const { provider } = useActiveWeb3React()
+  const providerOrSigner = useProviderOrSigner(withSignerIfPossible) ?? provider
 
-  const canReturnContract = useMemo(
-    () => address && ABI && (withSignerIfPossible ? library : true),
-    [address, ABI, library, withSignerIfPossible],
-  )
+  const canReturnContract = useMemo(() => address && ABI && providerOrSigner, [address, ABI, providerOrSigner])
 
   return useMemo(() => {
     if (!canReturnContract) return null
     try {
-      return getContract(address, ABI, signer)
+      return getContract(address, ABI, providerOrSigner)
     } catch (error) {
       console.error('Failed to get contract', error)
       return null
     }
-  }, [address, ABI, signer, canReturnContract]) as T
+  }, [address, ABI, providerOrSigner, canReturnContract]) as T
 }
 
 export function useTokenContract(tokenAddress?: string, withSignerIfPossible?: boolean) {
