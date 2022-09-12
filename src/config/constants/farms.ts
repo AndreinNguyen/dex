@@ -1,8 +1,10 @@
-import { serializeTokens } from './tokens'
+import { serializeTokens, mainnetTokens } from './tokens'
 import { SerializedFarmConfig } from './types'
 import { CHAIN_ID } from './networks'
 
-const serializedTokens = serializeTokens()
+const serializedTokens = serializeTokens(mainnetTokens)
+
+// TODO: support switch network
 
 const farms: SerializedFarmConfig[] = [
   /**

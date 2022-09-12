@@ -4,7 +4,7 @@ import {
   TokenImage as UIKitTokenImage,
   ImageProps,
 } from '@pancakeswap/uikit'
-import tokens from 'config/constants/tokens'
+import { mainnetTokens } from 'config/constants/tokens'
 import { Token } from '@savvydex/sdk'
 
 interface TokenPairImageProps extends Omit<UIKitTokenPairImageProps, 'primarySrc' | 'secondarySrc'> {
@@ -13,7 +13,7 @@ interface TokenPairImageProps extends Omit<UIKitTokenPairImageProps, 'primarySrc
 }
 
 const getImageUrlFromToken = (token: Token) => {
-  const symbol = token.symbol === 'BNB' ? tokens.wbnb.symbol : token.symbol
+  const symbol = token.symbol === 'BNB' ? mainnetTokens.wbnb.symbol : token.symbol
   return `/images/tokens/${symbol}.png`
 }
 

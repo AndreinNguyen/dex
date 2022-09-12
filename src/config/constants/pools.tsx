@@ -2,10 +2,10 @@ import { BigNumber } from '@ethersproject/bignumber'
 import Trans from 'components/Trans'
 import { VaultKey } from 'state/types'
 import { CHAIN_ID } from './networks'
-import tokens, { serializeTokens } from './tokens'
+import { serializeTokens, mainnetTokens } from './tokens'
 import { SerializedPoolConfig, PoolCategory } from './types'
 
-const serializedTokens = serializeTokens()
+const serializedTokens = serializeTokens(mainnetTokens)
 
 export const MAX_LOCK_DURATION = 31536000
 export const UNLOCK_FREE_DURATION = 604800
@@ -20,7 +20,7 @@ export const vaultPoolConfig = {
     autoCompoundFrequency: 5000,
     gasLimit: 380000,
     tokenImage: {
-      primarySrc: `/images/tokens/${tokens.svc.address}.svg`,
+      primarySrc: `/images/tokens/${mainnetTokens.svc.address}.svg`,
       secondarySrc: '/images/tokens/autorenew.svg',
     },
   },
@@ -30,7 +30,7 @@ export const vaultPoolConfig = {
     autoCompoundFrequency: 5000,
     gasLimit: 500000,
     tokenImage: {
-      primarySrc: `/images/tokens/${tokens.svc.address}.svg`,
+      primarySrc: `/images/tokens/${mainnetTokens.svc.address}.svg`,
       secondarySrc: '/images/tokens/autorenew.svg',
     },
   },
@@ -40,7 +40,7 @@ export const vaultPoolConfig = {
     autoCompoundFrequency: 1,
     gasLimit: 500000,
     tokenImage: {
-      primarySrc: `/images/tokens/${tokens.svc.address}.svg`,
+      primarySrc: `/images/tokens/${mainnetTokens.svc.address}.svg`,
       secondarySrc: `/images/tokens/ifo-pool-icon.svg`,
     },
   },

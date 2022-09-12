@@ -1,4 +1,5 @@
-import tokens from './tokens'
+// TODO: support switch network
+import { mainnetTokens } from './tokens'
 import { SerializedFarmConfig } from './types'
 
 const priceHelperLps: SerializedFarmConfig[] = [
@@ -16,8 +17,8 @@ const priceHelperLps: SerializedFarmConfig[] = [
       97: '',
       56: '0x3147F98B8f9C53Acdf8F16332eaD12B592a1a4ae',
     },
-    token: tokens.ankr,
-    quoteToken: tokens.wbnb,
+    token: mainnetTokens.ankr,
+    quoteToken: mainnetTokens.wbnb,
   },
   {
     pid: null,
@@ -26,8 +27,8 @@ const priceHelperLps: SerializedFarmConfig[] = [
       97: '',
       56: '0x4DcB7b3b0E8914DC0e6D366521604cD23E7991E1',
     },
-    token: tokens.antex,
-    quoteToken: tokens.busd,
+    token: mainnetTokens.antex,
+    quoteToken: mainnetTokens.busd,
   },
 ]
 

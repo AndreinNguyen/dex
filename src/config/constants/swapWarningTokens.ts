@@ -1,8 +1,9 @@
 import { Token } from '@savvydex/sdk'
-import tokens from 'config/constants/tokens'
+// TODO: support switch network
+import { mainnetTokens } from 'config/constants/tokens'
 import rugPullTokens from 'config/constants/rugPullTokens'
 
-const { bondly, safemoon, itam, ccar, bttold } = tokens
+const { bondly, safemoon, itam, ccar, bttold } = mainnetTokens
 const { pokemoney } = rugPullTokens
 
 interface WarningTokenList {
