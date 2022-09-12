@@ -1,5 +1,5 @@
 import { FlexProps } from "styled-system";
-import { ReactElement } from "react";
+import { ReactElement, ReactNode } from "react";
 
 export const variants = {
   DEFAULT: "default",
@@ -12,9 +12,10 @@ export type Variant = typeof variants[keyof typeof variants];
 
 export interface UserMenuProps extends FlexProps {
   account?: string;
-  text?: string;
+  text?: ReactNode;
   avatarSrc?: string;
   variant?: Variant;
+  disabled?: boolean;
   children?: (exposedProps: { isOpen: boolean }) => ReactElement;
 }
 

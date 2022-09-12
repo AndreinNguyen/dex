@@ -23,6 +23,7 @@
     "paths": {
       "@savvydex/sdk": ["../packages/swap-sdk"],
       "@pancakeswap/wagmi": ["../packages/wagmi"],
+      "@pancakeswap/uikit": ["../packages/uikit"]
     }
   },
   "exclude": ["node_modules", "cypress"],

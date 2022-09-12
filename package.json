@@ -52,7 +52,6 @@
     "@ethersproject/units": "^5.5.0",
     "@gelatonetwork/limit-orders-lib": "^4.1.0",
     "@next/bundle-analyzer": "^12.0.7",
-    "@pancakeswap/uikit": "file:packages/uikit",
     "@reduxjs/toolkit": "^1.8.2",
     "@sentry/nextjs": "6.19.6",
     "@types/uuid": "^8.3.4",
