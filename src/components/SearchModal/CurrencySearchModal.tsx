@@ -27,12 +27,12 @@ const Footer = styled.div`
   text-align: center;
 `
 
-const StyledModalContainer = styled(ModalContainer)`
+export const StyledModalContainer = styled(ModalContainer)`
   max-width: 420px;
   width: 100%;
 `
 
-const StyledModalBody = styled(ModalBody)`
+export const StyledModalBody = styled(ModalBody)`
   padding: 24px;
   overflow-y: auto;
   -ms-overflow-style: none;
