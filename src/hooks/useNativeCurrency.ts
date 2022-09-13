@@ -8,7 +8,8 @@ export default function useNativeCurrency(): NativeCurrency {
     try {
       return Native.onChain(chainId)
     } catch (e) {
-      return Native.onChain(ChainId.MAINNET)
+      // TODO: Switch to mainnet on production
+      return Native.onChain(ChainId.TESTNET)
     }
   }, [chainId])
 }
