@@ -1,7 +1,6 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import Trans from 'components/Trans'
 import { VaultKey } from 'state/types'
-import { CHAIN_ID } from './networks'
 import { serializeTokens, mainnetTokens } from './tokens'
 import { SerializedPoolConfig, PoolCategory } from './types'
 
@@ -119,7 +118,7 @@ const pools: SerializedPoolConfig[] = [
     tokenPerBlock: '0.09645',
     version: 3,
   },
-].filter((p) => !!p.contractAddress[CHAIN_ID])
+]
 
 // known finished pools
 const finishedPools = [
@@ -3259,8 +3258,6 @@ const finishedPools = [
     enableEmergencyWithdraw: true,
     tokenPerBlock: '7.502',
   },
-]
-  .filter((p) => !!p.contractAddress[CHAIN_ID])
-  .map((p) => ({ ...p, isFinished: true }))
+].map((p) => ({ ...p, isFinished: true }))
 
 export default [...pools, ...finishedPools]

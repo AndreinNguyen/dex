@@ -4,7 +4,6 @@ import { AddIcon, Button, CardBody, Message, Text, TooltipText, useModal, useToo
 import { JSBI, CurrencyAmount, Token, WNATIVE, MINIMUM_LIQUIDITY, ChainId, Currency } from '@savvydex/sdk'
 import UnsupportedCurrencyFooter from 'components/UnsupportedCurrencyFooter'
 import { ROUTER_ADDRESS } from 'config/constants/exchange'
-import { CHAIN_ID } from 'config/constants/networks'
 import { useTranslation } from 'contexts/Localization'
 import { useIsTransactionUnsupported, useIsTransactionWarning } from 'hooks/Trades'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
@@ -149,8 +148,8 @@ export default function AddLiquidity() {
   )
 
   // check whether the user has approved the router on the tokens
-  const [approvalA, approveACallback] = useApproveCallback(parsedAmounts[Field.CURRENCY_A], ROUTER_ADDRESS[CHAIN_ID])
-  const [approvalB, approveBCallback] = useApproveCallback(parsedAmounts[Field.CURRENCY_B], ROUTER_ADDRESS[CHAIN_ID])
+  const [approvalA, approveACallback] = useApproveCallback(parsedAmounts[Field.CURRENCY_A], ROUTER_ADDRESS[chainId])
+  const [approvalB, approveBCallback] = useApproveCallback(parsedAmounts[Field.CURRENCY_B], ROUTER_ADDRESS[chainId])
 
   const addTransaction = useTransactionAdder()
 
