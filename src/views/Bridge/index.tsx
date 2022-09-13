@@ -17,6 +17,7 @@ type Props = {
 const Bridge = (props: Props) => {
   const [fromToken, setFromToken] = useState({})
   const [toToken, setToToken] = useState({})
+
   const { t } = useTranslation()
   const [onOpenListTokenModal] = useModal(<ListTokenModal />)
 
@@ -32,11 +33,16 @@ const Bridge = (props: Props) => {
           <Divider />
 
           <CardBody>
-            <SelectTokenInput label="From" data={fromToken} setDataToken={setFromToken} />
+            <SelectTokenInput
+              label="From"
+              data={fromToken}
+              setDataToken={setFromToken}
+              openModal={onOpenListTokenModal}
+            />
             <Flex justifyContent="center" paddingTop="18px">
               <Sync color="#fff" size={24} cursor="pointer" />
             </Flex>
-            <SelectTokenInput label="To" data={toToken} setDataToken={setToToken} />
+            <SelectTokenInput label="To" data={toToken} setDataToken={setToToken} openModal={onOpenListTokenModal} />
 
             <Flex mt="12px">
               <TotalAmountBridge />

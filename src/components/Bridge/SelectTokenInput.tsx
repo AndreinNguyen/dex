@@ -6,6 +6,7 @@ type Props = {
   label: string
   data?: any
   setDataToken
+  openModal: () => void
 }
 
 const SelectTokenStyle = styled.div`
@@ -72,7 +73,7 @@ const ChevronBottom = styled(ChevronDownIcon).attrs({ width: '24px' })`
   display: block;
 `
 
-const SelectTokenInput = ({ label, setDataToken }: Props) => {
+const SelectTokenInput = ({ label, setDataToken, openModal }: Props) => {
   return (
     <SelectTokenStyle>
       <label className="label">{label}</label>
@@ -80,7 +81,7 @@ const SelectTokenInput = ({ label, setDataToken }: Props) => {
       <div className="inputPanel">
         <div className="token general-select">
           <p className="label">Token</p>
-          <div className="token-select">
+          <div className="token-select" onClick={openModal}>
             <div className="token-info">
               <div className="default-icon" />
               <img src="" alt="" />
@@ -94,7 +95,7 @@ const SelectTokenInput = ({ label, setDataToken }: Props) => {
 
         <div className="network general-select">
           <p className="label">Network</p>
-          <div className="token-select">
+          <div className="token-select" onClick={openModal}>
             <div className="token-info">
               <div className="default-icon" />
               <img src="" alt="" />

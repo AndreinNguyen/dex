@@ -6,12 +6,14 @@ type Props = {
 }
 
 const ListTokenModal = (props: Props) => {
-  const onDismiss = () => null
+  const onDismiss = () => {
+    console.log('123 :>> ', 123)
+  }
   return (
     <StyledModalContainer minWidth="320px">
       <ModalHeader>
         <ModalTitle>
-          <Heading>Hello</Heading>
+          <Heading>Token</Heading>
         </ModalTitle>
         <ModalCloseButton onDismiss={onDismiss} />
       </ModalHeader>
