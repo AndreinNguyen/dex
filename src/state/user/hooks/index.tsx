@@ -4,10 +4,10 @@ import flatMap from 'lodash/flatMap'
 import farms from 'config/constants/farms'
 import { useCallback, useMemo } from 'react'
 import { useSelector } from 'react-redux'
-import { CHAIN_ID } from 'config/constants/networks'
 import { BASES_TO_TRACK_LIQUIDITY_FOR, PINNED_PAIRS } from 'config/constants'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import { useOfficialsAndUserAddedTokens } from 'hooks/Tokens'
+import { useFeeData } from 'wagmi'
 import { AppState, useAppDispatch } from '../../index'
 import {
   addSerializedPair,
@@ -387,11 +387,23 @@ export function useRemoveUserAddedToken(): (chainId: number, address: string) =>
 }
 
 export function useGasPrice(): string {
-  const chainId = CHAIN_ID
+  const { chainId, chain } = useActiveWeb3React()
   const userGas = useSelector<AppState, AppState['user']['gasPrice']>((state) => state.user.gasPrice)
-  return chainId === ChainId.MAINNET.toString() ? userGas : GAS_PRICE_GWEI.testnet
-  // TODO: Use transaction speed for gas price
-  // return userGas
+  const { data } = useFeeData({
+    chainId,
+    enabled: chainId !== ChainId.MAINNET && chainId !== ChainId.TESTNET,
+    watch: true,
+  })
+  if (chainId === ChainId.MAINNET) {
+    return userGas
+  }
+  if (chainId === ChainId.TESTNET) {
+    return GAS_PRICE_GWEI.testnet
+  }
+  if (chain?.testnet) {
+    return data?.formatted?.maxPriorityFeePerGas
+  }
+  return data?.formatted?.gasPrice
 }
 
 export function useGasPriceManager(): [string, (userGasPrice: string) => void] {

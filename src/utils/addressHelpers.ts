@@ -3,9 +3,8 @@ import addresses from 'config/constants/contracts'
 import { Address } from 'config/constants/types'
 import { VaultKey } from 'state/types'
 
-export const getAddress = (address: Address): string => {
-  const chainId = process.env.NEXT_PUBLIC_CHAIN_ID
-  return address?.[chainId] ? address[chainId] : address?.[ChainId.MAINNET]
+export const getAddress = (address: Address, chainId?: number): string => {
+  return address[chainId] ? address[chainId] : address[ChainId.TESTNET]
 }
 
 export const getMasterChefAddress = () => {
@@ -14,8 +13,8 @@ export const getMasterChefAddress = () => {
 export const getMasterChefV1Address = () => {
   return getAddress(addresses.masterChefV1)
 }
-export const getMulticallAddress = () => {
-  return getAddress(addresses.multiCall)
+export const getMulticallAddress = (chainId?: number) => {
+  return getAddress(addresses.multiCall, chainId)
 }
 export const getPancakeProfileAddress = () => {
   return getAddress(addresses.pancakeProfile)

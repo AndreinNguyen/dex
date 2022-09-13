@@ -1,15 +1,17 @@
 import { ChainId, Token } from '@savvydex/sdk'
 import { createSelector } from '@reduxjs/toolkit'
-import { CHAIN_ID } from 'config/constants/networks'
+import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import { useSelector } from 'react-redux'
 import { AppState } from '../../index'
 import { deserializeToken } from './helpers'
 
 const selectUserTokens = ({ user: { tokens } }: AppState) => tokens
 
-export const userAddedTokenSelector = createSelector(selectUserTokens, (serializedTokensMap) =>
-  Object.values(serializedTokensMap?.[CHAIN_ID as unknown as ChainId] ?? {}).map(deserializeToken),
-)
+export const userAddedTokenSelector = (chainId: number) =>
+  createSelector(selectUserTokens, (serializedTokensMap) =>
+    Object.values(serializedTokensMap?.[chainId as unknown as ChainId] ?? {}).map(deserializeToken),
+  )
 export default function useUserAddedTokens(): Token[] {
-  return useSelector(userAddedTokenSelector)
+  const { chainId } = useActiveWeb3React()
+  return useSelector(userAddedTokenSelector(chainId))
 }

@@ -1,10 +1,10 @@
 import type { Signer } from '@ethersproject/abstract-signer'
 import type { Provider } from '@ethersproject/providers'
 import { Contract } from '@ethersproject/contracts'
-import { simpleRpcProvider } from 'utils/providers'
+import { bscRpcProvider } from 'utils/providers'
 import poolsConfig from 'config/constants/pools'
 import { PoolCategory } from 'config/constants/types'
-import tokens from 'config/constants/tokens'
+import { mainnetTokens } from 'config/constants/tokens'
 
 // Addresses
 import {
@@ -115,7 +115,7 @@ import type {
 } from 'config/abi/types'
 
 export const getContract = (abi: any, address: string, signer?: Signer | Provider) => {
-  const signerOrProvider = signer ?? simpleRpcProvider
+  const signerOrProvider = signer ?? bscRpcProvider
 
   return new Contract(address, abi, signerOrProvider)
 }
@@ -149,10 +149,10 @@ export const getPointCenterIfoContract = (signer?: Signer | Provider) => {
   return getContract(pointCenterIfo, getPointCenterIfoAddress(), signer) as PointCenterIfo
 }
 export const getCakeContract = (signer?: Signer | Provider) => {
-  return getContract(cakeAbi, tokens.svc.address, signer) as Cake
+  return getContract(cakeAbi, mainnetTokens.svc.address, signer) as Cake
 }
 export const getSVCContract = (signer?: Signer | Provider) => {
-  return getContract(svcAbi, tokens.svc.address, signer) as Svc
+  return getContract(svcAbi, mainnetTokens.svc.address, signer) as Svc
 }
 export const getProfileContract = (signer?: Signer | Provider) => {
   return getContract(profileABI, getPancakeProfileAddress(), signer) as PancakeProfile
@@ -213,7 +213,7 @@ export const getChainlinkOracleContract = (address: string, signer?: Signer | Pr
   return getContract(chainlinkOracleAbi, address, signer) as ChainlinkOracle
 }
 export const getMulticallContract = () => {
-  return getContract(MultiCallAbi, getMulticallAddress(), simpleRpcProvider) as Multicall
+  return getContract(MultiCallAbi, getMulticallAddress(), bscRpcProvider) as Multicall
 }
 export const getBunnySpecialCakeVaultContract = (signer?: Signer | Provider) => {
   return getContract(bunnySpecialCakeVaultAbi, getBunnySpecialCakeVaultAddress(), signer) as BunnySpecialCakeVault

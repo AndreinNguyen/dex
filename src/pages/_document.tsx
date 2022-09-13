@@ -3,6 +3,8 @@ import Document, { DocumentContext, Head, Html, Main, NextScript } from 'next/do
 import { ServerStyleSheet } from 'styled-components'
 import { nodes } from 'utils/getRpcUrl'
 
+// TODO: support switch network
+
 class MyDocument extends Document {
   static async getInitialProps(ctx: DocumentContext) {
     const sheet = new ServerStyleSheet()

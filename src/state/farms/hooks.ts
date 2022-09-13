@@ -1,8 +1,7 @@
-import { ChainId } from '@savvydex/sdk'
+import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import { useWeb3React } from '@pancakeswap/wagmi'
 import BigNumber from 'bignumber.js'
 import { farmsConfig, SLOW_INTERVAL } from 'config/constants'
-import { CHAIN_ID } from 'config/constants/networks'
 import { useFastRefreshEffect } from 'hooks/useRefreshEffect'
 import useSWRImmutable from 'swr/immutable'
 import { useMemo } from 'react'
@@ -52,13 +51,20 @@ export const usePollFarmsWithUserData = () => {
  * 2 = CAKE-BNB LP
  * 3 = BUSD-BNB LP
  */
-const coreFarmPIDs = CHAIN_ID === String(ChainId.MAINNET) ? [2, 3] : [1, 2]
+
+// TODO: support switch network
+const coreFarmPIDs = {
+  56: [2, 3],
+  97: [1, 2],
+}
+
 export const usePollCoreFarmData = () => {
   const dispatch = useAppDispatch()
+  const { chainId } = useActiveWeb3React()
 
   useFastRefreshEffect(() => {
-    dispatch(fetchFarmsPublicDataAsync(coreFarmPIDs))
-  }, [dispatch])
+    dispatch(fetchFarmsPublicDataAsync(coreFarmPIDs[chainId]))
+  }, [chainId, dispatch])
 }
 
 export const useFarms = (): DeserializedFarmsState => {
