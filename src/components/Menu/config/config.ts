@@ -33,6 +33,10 @@ const config: (t: ContextApi['t'], languageCode?: string) => ConfigMenuItemsType
         label: t('Liquidity'),
         href: '/liquidity',
       },
+      {
+        label: t('Bridge'),
+        href: '/bridge',
+      },
     ],
   },
   {
