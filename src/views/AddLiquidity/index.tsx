@@ -1,7 +1,7 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { TransactionResponse } from '@ethersproject/providers'
 import { AddIcon, Button, CardBody, Message, Text, TooltipText, useModal, useTooltip } from '@pancakeswap/uikit'
-import { Currency, currencyEquals, ETHER, TokenAmount, Token, WETH } from '@savvydex/sdk'
+import { JSBI, CurrencyAmount, Token, WNATIVE, MINIMUM_LIQUIDITY, ChainId } from '@savvydex/sdk'
 import UnsupportedCurrencyFooter from 'components/UnsupportedCurrencyFooter'
 import { ROUTER_ADDRESS } from 'config/constants/exchange'
 import { CHAIN_ID } from 'config/constants/networks'
@@ -35,7 +35,7 @@ import { useTransactionAdder } from '../../state/transactions/hooks'
 import { useGasPrice, useIsExpertMode, useUserSlippageTolerance } from '../../state/user/hooks'
 import { calculateGasMargin } from '../../utils'
 import { currencyId } from '../../utils/currencyId'
-import { calculateSlippageAmount, getRouterContract } from '../../utils/exchange'
+import { calculateSlippageAmount, useRouterContract } from '../../utils/exchange'
 import { formatAmount } from '../../utils/formatInfoNumbers'
 import { maxAmountSpend } from '../../utils/maxAmountSpend'
 import { wrappedCurrency } from '../../utils/wrappedCurrency'
@@ -58,7 +58,7 @@ export default function AddLiquidity() {
   const router = useRouter()
   const [currencyIdA, currencyIdB] = router.query.currency || []
 
-  const { account, chainId, library } = useActiveWeb3React()
+  const { account, chainId } = useActiveWeb3React()
   const dispatch = useAppDispatch()
   const { t } = useTranslation()
   const gasPrice = useGasPrice()
@@ -72,10 +72,8 @@ export default function AddLiquidity() {
     }
   }, [dispatch, currencyIdA, currencyIdB])
 
-  const oneCurrencyIsWBNB = Boolean(
-    chainId &&
-      ((currencyA && currencyEquals(currencyA, WETH[chainId])) ||
-        (currencyB && currencyEquals(currencyB, WETH[chainId]))),
+  const oneCurrencyIsWNATIVE = Boolean(
+    chainId && ((currencyA && currencyA.equals(WNATIVE[chainId])) || (currencyB && currencyB.equals(WNATIVE[chainId]))),
   )
 
   const expertMode = useIsExpertMode()
@@ -130,7 +128,7 @@ export default function AddLiquidity() {
   }
 
   // get the max amounts user can add
-  const maxAmounts: { [field in Field]?: TokenAmount } = [Field.CURRENCY_A, Field.CURRENCY_B].reduce(
+  const maxAmounts: { [field in Field]?: CurrencyAmount<Token> } = [Field.CURRENCY_A, Field.CURRENCY_B].reduce(
     (accumulator, field) => {
       return {
         ...accumulator,
@@ -140,7 +138,7 @@ export default function AddLiquidity() {
     {},
   )
 
-  const atMaxAmounts: { [field in Field]?: TokenAmount } = [Field.CURRENCY_A, Field.CURRENCY_B].reduce(
+  const atMaxAmounts: { [field in Field]?: CurrencyAmount<Token> } = [Field.CURRENCY_A, Field.CURRENCY_B].reduce(
     (accumulator, field) => {
       return {
         ...accumulator,
@@ -156,9 +154,10 @@ export default function AddLiquidity() {
 
   const addTransaction = useTransactionAdder()
 
+  const routerContract = useRouterContract()
+
   async function onAdd() {
     if (!chainId || !library || !account) return
-    const routerContract = getRouterContract(chainId, library, account)
 
     const { [Field.CURRENCY_A]: parsedAmountA, [Field.CURRENCY_B]: parsedAmountB } = parsedAmounts
     if (!parsedAmountA || !parsedAmountB || !currencyA || !currencyB || !deadline) {
@@ -470,7 +469,7 @@ export default function AddLiquidity() {
         pair && !noLiquidity && pairState !== PairState.INVALID ? (
           <BodyWrapper>
             <AutoColumn style={{ minWidth: '20rem', width: '100%', marginTop: '1rem' }}>
-              <MinimalPositionCard showUnwrapped={oneCurrencyIsWBNB} pair={pair} />
+              <MinimalPositionCard showUnwrapped={oneCurrencyIsWNATIVE} pair={pair} />
             </AutoColumn>
           </BodyWrapper>
         ) : null
