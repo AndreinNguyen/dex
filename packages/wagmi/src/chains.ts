@@ -1,4 +1,4 @@
-import { arbitrumRinkeby, optimismKovan, polygonMumbai, rinkeby, mainnet } from "wagmi/chains";
+import { arbitrumRinkeby, optimismKovan, polygonMumbai, rinkeby, mainnet, polygon } from "wagmi/chains";
 import { Chain } from "wagmi";
 
 export const avalandche: Chain = {
@@ -134,4 +134,4 @@ export const CHAINS_STARGATE_TESTNET = [
   fantomTestnet,
 ];
 
-export const CHAINS = [bsc, mainnet, bscTest, rinkeby];
+export const CHAINS = [bsc, mainnet, bscTest, polygon, polygonMumbai, rinkeby];

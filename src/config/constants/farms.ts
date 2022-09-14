@@ -11,7 +11,9 @@ const farms: SerializedFarmConfig[] = [
    */
   {
     pid: 0,
-    v1pid: 0,
+    // TODO:
+    // v1pid: 0,
+    v1pid: 1,
     lpSymbol: 'SVC',
     lpAddresses: {
       97: process.env.NEXT_PUBLIC_SVC_ADDRESS,

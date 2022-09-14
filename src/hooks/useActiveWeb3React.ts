@@ -88,7 +88,8 @@ const useActiveWeb3React = () => {
 export const useActiveChainId = () => {
   const localChainId = useLocalNetworkChain()
   const { chain } = useNetwork()
-  const chainId = chain?.id ?? localChainId ?? ChainId.MAINNET
+  // TODO: Switch to mainnet on production
+  const chainId = chain?.id ?? localChainId ?? ChainId.TESTNET
   return chainId
 }
 

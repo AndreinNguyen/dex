@@ -6,13 +6,13 @@ import useAuth from './useAuth'
 
 export const useWallet = () => {
   const { connectors } = useConnect()
-  const { login, logout } = useAuth()
+  const { login } = useAuth()
   const { t } = useTranslation()
 
   const finalConnectors = useMemo(() => {
     return walletConnectors.map((config) => {
       const found = connectors.find((c) => c.id === config.connectorId)
-      if (!found.ready) {
+      if (!found?.ready) {
         if (config.connectorId === ConnectorNames.Injected) {
           return {
             ...config,
@@ -28,7 +28,7 @@ export const useWallet = () => {
     })
   }, [connectors])
 
-  const { onPresentConnectModal } = useWalletModal(login, logout, t, finalConnectors)
+  const { onPresentConnectModal } = useWalletModal(login, t, finalConnectors)
 
   return { onPresentConnectModal }
 }

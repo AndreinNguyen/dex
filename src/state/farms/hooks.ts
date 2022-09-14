@@ -55,7 +55,7 @@ export const usePollFarmsWithUserData = () => {
 // TODO: support switch network
 const coreFarmPIDs = {
   56: [2, 3],
-  97: [1, 2],
+  97: [0, 1, 2],
 }
 
 export const usePollCoreFarmData = () => {
