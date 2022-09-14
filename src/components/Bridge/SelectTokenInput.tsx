@@ -1,13 +1,7 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import { ChevronDownIcon } from '@pancakeswap/uikit'
+import { ChevronDownIcon, useModal } from '@pancakeswap/uikit'
 import styled from 'styled-components'
-
-type Props = {
-  label: string
-  data?: any
-  setDataToken
-  openModal: () => void
-}
+import ListTokenModal from './ListTokenModal'
 
 const SelectTokenStyle = styled.div`
   font-family: 'Space Grotesk', sans-serif;
@@ -73,19 +67,27 @@ const ChevronBottom = styled(ChevronDownIcon).attrs({ width: '24px' })`
   display: block;
 `
 
-const SelectTokenInput = ({ label, setDataToken, openModal }: Props) => {
+type Props = {
+  label: string
+  data?: any
+  setDataToken
+  setData
+}
+
+const SelectTokenInput = ({ label, setDataToken, setData }: Props) => {
+  const [onOpenListTokenModal] = useModal(<ListTokenModal />)
+
   return (
     <SelectTokenStyle>
       <label className="label">{label}</label>
-
       <div className="inputPanel">
-        <div className="token general-select">
-          <p className="label">Token</p>
-          <div className="token-select" onClick={openModal}>
+        <div className="network general-select">
+          <p className="label">Network</p>
+          <div className="token-select" onClick={onOpenListTokenModal} role="presentation">
             <div className="token-info">
               <div className="default-icon" />
               <img src="" alt="" />
-              <input type="text" readOnly autoComplete="off" autoCorrect="off" placeholder="Select" />
+              <div className="name">Select</div>
             </div>
             <div className="navigate-icon">
               <ChevronBottom />
@@ -93,13 +95,13 @@ const SelectTokenInput = ({ label, setDataToken, openModal }: Props) => {
           </div>
         </div>
 
-        <div className="network general-select">
-          <p className="label">Network</p>
-          <div className="token-select" onClick={openModal}>
+        <div className="token general-select">
+          <p className="label">Token</p>
+          <div className="token-select" onClick={onOpenListTokenModal} role="presentation">
             <div className="token-info">
               <div className="default-icon" />
               <img src="" alt="" />
-              <div className="name">Select</div>
+              <input type="text" readOnly autoComplete="off" autoCorrect="off" placeholder="Select" />
             </div>
             <div className="navigate-icon">
               <ChevronBottom />
