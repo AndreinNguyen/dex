@@ -1,14 +1,13 @@
 import { Heading, ModalCloseButton, ModalHeader, ModalTitle } from '@pancakeswap/uikit'
 import { StyledModalBody, StyledModalContainer } from 'components/SearchModal/CurrencySearchModal'
+import { networkSupportBridge } from './bridgeConfig'
 
 type Props = {
   data?: any
+  onDismiss?: () => void
 }
 
-const ListTokenModal = (props: Props) => {
-  const onDismiss = () => {
-    console.log('123 :>> ', 123)
-  }
+const ListTokenModal = ({ onDismiss }: Props) => {
   return (
     <StyledModalContainer minWidth="320px">
       <ModalHeader>
@@ -17,7 +16,11 @@ const ListTokenModal = (props: Props) => {
         </ModalTitle>
         <ModalCloseButton onDismiss={onDismiss} />
       </ModalHeader>
-      <StyledModalBody>abc</StyledModalBody>
+      <StyledModalBody>
+        {Object.keys(networkSupportBridge).map((key, index) => (
+          <div>{networkSupportBridge[key].name}</div>
+        ))}
+      </StyledModalBody>
     </StyledModalContainer>
   )
 }
