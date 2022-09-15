@@ -1,15 +1,21 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import { Button } from '@pancakeswap/uikit'
+import { CurrencyAmount } from '@savvydex/sdk'
 import { Container, InputPanel, InputRow, LabelRow } from 'components/CurrencyInputPanel'
 import { Input as NumericalInput } from 'components/CurrencyInputPanel/NumericalInput'
 import { useTranslation } from 'contexts/Localization'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
+import useSVCTokenBalanceDisplay from 'hooks/useSVCTokenBalanceDisplay'
+import useTokenBalance from 'hooks/useTokenBalance'
 import { useState } from 'react'
 import styled from 'styled-components'
+import { maxAmountSpend } from 'utils/maxAmountSpend'
+import tokens from 'config/constants/tokens'
 
 type Props = {
-  data?: any
   disableCurrencySelect?: boolean
+  setTotalAmount
+  value
 }
 
 const TotalAmountInputStyle = styled.div`
@@ -26,11 +32,13 @@ const TotalAmountInputStyle = styled.div`
   }
 `
 
-const TotalAmountBridge = ({ disableCurrencySelect }: Props) => {
-  const [totalAmount, setTotalAmount] = useState()
+const TotalAmountBridge = ({ disableCurrencySelect, setTotalAmount, value }: Props) => {
   const onUserInput = (val) => {
     setTotalAmount(val)
   }
+
+  const { balanceDisplay } = useSVCTokenBalanceDisplay()
+  const { balance: cakeBalance, fetchStatus: cakeFetchStatus } = useTokenBalance(tokens.svc.address)
 
   const onMax = () => {
     console.log('123 :>> ', 123)
@@ -50,7 +58,7 @@ const TotalAmountBridge = ({ disableCurrencySelect }: Props) => {
           <LabelRow>
             <NumericalInput
               className="token-amount-input"
-              value={totalAmount}
+              value={value}
               onUserInput={(val) => {
                 onUserInput(val)
               }}
