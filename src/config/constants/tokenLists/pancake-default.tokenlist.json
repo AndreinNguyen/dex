@@ -27,6 +27,14 @@
       "logoURI": "https://lab-dex.savvycom.xyz/images/tokens/0x6dd1f1917443530e3adf9011e71b19d25943a21e.png"
     },
     {
+      "name": "Savvygame Token",
+      "symbol": "SVG",
+      "address": "0x37856fc36f6981733b456F3C785407e28A933d3C",
+      "chainId": 56,
+      "decimals": 18,
+      "logoURI": "https://dex.savvycom.ai/images/tokens/SVG.png"
+    },
+    {
       "name": "USDT Token",
       "symbol": "USDT",
       "address": "0x55d398326f99059fF775485246999027B3197955",
