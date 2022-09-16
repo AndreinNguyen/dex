@@ -107,4 +107,8 @@ export default {
     56: '0x0a8901b0E25DEb55A87524f0cC164E9644020EBA',
     97: '0xfC0c3F11fDA72Cb9A56F28Ec8D44C0ae4B3ABF86',
   },
+  bridgeSvc: {
+    56: '',
+    97: '0xeddB70aB861797B8b3BE6eF9D430EF0f90902A64'
+  }
 }

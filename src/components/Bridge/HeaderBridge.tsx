@@ -8,7 +8,7 @@ const HeaderBridgeStyle = styled.div`
   font-weight: 500;
 `
 const HeaderBridge = () => {
-  return <HeaderBridgeStyle>Bridge</HeaderBridgeStyle>
+  return <HeaderBridgeStyle>Bridge SVC</HeaderBridgeStyle>
 }
 
 export default HeaderBridge

@@ -20,6 +20,9 @@ export const getMulticallAddress = () => {
 export const getPancakeProfileAddress = () => {
   return getAddress(addresses.pancakeProfile)
 }
+export const getBridgeAddress = () => {
+  return getAddress(addresses.bridgeSvc)
+}
 export const getPancakeBunniesAddress = () => {
   return getAddress(addresses.pancakeBunnies)
 }

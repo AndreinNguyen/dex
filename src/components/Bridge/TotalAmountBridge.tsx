@@ -1,15 +1,18 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
+import { BigNumber } from '@ethersproject/bignumber'
+import { formatEther } from '@ethersproject/units'
 import { Button } from '@pancakeswap/uikit'
 import { Container, InputPanel, InputRow, LabelRow } from 'components/CurrencyInputPanel'
 import { Input as NumericalInput } from 'components/CurrencyInputPanel/NumericalInput'
 import { useTranslation } from 'contexts/Localization'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
-import { useState } from 'react'
 import styled from 'styled-components'
 
 type Props = {
-  data?: any
   disableCurrencySelect?: boolean
+  setTotalAmount
+  value
+  maxBalance: BigNumber
 }
 
 const TotalAmountInputStyle = styled.div`
@@ -26,14 +29,13 @@ const TotalAmountInputStyle = styled.div`
   }
 `
 
-const TotalAmountBridge = ({ disableCurrencySelect }: Props) => {
-  const [totalAmount, setTotalAmount] = useState()
+const TotalAmountBridge = ({ disableCurrencySelect, setTotalAmount, value, maxBalance }: Props) => {
   const onUserInput = (val) => {
     setTotalAmount(val)
   }
 
   const onMax = () => {
-    console.log('123 :>> ', 123)
+    setTotalAmount(formatEther(maxBalance.toString()))
   }
 
   const { account, library } = useActiveWeb3React()
@@ -50,7 +52,7 @@ const TotalAmountBridge = ({ disableCurrencySelect }: Props) => {
           <LabelRow>
             <NumericalInput
               className="token-amount-input"
-              value={totalAmount}
+              value={value}
               onUserInput={(val) => {
                 onUserInput(val)
               }}

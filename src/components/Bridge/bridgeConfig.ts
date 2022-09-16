@@ -10,9 +10,15 @@ export enum ChainId {
 
 export const networkSupportBridge = {
   [ChainId.TESTNET]: {
-    name: 'BSC Testnet',
+    chainId: ChainId.TESTNET,
+    name: 'Binance Chain',
+    address: '12345',
+    logo: 'https://res.cloudinary.com/bridge-network/image/upload/v1649686608/logo/Binance_Smart_Chain.svg',
   },
   [ChainId.MUMBAI]: {
-    name: 'Mumbai',
+    chainId: ChainId.MUMBAI,
+    name: 'Polygon Mumbai',
+    address: '50560',
+    logo: '	https://res.cloudinary.com/bridge-network/image/upload/v1646004158/logo/polygon.svg',
   },
 }

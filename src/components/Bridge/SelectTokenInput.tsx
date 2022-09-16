@@ -25,6 +25,7 @@ const SelectTokenStyle = styled.div`
 
     .general-select {
       cursor: pointer;
+      width: 100%;
 
       .token-select {
         display: flex;
@@ -35,11 +36,15 @@ const SelectTokenStyle = styled.div`
           display: flex;
           align-items: center;
           .default-icon {
-            width: 18px;
-            height: 18px;
+            width: 24px;
+            height: 25px;
             margin-right: 8px;
             background-color: #b8add2;
             border-radius: 50%;
+          }
+
+          .logo {
+            margin-right: 8px;
           }
 
           input {
@@ -52,14 +57,6 @@ const SelectTokenStyle = styled.div`
         }
       }
     }
-
-    .network {
-      width: 30%;
-    }
-
-    .token {
-      width: 65%;
-    }
   }
 `
 
@@ -69,39 +66,24 @@ const ChevronBottom = styled(ChevronDownIcon).attrs({ width: '24px' })`
 
 type Props = {
   label: string
-  data?: any
+  data: any
   setDataToken
   setData
 }
 
-const SelectTokenInput = ({ label, setDataToken, setData }: Props) => {
-  const [onOpenListTokenModal] = useModal(<ListTokenModal />)
+const SelectTokenInput = ({ label, setDataToken, data }: Props) => {
+  const [onOpenListNetworkModal] = useModal(<ListTokenModal setDataToken={setDataToken} />)
 
   return (
     <SelectTokenStyle>
       <label className="label">{label}</label>
       <div className="inputPanel">
         <div className="network general-select">
-          <p className="label">Network</p>
-          <div className="token-select" onClick={onOpenListTokenModal} role="presentation">
+          <div className="token-select" onClick={onOpenListNetworkModal} role="presentation">
             <div className="token-info">
-              <div className="default-icon" />
-              <img src="" alt="" />
-              <div className="name">Select</div>
-            </div>
-            <div className="navigate-icon">
-              <ChevronBottom />
-            </div>
-          </div>
-        </div>
+              {data?.logo ? <img className="logo" src={data?.logo} alt="" /> : <div className="default-icon" />}
 
-        <div className="token general-select">
-          <p className="label">Token</p>
-          <div className="token-select" onClick={onOpenListTokenModal} role="presentation">
-            <div className="token-info">
-              <div className="default-icon" />
-              <img src="" alt="" />
-              <input type="text" readOnly autoComplete="off" autoCorrect="off" placeholder="Select" />
+              <div className="name">{data?.name || 'Select'}</div>
             </div>
             <div className="navigate-icon">
               <ChevronBottom />
