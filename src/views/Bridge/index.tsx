@@ -1,10 +1,9 @@
 import { BigNumber as BigNumberEther } from '@ethersproject/bignumber'
 import { formatEther, parseEther } from '@ethersproject/units'
-import { Button, CardBody, Flex, useModal } from '@pancakeswap/uikit'
+import { Button, CardBody, Flex } from '@pancakeswap/uikit'
 import { Sync } from '@styled-icons/material/Sync'
 import { AppBody } from 'components/App'
 import { HeaderBridge } from 'components/Bridge'
-import ApproveTokenModal from 'components/Bridge/ApproveTokenModal'
 import { ChainId, networkSupportBridge } from 'components/Bridge/bridgeConfig'
 import ReceivingAddressInput from 'components/Bridge/ReceivingAddressInput'
 import SelectTokenInput from 'components/Bridge/SelectTokenInput'
@@ -20,11 +19,7 @@ import { getProviderOrSigner } from 'utils'
 import { getBridgeAddress } from 'utils/addressHelpers'
 import { getBridgeContract, getSVCContract } from 'utils/contractHelpers'
 
-type Props = {
-  data?: any
-}
-
-const Bridge = (props: Props) => {
+const Bridge = () => {
   const [fromToken, setFromToken] = useState(networkSupportBridge[ChainId.TESTNET])
   const [toToken, setToToken] = useState(networkSupportBridge[ChainId.MUMBAI])
   const [receivingAddress, setReceivingAddress] = useState('')
@@ -56,7 +51,7 @@ const Bridge = (props: Props) => {
     if (account) {
       checkAllowance()
     }
-  }, [account, library])
+  })
 
   const checkAllowance = async () => {
     const allowance = await svcContract.allowance(account, bridgeAddress)
@@ -65,21 +60,19 @@ const Bridge = (props: Props) => {
     return amount
   }
 
-  const [openApproveTokenModal] = useModal(<ApproveTokenModal data={null} />)
-
   const onLockToken = async () => {
     if (receivingAddress) {
       try {
         await bridgeContract.lock(receivingAddress, totalAmountFormatted)
       } catch (error) {
-        console.log('error', error)
+        console.error(error)
       }
     }
     if (receivingAddress) {
       try {
         await bridgeContract.lock(receivingAddress, totalAmountFormatted)
       } catch (error) {
-        console.log('error', error)
+        console.error(error)
       }
     }
   }
@@ -148,7 +141,7 @@ const Bridge = (props: Props) => {
             </Flex>
 
             <Flex mt="12px">
-              <TotalAmountBridge value={totalAmount} setTotalAmount={setTotalAmount} />
+              <TotalAmountBridge value={totalAmount} setTotalAmount={setTotalAmount} maxBalance={maxBalanceToken} />
             </Flex>
 
             <Flex mt="30px">{generateButton()}</Flex>

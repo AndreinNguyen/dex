@@ -1,21 +1,18 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
+import { BigNumber } from '@ethersproject/bignumber'
+import { formatEther } from '@ethersproject/units'
 import { Button } from '@pancakeswap/uikit'
-import { CurrencyAmount } from '@savvydex/sdk'
 import { Container, InputPanel, InputRow, LabelRow } from 'components/CurrencyInputPanel'
 import { Input as NumericalInput } from 'components/CurrencyInputPanel/NumericalInput'
 import { useTranslation } from 'contexts/Localization'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
-import useSVCTokenBalanceDisplay from 'hooks/useSVCTokenBalanceDisplay'
-import useTokenBalance from 'hooks/useTokenBalance'
-import { useState } from 'react'
 import styled from 'styled-components'
-import { maxAmountSpend } from 'utils/maxAmountSpend'
-import tokens from 'config/constants/tokens'
 
 type Props = {
   disableCurrencySelect?: boolean
   setTotalAmount
   value
+  maxBalance: BigNumber
 }
 
 const TotalAmountInputStyle = styled.div`
@@ -32,16 +29,13 @@ const TotalAmountInputStyle = styled.div`
   }
 `
 
-const TotalAmountBridge = ({ disableCurrencySelect, setTotalAmount, value }: Props) => {
+const TotalAmountBridge = ({ disableCurrencySelect, setTotalAmount, value, maxBalance }: Props) => {
   const onUserInput = (val) => {
     setTotalAmount(val)
   }
 
-  const { balanceDisplay } = useSVCTokenBalanceDisplay()
-  const { balance: cakeBalance, fetchStatus: cakeFetchStatus } = useTokenBalance(tokens.svc.address)
-
   const onMax = () => {
-    console.log('123 :>> ', 123)
+    setTotalAmount(formatEther(maxBalance.toString()))
   }
 
   const { account, library } = useActiveWeb3React()
