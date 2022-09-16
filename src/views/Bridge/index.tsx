@@ -1,37 +1,41 @@
+import { BigNumber as BigNumberEther } from '@ethersproject/bignumber'
+import { formatEther, parseEther } from '@ethersproject/units'
 import { Button, CardBody, Flex, useModal } from '@pancakeswap/uikit'
 import { Sync } from '@styled-icons/material/Sync'
-import BigNumber from 'bignumber.js'
-import { BigNumber as BigNumberEther } from '@ethersproject/bignumber'
 import { AppBody } from 'components/App'
 import { HeaderBridge } from 'components/Bridge'
+import ApproveTokenModal from 'components/Bridge/ApproveTokenModal'
+import { ChainId, networkSupportBridge } from 'components/Bridge/bridgeConfig'
 import ReceivingAddressInput from 'components/Bridge/ReceivingAddressInput'
 import SelectTokenInput from 'components/Bridge/SelectTokenInput'
 import TotalAmountBridge from 'components/Bridge/TotalAmountBridge'
+import ConnectWalletButton from 'components/ConnectWalletButton'
 import Divider from 'components/Divider'
 import Page from 'components/Layout/Page'
-import { useTranslation } from 'contexts/Localization'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
+import { useGetCakeBalance } from 'hooks/useTokenBalance'
+import { toNumber } from 'lodash'
 import { useEffect, useState } from 'react'
 import { getProviderOrSigner } from 'utils'
 import { getBridgeAddress } from 'utils/addressHelpers'
 import { getBridgeContract, getSVCContract } from 'utils/contractHelpers'
-import { formatEther, parseEther } from '@ethersproject/units'
-import { useApproveCallback } from 'hooks/useApproveCallback'
-import { CurrencyAmount } from '@savvydex/sdk'
-import ConnectWalletButton from 'components/ConnectWalletButton'
-import { toNumber } from 'lodash'
-import ApproveTokenModal from 'components/Bridge/ApproveTokenModal'
 
 type Props = {
   data?: any
 }
 
 const Bridge = (props: Props) => {
-  const [fromToken, setFromToken] = useState(null)
-  const [toToken, setToToken] = useState(null)
+  const [fromToken, setFromToken] = useState(networkSupportBridge[ChainId.TESTNET])
+  const [toToken, setToToken] = useState(networkSupportBridge[ChainId.MUMBAI])
   const [receivingAddress, setReceivingAddress] = useState('')
   const [totalAmount, setTotalAmount] = useState('')
   const [totalAmountFormatted, setTotalAmountFormatted] = useState<BigNumberEther>()
+  const [allowanceAmount, setAllowanceAmount] = useState('0')
+  const { account, library } = useActiveWeb3React()
+  const bridgeContract = getBridgeContract(getProviderOrSigner(library, account))
+  const svcContract = getSVCContract(getProviderOrSigner(library, account))
+  const bridgeAddress = getBridgeAddress()
+  const { balance: maxBalanceToken } = useGetCakeBalance()
 
   const reverseNetwork = () => {
     if (fromToken || toToken) {
@@ -48,20 +52,17 @@ const Bridge = (props: Props) => {
     }
   }, [totalAmount])
 
-  const { account, library } = useActiveWeb3React()
-  const bridgeContract = getBridgeContract(getProviderOrSigner(library, account))
-  const svcContract = getSVCContract(getProviderOrSigner(library, account))
-  const bridgeAddress = getBridgeAddress()
+  useEffect(() => {
+    if (account) {
+      checkAllowance()
+    }
+  }, [account, library])
 
   const checkAllowance = async () => {
     const allowance = await svcContract.allowance(account, bridgeAddress)
     const amount = formatEther(allowance)
+    setAllowanceAmount(amount)
     return amount
-  }
-
-  const approveToken = async (amount) => {
-    if (!totalAmount) return
-    svcContract.approve(bridgeAddress, amount)
   }
 
   const [openApproveTokenModal] = useModal(<ApproveTokenModal data={null} />)
@@ -69,14 +70,14 @@ const Bridge = (props: Props) => {
   const onLockToken = async () => {
     if (receivingAddress) {
       try {
-        const res = await bridgeContract.lock(receivingAddress, totalAmountFormatted)
+        await bridgeContract.lock(receivingAddress, totalAmountFormatted)
       } catch (error) {
         console.log('error', error)
       }
     }
     if (receivingAddress) {
       try {
-        const res = await bridgeContract.lock(receivingAddress, totalAmountFormatted)
+        await bridgeContract.lock(receivingAddress, totalAmountFormatted)
       } catch (error) {
         console.log('error', error)
       }
@@ -84,19 +85,12 @@ const Bridge = (props: Props) => {
   }
 
   const handleSwap = async () => {
-    const allowanceAmount = await checkAllowance()
-
-    console.log('allowanceAmount :>> ', allowanceAmount)
-
     if (toNumber(allowanceAmount) < toNumber(formatEther(totalAmountFormatted))) {
-      // openApproveTokenModal()
-      const amountToApprove = toNumber(formatEther(totalAmountFormatted)) - toNumber(allowanceAmount)
-      const res = await svcContract.approve(bridgeAddress, amountToApprove.toString())
+      await (await svcContract.approve(bridgeAddress, maxBalanceToken)).wait()
       onLockToken()
-      return
+    } else {
+      onLockToken()
     }
-
-    onLockToken()
   }
 
   const generateButton = () => {
@@ -130,7 +124,7 @@ const Bridge = (props: Props) => {
 
     return (
       <Button width="100%" onClick={handleSwap}>
-        Swap
+        {allowanceAmount < totalAmount ? 'Approve' : 'Swap'}
       </Button>
     )
   }
