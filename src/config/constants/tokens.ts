@@ -9,7 +9,7 @@ interface TokenList {
 
 const SVC_MAINNET = new Token(
   ChainId.MAINNET,
-  '0x0E09FaBB73Bd3Ade0a17ECC321fD13a19e81cE82',
+  '0x857b64d4A0ce517631210eaf9d512BC04485b439',
   18,
   'SVC',
   'Savvy Coin',
@@ -34,6 +34,28 @@ export const SVC: Record<ChainId, Token> = {
   [ChainId.RINKEBY]: SVC_TESTNET,
   [ChainId.POLYGON]: SVC_TESTNET,
   [ChainId.MUMBAI]: SVC_TESTNET,
+}
+
+// TODO: update address later
+export const LP_SVC_BUSD: Record<ChainId, string> = {
+  [ChainId.MAINNET]: '0x564C03d7AC6687D53B2053b69696Cb761A2c046e',
+  [ChainId.TESTNET]: '0xB33aEB67FbE64b0f95Fa3FF83979Bd246e9d7a97',
+  [ChainId.ETHEREUM]: '',
+  [ChainId.GOERLI]: '',
+  [ChainId.RINKEBY]: '',
+  [ChainId.POLYGON]: '',
+  [ChainId.MUMBAI]: '',
+}
+
+// TODO: update address later
+export const LP_WBNB_BUSD: Record<ChainId, string> = {
+  [ChainId.MAINNET]: '0x16b9a82891338f9bA80E2D6970FddA79D1eb0daE',
+  [ChainId.TESTNET]: '0xE7d28e79DFE52d304CADAc4EF439d7b59eF18D4E',
+  [ChainId.ETHEREUM]: '',
+  [ChainId.GOERLI]: '',
+  [ChainId.RINKEBY]: '',
+  [ChainId.POLYGON]: '',
+  [ChainId.MUMBAI]: '',
 }
 
 export const defineTokens = <T extends TokenList>(t: T) => t
@@ -77,6 +99,15 @@ const USDT_BSC = new Token(
   'https://tether.to/',
 )
 
+const USDT_TESTNET = new Token(
+  ChainId.TESTNET,
+  '0x3F35B0Ec347fcCfdD2C2bA84B5cd46C7E91ECdF3',
+  18,
+  'USDT',
+  'Tether USD',
+  'https://tether.to/',
+)
+
 const USDT_ETH = new Token(
   ChainId.ETHEREUM,
   '0x55d398326f99059fF775485246999027B3197955',
@@ -88,7 +119,7 @@ const USDT_ETH = new Token(
 
 export const USDT: Record<ChainId, Token> = {
   [ChainId.MAINNET]: USDT_BSC,
-  [ChainId.TESTNET]: USDT_BSC,
+  [ChainId.TESTNET]: USDT_TESTNET,
   [ChainId.ETHEREUM]: USDT_ETH,
   [ChainId.GOERLI]: USDT_ETH,
   [ChainId.RINKEBY]: USDT_ETH,
@@ -162,7 +193,7 @@ export const BUSD: Record<ChainId, Token> = {
 }
 
 export const mainnetTokens = defineTokens({
-  svc: new Token(MAINNET, process.env.NEXT_PUBLIC_SVC_ADDRESS, 18, 'SVC', 'Savvycoin', 'https://coin.savvycom.vn/'),
+  svc: new Token(MAINNET, SVC[ChainId.MAINNET].address, 18, 'SVC', 'Savvycoin', 'https://coin.savvycom.vn/'),
   wbnb: new Token(
     MAINNET,
     '0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c',
@@ -2266,7 +2297,7 @@ export const mainnetTokens = defineTokens({
 } as const)
 
 export const testnetTokens = defineTokens({
-  svc: new Token(TESTNET, process.env.NEXT_PUBLIC_SVC_ADDRESS, 18, 'SVC', 'Savvycoin', 'https://coin.savvycom.vn/'),
+  svc: new Token(TESTNET, SVC[ChainId.TESTNET].address, 18, 'SVC', 'Savvycoin', 'https://coin.savvycom.vn/'),
   wbnb: new Token(
     TESTNET,
     '0xae13d989daC2f0dEbFf460aC112a837C89BAa7cd',

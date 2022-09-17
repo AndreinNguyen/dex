@@ -1,15 +1,16 @@
 import { SerializedFarmConfig } from 'config/constants/types'
 import BigNumber from 'bignumber.js'
 import { getFullDecimalMultiplier } from 'utils/getFullDecimalMultiplier'
+import { ChainId } from '@savvydex/sdk'
 import { BIG_ZERO, BIG_TWO } from '../../utils/bigNumber'
 import { fetchPublicFarmsData } from './fetchPublicFarmData'
 import { fetchMasterChefData } from './fetchMasterChefData'
 import { SerializedFarm } from '../types'
 
-const fetchFarms = async (farmsToFetch: SerializedFarmConfig[]): Promise<SerializedFarm[]> => {
+const fetchFarms = async (farmsToFetch: SerializedFarmConfig[], chainId: ChainId): Promise<SerializedFarm[]> => {
   const [farmResult, masterChefResult] = await Promise.all([
-    fetchPublicFarmsData(farmsToFetch),
-    fetchMasterChefData(farmsToFetch),
+    fetchPublicFarmsData(farmsToFetch, chainId),
+    fetchMasterChefData(farmsToFetch, chainId),
   ])
 
   return farmsToFetch.map((farm, index) => {

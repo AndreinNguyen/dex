@@ -459,10 +459,10 @@ export function useTrackedTokenPairs(): [Token, Token][] {
 
   const farmPairs: [Token, Token][] = useMemo(
     () =>
-      farms
+      farms(chainId)
         .filter((farm) => farm.pid !== 0)
         .map((farm) => [deserializeToken(farm.token), deserializeToken(farm.quoteToken)]),
-    [],
+    [chainId],
   )
 
   // pairs for every token against every base

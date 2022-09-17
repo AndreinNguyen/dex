@@ -13,6 +13,8 @@ import { getMasterChefAddress } from 'utils/addressHelpers'
 import { getBalanceAmount } from 'utils/formatBalance'
 import { ethersToBigNumber } from 'utils/bigNumber'
 import type { AppState } from 'state'
+import { ChainId } from '@savvydex/sdk'
+import { BigNumber } from '@ethersproject/bignumber'
 import fetchFarms from './fetchFarms'
 import getFarmsPrices from './getFarmsPrices'
 import {
@@ -22,10 +24,10 @@ import {
   fetchFarmUserStakedBalances,
 } from './fetchFarmUser'
 import { SerializedFarmsState, SerializedFarm } from '../types'
-import { fetchMasterChefFarmPoolLength } from './fetchMasterChefData'
 import { resetUserState } from '../global/actions'
 
-const noAccountFarmConfig = farmsConfig.map((farm) => ({
+// TODO: Switch to mainnet on production
+const noAccountFarmConfig = farmsConfig(ChainId.TESTNET).map((farm) => ({
   ...farm,
   userData: {
     allowance: '0',
@@ -45,14 +47,15 @@ const initialState: SerializedFarmsState = {
 // Async thunks
 export const fetchFarmsPublicDataAsync = createAsyncThunk<
   [SerializedFarm[], number, number],
-  number[],
+  { pids: number[]; chainId: ChainId },
   {
     state: AppState
   }
 >(
   'farms/fetchFarmsPublicDataAsync',
-  async (pids) => {
-    const masterChefAddress = getMasterChefAddress()
+  async ({ pids, chainId }) => {
+    const masterChefAddress = getMasterChefAddress(chainId)
+
     const calls = [
       {
         address: masterChefAddress,
@@ -65,14 +68,16 @@ export const fetchFarmsPublicDataAsync = createAsyncThunk<
         // params: [true],
       },
     ]
-    const [[poolLength], [rewardTokenPerBlock]] = await multicall(masterchefABI, calls)
+    const [[poolLength], [rewardTokenPerBlock]] = await multicall(masterchefABI, calls, chainId)
 
     const regularCakePerBlock = getBalanceAmount(ethersToBigNumber(rewardTokenPerBlock))
-    const farmsToFetch = farmsConfig.filter((farmConfig) => pids.includes(farmConfig.pid))
+    const farmsToFetch = farmsConfig(chainId).filter((farmConfig) => pids.includes(farmConfig.pid))
     const farmsCanFetch = farmsToFetch.filter((f) => poolLength.gt(f.pid))
 
-    const farms = await fetchFarms(farmsCanFetch)
+    const farms = await fetchFarms(farmsCanFetch, chainId)
+
     const farmsWithPrices = getFarmsPrices(farms)
+    // console.log({ farms, farmsWithPrices })
 
     return [farmsWithPrices, poolLength.toNumber(), regularCakePerBlock.toNumber()]
   },
@@ -98,21 +103,21 @@ interface FarmUserDataResponse {
 
 export const fetchFarmUserDataAsync = createAsyncThunk<
   FarmUserDataResponse[],
-  { account: string; pids: number[] },
+  { account: string; pids: number[]; chainId: ChainId },
   {
     state: AppState
   }
 >(
   'farms/fetchFarmUserDataAsync',
-  async ({ account, pids }) => {
-    const poolLength = await fetchMasterChefFarmPoolLength()
-    const farmsToFetch = farmsConfig.filter((farmConfig) => pids.includes(farmConfig.pid))
+  async ({ account, pids, chainId }) => {
+    const poolLength = BigNumber.from('3')
+    const farmsToFetch = farmsConfig(chainId).filter((farmConfig) => pids.includes(farmConfig.pid))
     const farmsCanFetch = farmsToFetch.filter((f) => poolLength.gt(f.pid))
     const [userFarmAllowances, userFarmTokenBalances, userStakedBalances, userFarmEarnings] = await Promise.all([
-      fetchFarmUserAllowances(account, farmsCanFetch),
-      fetchFarmUserTokenBalances(account, farmsCanFetch),
-      fetchFarmUserStakedBalances(account, farmsCanFetch),
-      fetchFarmUserEarnings(account, farmsCanFetch),
+      fetchFarmUserAllowances(account, farmsCanFetch, chainId),
+      fetchFarmUserTokenBalances(account, farmsCanFetch, chainId),
+      fetchFarmUserStakedBalances(account, farmsCanFetch, chainId),
+      fetchFarmUserEarnings(account, farmsCanFetch, chainId),
     ])
 
     return userFarmAllowances.map((farmAllowance, index) => {

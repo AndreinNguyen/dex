@@ -35,13 +35,14 @@ import {
   getGalaxyNTFClaimingContract,
   getSVCContract,
 } from 'utils/contractHelpers'
-import { getMulticallAddress } from 'utils/addressHelpers'
+import { getMasterChefAddress, getMulticallAddress } from 'utils/addressHelpers'
 import { Erc20, Erc20Bytes32, Multicall, Weth, Cake, Erc721collection, CakeVaultV2, Svc } from 'config/abi/types'
 import { useSigner } from 'wagmi'
 
 // Imports below migrated from Exchange useContract.ts
 import { Contract } from '@ethersproject/contracts'
 import { WNATIVE } from '@savvydex/sdk'
+import masterChef from 'config/abi/masterchef.json'
 import IPancakePairABI from '../config/abi/IPancakePair.json'
 import { ERC20_BYTES32_ABI } from '../config/abi/erc20'
 import ERC20_ABI from '../config/abi/erc20.json'
@@ -117,7 +118,8 @@ export const useProfileContract = (withSignerIfPossible = true) => {
 
 export const useMasterchef = (withSignerIfPossible = true) => {
   const providerOrSigner = useProviderOrSigner(withSignerIfPossible)
-  return useMemo(() => getMasterchefContract(providerOrSigner), [providerOrSigner])
+  const { chainId } = useActiveWeb3React()
+  return useMemo(() => getMasterchefContract(providerOrSigner, chainId), [chainId, providerOrSigner])
 }
 
 export const useMasterchefV1 = () => {
@@ -292,4 +294,9 @@ export function usePairContract(pairAddress?: string, withSignerIfPossible?: boo
 export function useMulticallContract() {
   const { chainId } = useActiveWeb3React()
   return useContract<Multicall>(getMulticallAddress(chainId), multiCallAbi, false)
+}
+
+export function useMasterChefContract() {
+  const { chainId } = useActiveWeb3React()
+  return useContract<Multicall>(getMasterChefAddress(chainId), masterChef, false)
 }

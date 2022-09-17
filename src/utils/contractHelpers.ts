@@ -5,6 +5,7 @@ import { bscRpcProvider } from 'utils/providers'
 import poolsConfig from 'config/constants/pools'
 import { PoolCategory } from 'config/constants/types'
 import { mainnetTokens } from 'config/constants/tokens'
+import { ChainId } from '@savvydex/sdk'
 
 // Addresses
 import {
@@ -115,7 +116,7 @@ import type {
 } from 'config/abi/types'
 
 export const getContract = (abi: any, address: string, signer?: Signer | Provider) => {
-  const signerOrProvider = signer ?? bscRpcProvider
+  const signerOrProvider = signer ?? bscRpcProvider()
 
   return new Contract(address, abi, signerOrProvider)
 }
@@ -166,8 +167,8 @@ export const getBunnyFactoryContract = (signer?: Signer | Provider) => {
 export const getBunnySpecialContract = (signer?: Signer | Provider) => {
   return getContract(bunnySpecialAbi, getBunnySpecialAddress(), signer) as BunnySpecial
 }
-export const getMasterchefContract = (signer?: Signer | Provider) => {
-  return getContract(masterChef, getMasterChefAddress(), signer) as Masterchef
+export const getMasterchefContract = (signer?: Signer | Provider, chainId?: ChainId) => {
+  return getContract(masterChef, getMasterChefAddress(chainId), signer) as Masterchef
 }
 export const getMasterchefV1Contract = (signer?: Signer | Provider) => {
   return getContract(masterChefV1, getMasterChefV1Address(), signer) as MasterchefV1
@@ -212,8 +213,8 @@ export const getPredictionsContract = (address: string, signer?: Signer | Provid
 export const getChainlinkOracleContract = (address: string, signer?: Signer | Provider) => {
   return getContract(chainlinkOracleAbi, address, signer) as ChainlinkOracle
 }
-export const getMulticallContract = () => {
-  return getContract(MultiCallAbi, getMulticallAddress(), bscRpcProvider) as Multicall
+export const getMulticallContract = (chainId: ChainId) => {
+  return getContract(MultiCallAbi, getMulticallAddress(chainId), bscRpcProvider(chainId)) as Multicall
 }
 export const getBunnySpecialCakeVaultContract = (signer?: Signer | Provider) => {
   return getContract(bunnySpecialCakeVaultAbi, getBunnySpecialCakeVaultAddress(), signer) as BunnySpecialCakeVault

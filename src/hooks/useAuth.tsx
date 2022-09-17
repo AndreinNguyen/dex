@@ -23,9 +23,10 @@ const useAuth = () => {
       try {
         const connected = await connectAsync({ connector: findConnector, chainId })
         if (connected.chain.id !== chainId) {
-          connected.connector.switchChain?.(chainId).catch(() => {
-            mutate('session-chain-id', connected.chain.id)
-          })
+          // TODO: comment this for disable switch network
+          // connected.connector.switchChain?.(chainId).catch(() => {
+          //   mutate('session-chain-id', connected.chain.id)
+          // })
         }
       } catch (error) {
         console.error(error)

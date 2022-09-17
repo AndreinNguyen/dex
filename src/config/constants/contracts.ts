@@ -1,7 +1,7 @@
 export default {
   masterChef: {
-    97: process.env.NEXT_PUBLIC_FARMING_CONTRACT,
-    56: process.env.NEXT_PUBLIC_FARMING_CONTRACT,
+    97: '0x6E2Aa59E3e6B02D4557Dd4Ac4F65B5dc922d1163',
+    56: '0x4D5Dd8B0Ab74E83B4c8e60Efd46ABD66782e910f',
   },
   masterChefV1: {
     97: '0x1d32c2945C8FDCBc7156c553B7cEa4325a17f4f9',

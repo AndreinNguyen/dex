@@ -15,6 +15,7 @@ import { useFarmUser, useLpTokenPrice, usePriceCakeBusd } from 'state/farms/hook
 import styled from 'styled-components'
 import { getAddress } from 'utils/addressHelpers'
 import getLiquidityUrlPathParts from 'utils/getLiquidityUrlPathParts'
+import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import useApproveFarm from '../../../hooks/useApproveFarm'
 import useStakeFarms from '../../../hooks/useStakeFarms'
 import useUnstakeFarms from '../../../hooks/useUnstakeFarms'
@@ -59,6 +60,7 @@ const Staked: React.FunctionComponent<StackedActionProps> = ({
   const router = useRouter()
   // const lpPrice = useLpTokenPrice(lpSymbol)
   const cakePrice = usePriceCakeBusd()
+  const { chainId } = useActiveWeb3React()
 
   const isApproved = account && allowance && allowance.isGreaterThan(0)
 
@@ -80,7 +82,7 @@ const Staked: React.FunctionComponent<StackedActionProps> = ({
           {t('Your funds have been staked in the farm')}
         </ToastDescriptionWithTx>,
       )
-      dispatch(fetchFarmUserDataAsync({ account, pids: [pid] }))
+      dispatch(fetchFarmUserDataAsync({ account, pids: [pid], chainId }))
     }
   }
 
@@ -95,7 +97,7 @@ const Staked: React.FunctionComponent<StackedActionProps> = ({
           {t('Your earnings have also been harvested to your wallet')}
         </ToastDescriptionWithTx>,
       )
-      dispatch(fetchFarmUserDataAsync({ account, pids: [pid] }))
+      dispatch(fetchFarmUserDataAsync({ account, pids: [pid], chainId }))
     }
   }
 
@@ -127,9 +129,9 @@ const Staked: React.FunctionComponent<StackedActionProps> = ({
     })
     if (receipt?.status) {
       toastSuccess(t('Contract Enabled'), <ToastDescriptionWithTx txHash={receipt.transactionHash} />)
-      dispatch(fetchFarmUserDataAsync({ account, pids: [pid] }))
+      dispatch(fetchFarmUserDataAsync({ account, pids: [pid], chainId }))
     }
-  }, [onApprove, dispatch, account, pid, t, toastSuccess, fetchWithCatchTxError])
+  }, [fetchWithCatchTxError, onApprove, toastSuccess, t, dispatch, account, pid, chainId])
 
   if (!account) {
     return (

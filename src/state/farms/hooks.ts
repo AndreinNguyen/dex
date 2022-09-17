@@ -1,4 +1,4 @@
-import useActiveWeb3React from 'hooks/useActiveWeb3React'
+import useActiveWeb3React, { useActiveChainId } from 'hooks/useActiveWeb3React'
 import { useWeb3React } from '@pancakeswap/wagmi'
 import BigNumber from 'bignumber.js'
 import { farmsConfig, SLOW_INTERVAL } from 'config/constants'
@@ -22,12 +22,13 @@ import {
 export const usePollFarmsWithUserData = () => {
   const dispatch = useAppDispatch()
   const { account } = useWeb3React()
+  const chainId = useActiveChainId()
 
   useSWRImmutable(
-    ['publicFarmData'],
+    ['publicFarmData', chainId],
     () => {
-      const pids = farmsConfig.map((farmToFetch) => farmToFetch.pid)
-      dispatch(fetchFarmsPublicDataAsync(pids))
+      const pids = farmsConfig(chainId).map((farmToFetch) => farmToFetch.pid)
+      dispatch(fetchFarmsPublicDataAsync({ pids, chainId }))
     },
     {
       refreshInterval: SLOW_INTERVAL,
@@ -35,10 +36,10 @@ export const usePollFarmsWithUserData = () => {
   )
 
   useSWRImmutable(
-    account ? ['farmsWithUserData', account] : null,
+    account ? ['farmsWithUserData', account, chainId] : null,
     () => {
-      const pids = farmsConfig.map((farmToFetch) => farmToFetch.pid)
-      dispatch(fetchFarmUserDataAsync({ account, pids }))
+      const pids = farmsConfig(chainId).map((farmToFetch) => farmToFetch.pid)
+      dispatch(fetchFarmUserDataAsync({ account, pids, chainId }))
     },
     {
       refreshInterval: SLOW_INTERVAL,
@@ -63,7 +64,7 @@ export const usePollCoreFarmData = () => {
   const { chainId } = useActiveWeb3React()
 
   useFastRefreshEffect(() => {
-    dispatch(fetchFarmsPublicDataAsync(coreFarmPIDs[chainId]))
+    dispatch(fetchFarmsPublicDataAsync({ pids: coreFarmPIDs[chainId], chainId }))
   }, [chainId, dispatch])
 }
 

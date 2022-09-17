@@ -89,7 +89,7 @@ export const useActiveChainId = () => {
   const localChainId = useLocalNetworkChain()
   const { chain } = useNetwork()
   // TODO: Switch to mainnet on production
-  const chainId = chain?.id ?? localChainId ?? ChainId.TESTNET
+  const chainId = chain?.id ?? localChainId ?? ChainId.MAINNET
   return chainId
 }
 
