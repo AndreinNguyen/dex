@@ -77,6 +77,7 @@ const Menu: React.FC<NavProps> = ({
   linkComponent = "a",
   userMenu,
   banner,
+  rightSide,
   globalMenu,
   isDark,
   toggleTheme,
@@ -155,7 +156,8 @@ const Menu: React.FC<NavProps> = ({
                     <CakePrice showSkeleton={svcFetchStatus} svcBalance={svcBalance} />
                   </Box>
                 )}
-                {globalMenu} {userMenu}
+                {/* {globalMenu} {userMenu} */}
+                {rightSide}
               </Flex>
             </StyledNav>
           </StyledNavContainer>
