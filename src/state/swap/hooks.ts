@@ -1,4 +1,4 @@
-import { Currency, CurrencyAmount, Trade, TradeType } from '@savvydex/sdk'
+import { ChainId, Currency, CurrencyAmount, Trade, TradeType } from '@savvydex/sdk'
 import { useWeb3React } from '@pancakeswap/wagmi'
 import { ParsedUrlQuery } from 'querystring'
 import { useEffect, useMemo, useState } from 'react'
@@ -19,6 +19,7 @@ import { computeSlippageAdjustedAmounts } from 'utils/exchange'
 import getLpAddress from 'utils/getLpAddress'
 import { getTokenAddress } from 'views/Swap/components/Chart/utils'
 import tryParseAmount from 'utils/tryParseAmount'
+import { SVC, USDT } from 'config/constants/tokens'
 import { AppState, useAppDispatch } from '../index'
 import { useCurrencyBalances } from '../wallet/hooks'
 import { Field, replaceSwapState, updateDerivedPairData, updatePairData } from './actions'
@@ -201,9 +202,9 @@ function validatedRecipient(recipient: any): string | null {
   return null
 }
 
-export function queryParametersToSwapState(parsedQs: ParsedUrlQuery): SwapState {
-  let inputCurrency = parseCurrencyFromURLParameter(parsedQs.inputCurrency) || DEFAULT_INPUT_CURRENCY
-  let outputCurrency = parseCurrencyFromURLParameter(parsedQs.outputCurrency) || DEFAULT_OUTPUT_CURRENCY
+export function queryParametersToSwapState(parsedQs: ParsedUrlQuery, chainId: ChainId): SwapState {
+  let inputCurrency = parseCurrencyFromURLParameter(parsedQs.inputCurrency) || USDT[chainId].address
+  let outputCurrency = parseCurrencyFromURLParameter(parsedQs.outputCurrency) || SVC[chainId].address
   if (inputCurrency === outputCurrency) {
     if (typeof parsedQs.outputCurrency === 'string') {
       inputCurrency = ''
@@ -242,7 +243,7 @@ export function useDefaultsFromURLSearch():
 
   useEffect(() => {
     if (!chainId) return
-    const parsed = queryParametersToSwapState(query)
+    const parsed = queryParametersToSwapState(query, chainId)
 
     dispatch(
       replaceSwapState({
