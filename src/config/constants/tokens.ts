@@ -1,7 +1,7 @@
-import { ChainId, Token } from '@savvydex/sdk'
+import { ChainId, Token, WNATIVE } from '@savvydex/sdk'
 import { serializeToken } from 'state/user/hooks/helpers'
 
-const { MAINNET, TESTNET } = ChainId
+const { MAINNET, TESTNET, MUMBAI } = ChainId
 
 interface TokenList {
   [symbol: string]: Token
@@ -25,6 +25,15 @@ const SVC_TESTNET = new Token(
   'https://pancakeswap.finance/',
 )
 
+const SVC_MUMBAI = new Token(
+  ChainId.MUMBAI,
+  '0xAa954FE24D2462244b6Ab54972F7bb78F0Db87fF',
+  18,
+  'SVC',
+  'Savvy Coin',
+  'https://pancakeswap.finance/',
+)
+
 // TODO: update address later
 export const SVC: Record<ChainId, Token> = {
   [ChainId.MAINNET]: SVC_MAINNET,
@@ -33,7 +42,7 @@ export const SVC: Record<ChainId, Token> = {
   [ChainId.GOERLI]: SVC_TESTNET,
   [ChainId.RINKEBY]: SVC_TESTNET,
   [ChainId.POLYGON]: SVC_TESTNET,
-  [ChainId.MUMBAI]: SVC_TESTNET,
+  [ChainId.MUMBAI]: SVC_MUMBAI,
 }
 
 // TODO: update address later
@@ -111,7 +120,16 @@ const USDT_TESTNET = new Token(
 const USDT_ETH = new Token(
   ChainId.ETHEREUM,
   '0x55d398326f99059fF775485246999027B3197955',
-  6,
+  18,
+  'USDT',
+  'Tether USD',
+  'https://tether.to/',
+)
+
+const USDT_MUMBAI = new Token(
+  ChainId.MUMBAI,
+  '0x0afF29eeCf746EC239C8DA3E8e630F46FCaBC48e',
+  18,
   'USDT',
   'Tether USD',
   'https://tether.to/',
@@ -124,7 +142,7 @@ export const USDT: Record<ChainId, Token> = {
   [ChainId.GOERLI]: USDT_ETH,
   [ChainId.RINKEBY]: USDT_ETH,
   [ChainId.POLYGON]: USDT_ETH,
-  [ChainId.MUMBAI]: USDT_ETH,
+  [ChainId.MUMBAI]: USDT_MUMBAI,
 }
 
 export const USDC: Record<ChainId, Token> = {
@@ -194,16 +212,9 @@ export const BUSD: Record<ChainId, Token> = {
 
 export const mainnetTokens = defineTokens({
   svc: new Token(MAINNET, SVC[ChainId.MAINNET].address, 18, 'SVC', 'Savvycoin', 'https://coin.savvycom.vn/'),
-  wbnb: new Token(
-    MAINNET,
-    '0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c',
-    18,
-    'WBNB',
-    'Wrapped BNB',
-    'https://www.binance.com/',
-  ),
+  wbnb: new Token(MAINNET, WNATIVE[ChainId.MAINNET].address, 18, 'WBNB', 'Wrapped BNB', 'https://www.binance.com/'),
   // bnb here points to the wbnb contract. Wherever the currency BNB is required, conditional checks for the symbol 'BNB' can be used
-  bnb: new Token(MAINNET, '0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c', 18, 'BNB', 'BNB', 'https://www.binance.com/'),
+  bnb: new Token(MAINNET, WNATIVE[ChainId.MAINNET].address, 18, 'BNB', 'BNB', 'https://www.binance.com/'),
   cake: new Token(
     MAINNET,
     '0x0E09FaBB73Bd3Ade0a17ECC321fD13a19e81cE82',
@@ -249,14 +260,7 @@ export const mainnetTokens = defineTokens({
     'BSC Defi blue chips token',
     'https://powerpool.finance/',
   ),
-  busd: new Token(
-    MAINNET,
-    '0x55d398326f99059fF775485246999027B3197955',
-    18,
-    'USDT',
-    'Binance USDT',
-    'https://www.paxos.com/usdt/',
-  ),
+  busd: new Token(MAINNET, USDT[ChainId.MAINNET].address, 18, 'USDT', 'Binance USDT', 'https://www.paxos.com/usdt/'), // TODO: This is USDT, but we haven't changed our name yet
   dai: new Token(
     MAINNET,
     '0x1AF3F329e8BE154074D8769D1FFa4eE058B1DBc3',
@@ -2298,14 +2302,7 @@ export const mainnetTokens = defineTokens({
 
 export const testnetTokens = defineTokens({
   svc: new Token(TESTNET, SVC[ChainId.TESTNET].address, 18, 'SVC', 'Savvycoin', 'https://coin.savvycom.vn/'),
-  wbnb: new Token(
-    TESTNET,
-    '0xae13d989daC2f0dEbFf460aC112a837C89BAa7cd',
-    18,
-    'WBNB',
-    'Wrapped BNB',
-    'https://www.binance.com/',
-  ),
+  wbnb: new Token(TESTNET, WNATIVE[ChainId.TESTNET].address, 18, 'WBNB', 'Wrapped BNB', 'https://www.binance.com/'),
   cake: new Token(
     TESTNET,
     '0xa35062141Fa33BCA92Ce69FeD37D0E8908868AAe',
@@ -2314,14 +2311,7 @@ export const testnetTokens = defineTokens({
     'PancakeSwap Token',
     'https://pancakeswap.finance/',
   ),
-  busd: new Token(
-    TESTNET,
-    process.env.NEXT_PUBLIC_BUSD_ADDRESS,
-    18,
-    'USDT',
-    'Binance USDT',
-    'https://www.paxos.com/busd/',
-  ),
+  busd: new Token(TESTNET, USDT[ChainId.TESTNET].address, 18, 'USDT', 'Binance USDT', 'https://www.paxos.com/busd/'), // TODO: This is USDT, but we haven't changed our name yet
   syrup: new Token(
     TESTNET,
     '0xfE1e507CeB712BDe086f3579d2c03248b2dB77f9',
@@ -2332,6 +2322,36 @@ export const testnetTokens = defineTokens({
   ),
   bake: new Token(
     TESTNET,
+    '0xE02dF9e3e622DeBdD69fb838bB799E3F168902c5',
+    18,
+    'BAKE',
+    'Bakeryswap Token',
+    'https://www.bakeryswap.org/',
+  ),
+} as const)
+
+export const mumbaiTokens = defineTokens({
+  svc: new Token(MUMBAI, SVC[ChainId.MUMBAI].address, 18, 'SVC', 'Savvycoin', 'https://coin.savvycom.vn/'),
+  wbnb: new Token(MUMBAI, WNATIVE[ChainId.MUMBAI].address, 18, 'WMACTIC', 'Wrapped Matic', 'https://www.binance.com/'),
+  cake: new Token(
+    MUMBAI,
+    '0xa35062141Fa33BCA92Ce69FeD37D0E8908868AAe',
+    18,
+    'CAKE',
+    'PancakeSwap Token',
+    'https://pancakeswap.finance/',
+  ),
+  busd: new Token(MUMBAI, USDT[ChainId.MUMBAI].address, 18, 'USDT', 'Binance USDT', 'https://www.paxos.com/busd/'), // TODO: This is USDT, but we haven't changed our name yet
+  syrup: new Token(
+    MUMBAI,
+    '0xfE1e507CeB712BDe086f3579d2c03248b2dB77f9',
+    18,
+    'SYRUP',
+    'SyrupBar Token',
+    'https://pancakeswap.finance/',
+  ),
+  bake: new Token(
+    MUMBAI,
     '0xE02dF9e3e622DeBdD69fb838bB799E3F168902c5',
     18,
     'BAKE',

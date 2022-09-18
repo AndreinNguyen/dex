@@ -1,10 +1,11 @@
 import { ChainId } from '@savvydex/sdk'
-import { serializeTokens, mainnetTokens, SVC, LP_SVC_BUSD, LP_WBNB_BUSD, testnetTokens } from './tokens'
+import { serializeTokens, mainnetTokens, SVC, LP_SVC_BUSD, LP_WBNB_BUSD, testnetTokens, mumbaiTokens } from './tokens'
 import { SerializedFarmConfig } from './types'
 
 const serializedTokens = {
   [ChainId.TESTNET]: serializeTokens(testnetTokens),
   [ChainId.MAINNET]: serializeTokens(mainnetTokens),
+  [ChainId.MUMBAI]: serializeTokens(mumbaiTokens),
 }
 
 // TODO: support switch network
