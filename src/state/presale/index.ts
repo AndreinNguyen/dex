@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import { PresaleState } from 'state/types'
+import { ChainId } from '@savvydex/sdk'
 import fetchUserPresaleInfo from './fetchUserPresaleInfo'
 
 const initialState: PresaleState = {
@@ -18,9 +19,9 @@ export const fetchPresaleDataAsync = createAsyncThunk<
     pendingAmount: string
     receivedAmount: string
   },
-  string
->('presale/fetchPresaleDataAsync', async (account: string) => {
-  const res = await fetchUserPresaleInfo(account)
+  { account: string; chainId: ChainId }
+>('presale/fetchPresaleDataAsync', async ({ account, chainId }) => {
+  const res = await fetchUserPresaleInfo(account, chainId)
 
   return {
     totalAmount: res.totalCoin.toString(),

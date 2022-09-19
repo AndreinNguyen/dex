@@ -3,7 +3,6 @@ import { useWeb3React } from '@pancakeswap/wagmi'
 import { ParsedUrlQuery } from 'querystring'
 import { useEffect, useMemo, useState } from 'react'
 import { SLOW_INTERVAL } from 'config/constants'
-import { DEFAULT_INPUT_CURRENCY, DEFAULT_OUTPUT_CURRENCY } from 'config/constants/exchange'
 import useSWRImmutable from 'swr/immutable'
 import { useDispatch, useSelector } from 'react-redux'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
@@ -45,7 +44,7 @@ export function useSwapState(): AppState['swap'] {
 const BAD_RECIPIENT_ADDRESSES: string[] = [
   '0x249C9DADfd1B751B1224C5c1CD146dB41FFB1e75', // v2 factory
   '0xE2cb7F5cB8660B44Bddb6141D15f3AE8219F3B95', // v2 router 01
-  process.env.NEXT_PUBLIC_ROUTER_ADDRESS, // v2 router 02
+  '0xb3fCf70006119745Cb241ee78AD43a988EE6Fd41', // TODO: v2 router 02 TESTNET
 ]
 
 /**

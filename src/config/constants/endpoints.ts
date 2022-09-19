@@ -1,3 +1,5 @@
+import { ChainId } from '@savvydex/sdk'
+
 export const GRAPH_API_PROFILE = process.env.NEXT_PUBLIC_GRAPH_API_PROFILE
 export const GRAPH_API_PREDICTION = process.env.NEXT_PUBLIC_GRAPH_API_PREDICTION
 export const GRAPH_API_LOTTERY = process.env.NEXT_PUBLIC_GRAPH_API_LOTTERY
@@ -22,6 +24,12 @@ export const TC_MOD_SUBGRAPH = 'https://api.thegraph.com/subgraphs/name/pancakes
 
 export const GALAXY_NFT_CLAIMING_API = 'https://graphigo.prd.galaxy.eco/query'
 
-export const SAVVYDEX_API = process.env.NEXT_PUBLIC_END_POINT_API
-
-// export const SAVVYDEX_API = 'http://localhost:3005/api'
+export const ApiEndpoints: Record<ChainId, string> = {
+  [ChainId.MAINNET]: 'https://dex-api.savvycom.ai/api', // bsc mainnet
+  [ChainId.TESTNET]: 'https://lab-dex-api.savvycom.xyz/api', // bsc testnet
+  [ChainId.ETHEREUM]: '',
+  [ChainId.GOERLI]: '',
+  [ChainId.RINKEBY]: '',
+  [ChainId.POLYGON]: '', // polygon mainnet
+  [ChainId.MUMBAI]: '', // polygon testnet
+}

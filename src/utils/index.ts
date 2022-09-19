@@ -61,7 +61,7 @@ export function getContract(address: string, ABI: any, signer?: Signer | Provide
     throw Error(`Invalid 'address' parameter '${address}'.`)
   }
 
-  return new Contract(address, ABI, signer ?? bscRpcProvider)
+  return new Contract(address, ABI, signer ?? bscRpcProvider())
 }
 
 export function escapeRegExp(string: string): string {
