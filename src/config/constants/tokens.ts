@@ -53,7 +53,7 @@ export const LP_SVC_BUSD: Record<ChainId, string> = {
   [ChainId.GOERLI]: '',
   [ChainId.RINKEBY]: '',
   [ChainId.POLYGON]: '',
-  [ChainId.MUMBAI]: '',
+  [ChainId.MUMBAI]: '0x413d4ceDC6642734705099360433b479d679C2d0',
 }
 
 // TODO: update address later
@@ -64,7 +64,7 @@ export const LP_WBNB_BUSD: Record<ChainId, string> = {
   [ChainId.GOERLI]: '',
   [ChainId.RINKEBY]: '',
   [ChainId.POLYGON]: '',
-  [ChainId.MUMBAI]: '',
+  [ChainId.MUMBAI]: '0xee055ba9bd7254ba292d1ed3f523b1d71d477f2c',
 }
 
 export const defineTokens = <T extends TokenList>(t: T) => t

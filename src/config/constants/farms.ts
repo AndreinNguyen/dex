@@ -23,6 +23,7 @@ const farms = (chainId: ChainId): SerializedFarmConfig[] => [
     lpAddresses: {
       97: SVC[ChainId.TESTNET].address,
       56: SVC[ChainId.MAINNET].address,
+      80001: SVC[ChainId.MUMBAI].address,
     },
     token: serializedTokens[chainId].svc,
     quoteToken: serializedTokens[chainId].svc,
@@ -34,6 +35,7 @@ const farms = (chainId: ChainId): SerializedFarmConfig[] => [
     lpAddresses: {
       97: LP_SVC_BUSD[ChainId.TESTNET],
       56: LP_SVC_BUSD[ChainId.MAINNET],
+      80001: LP_SVC_BUSD[ChainId.MUMBAI],
     },
     token: serializedTokens[chainId].svc,
     quoteToken: serializedTokens[chainId].busd,
@@ -45,6 +47,7 @@ const farms = (chainId: ChainId): SerializedFarmConfig[] => [
     lpAddresses: {
       97: LP_WBNB_BUSD[ChainId.TESTNET],
       56: LP_WBNB_BUSD[ChainId.MAINNET],
+      80001: LP_WBNB_BUSD[ChainId.MUMBAI],
     },
     token: serializedTokens[chainId].busd,
     quoteToken: serializedTokens[chainId].wbnb,
