@@ -1,10 +1,11 @@
 import { BigNumber as BigNumberEther } from '@ethersproject/bignumber'
 import { formatEther, parseEther } from '@ethersproject/units'
-import { Button, CardBody, Flex } from '@pancakeswap/uikit'
+import { Button, CardBody, Flex, useModal } from '@pancakeswap/uikit'
 import { Sync } from '@styled-icons/material/Sync'
 import { AppBody } from 'components/App'
 import { HeaderBridge } from 'components/Bridge'
 import { ChainId, networkSupportBridge } from 'components/Bridge/bridgeConfig'
+import PendingApproveModal from 'components/Bridge/PendingApproveModal'
 import ReceivingAddressInput from 'components/Bridge/ReceivingAddressInput'
 import SelectTokenInput from 'components/Bridge/SelectTokenInput'
 import TotalAmountBridge from 'components/Bridge/TotalAmountBridge'
@@ -13,11 +14,18 @@ import Divider from 'components/Divider'
 import Page from 'components/Layout/Page'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import { useGetCakeBalance } from 'hooks/useTokenBalance'
-import { toNumber } from 'lodash'
 import { useEffect, useState } from 'react'
 import { getProviderOrSigner } from 'utils'
 import { getBridgeAddress } from 'utils/addressHelpers'
-import { getBridgeContract, getSVCContract } from 'utils/contractHelpers'
+import { getBridgeContract, getSVCContract, getSVCPolygonContract } from 'utils/contractHelpers'
+
+export enum ApproveModalStatus {
+  PENDING = 1,
+  REJECT,
+  CONFIRMED,
+  APPROVE_COMPLETED,
+  SWAP_COMPLETED,
+}
 
 const Bridge = () => {
   const [fromToken, setFromToken] = useState(networkSupportBridge[ChainId.TESTNET])
@@ -30,7 +38,10 @@ const Bridge = () => {
   const bridgeContract = getBridgeContract(getProviderOrSigner(library, account))
   const svcContract = getSVCContract(getProviderOrSigner(library, account))
   const bridgeAddress = getBridgeAddress()
+  const svcPolygonContract = getSVCPolygonContract(getProviderOrSigner(library, account))
   const { balance: maxBalanceToken } = useGetCakeBalance()
+  const [transactionInfo, setTransactionInfo] = useState()
+  const [approveModalStatus, setApproveModalStatus] = useState<ApproveModalStatus>(ApproveModalStatus.PENDING)
 
   const reverseNetwork = () => {
     if (fromToken || toToken) {
@@ -40,6 +51,18 @@ const Bridge = () => {
       setToToken(from)
     }
   }
+
+  const [onPressApproveModal] = useModal(
+    <PendingApproveModal approveStatus={approveModalStatus} transactionInfo={transactionInfo} />,
+    true,
+    true,
+    'approveBridgeModal',
+  )
+
+  // const getBalancePolygon = async () => {
+  //   const balancePolygon = await svcPolygonContract.balanceOf('0x920C5d0A185Ca7E721824999176e9325D05FB2b6')
+  //   console.log('balancePolygon :>> ', balancePolygon)
+  // }
 
   useEffect(() => {
     if (totalAmount) {
@@ -63,25 +86,38 @@ const Bridge = () => {
   const onLockToken = async () => {
     if (receivingAddress) {
       try {
-        await bridgeContract.lock(receivingAddress, totalAmountFormatted)
+        const res = await bridgeContract.lock(receivingAddress, totalAmountFormatted)
+        setTransactionInfo(res)
+        setApproveModalStatus(ApproveModalStatus.SWAP_COMPLETED)
       } catch (error) {
-        console.error(error)
-      }
-    }
-    if (receivingAddress) {
-      try {
-        await bridgeContract.lock(receivingAddress, totalAmountFormatted)
-      } catch (error) {
+        if (error?.code === 4001) {
+          setApproveModalStatus(ApproveModalStatus.REJECT)
+        }
         console.error(error)
       }
     }
   }
 
   const handleSwap = async () => {
-    if (toNumber(allowanceAmount) < toNumber(formatEther(totalAmountFormatted))) {
-      await (await svcContract.approve(bridgeAddress, maxBalanceToken)).wait()
-      onLockToken()
+    if (Number(allowanceAmount) < Number(formatEther(totalAmountFormatted))) {
+      setApproveModalStatus(ApproveModalStatus.PENDING)
+      onPressApproveModal()
+      try {
+        const confirm = await svcContract.approve(bridgeAddress, maxBalanceToken)
+        setApproveModalStatus(ApproveModalStatus.CONFIRMED)
+        await confirm.wait()
+        setApproveModalStatus(ApproveModalStatus.CONFIRMED)
+        onLockToken()
+      } catch (error) {
+        console.error(error)
+        if (error?.code === 4001) {
+          setApproveModalStatus(ApproveModalStatus.REJECT)
+        }
+      }
     } else {
+      // open confirm swap modal
+      setApproveModalStatus(ApproveModalStatus.APPROVE_COMPLETED)
+      onPressApproveModal()
       onLockToken()
     }
   }
@@ -117,7 +153,7 @@ const Bridge = () => {
 
     return (
       <Button width="100%" onClick={handleSwap}>
-        {allowanceAmount < totalAmount ? 'Approve' : 'Swap'}
+        {Number(allowanceAmount) < Number(totalAmount) ? 'Approve' : 'Swap'}
       </Button>
     )
   }

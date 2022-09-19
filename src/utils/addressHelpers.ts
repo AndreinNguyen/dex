@@ -23,6 +23,9 @@ export const getPancakeProfileAddress = () => {
 export const getBridgeAddress = () => {
   return getAddress(addresses.bridgeSvc)
 }
+export const getSVCPolygonAddress = () => {
+  return getAddress(addresses.svcPolygon)
+}
 export const getPancakeBunniesAddress = () => {
   return getAddress(addresses.pancakeBunnies)
 }

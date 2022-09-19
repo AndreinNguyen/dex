@@ -109,6 +109,10 @@ export default {
   },
   bridgeSvc: {
     56: '',
-    97: '0xeddB70aB861797B8b3BE6eF9D430EF0f90902A64'
-  }
+    97: '0xeddB70aB861797B8b3BE6eF9D430EF0f90902A64',
+  },
+  svcPolygon: {
+    56: '',
+    80001: '0x920C5d0A185Ca7E721824999176e9325D05FB2b6',
+  },
 }
