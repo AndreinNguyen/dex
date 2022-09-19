@@ -1,8 +1,8 @@
 import BigNumber from 'bignumber.js'
+import { SVC } from 'config/constants/tokens'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
+import { useTokenContract } from 'hooks/useContract'
 import { useEffect, useState } from 'react'
-import { getProviderOrSigner } from 'utils'
-import { getSVCContract } from 'utils/contractHelpers'
 import { getDecimalAmount } from 'utils/formatBalance'
 
 interface TransferProps {
@@ -12,8 +12,8 @@ interface TransferProps {
 
 export const useTransfer = (address: string, amount: string, callback?: () => void): TransferProps => {
   const [transferHash, setTransferHash] = useState<string>('')
-  const { account, library } = useActiveWeb3React()
-  const contract = getSVCContract(getProviderOrSigner(library, account))
+  const { chainId } = useActiveWeb3React()
+  const contract = useTokenContract(SVC[chainId].address)
   const transferHandler = async () => {
     try {
       const transferAmount = getDecimalAmount(new BigNumber(amount)).toString()

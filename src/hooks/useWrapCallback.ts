@@ -48,7 +48,7 @@ export default function useWrapCallback(
             ? async () => {
                 try {
                   const txReceipt = await callWithGasPrice(wbnbContract, 'deposit', undefined, {
-                    value: `0x${inputAmount.raw.toString(16)}`,
+                    value: `0x${inputAmount.quotient.toString(16)}`,
                   })
                   addTransaction(txReceipt, {
                     summary: `Wrap ${inputAmount.toSignificant(6)} BNB to WBNB`,
@@ -70,7 +70,7 @@ export default function useWrapCallback(
             ? async () => {
                 try {
                   const txReceipt = await callWithGasPrice(wbnbContract, 'withdraw', [
-                    `0x${inputAmount.raw.toString(16)}`,
+                    `0x${inputAmount.quotient.toString(16)}`,
                   ])
                   addTransaction(txReceipt, { summary: `Unwrap ${inputAmount.toSignificant(6)} WBNB to BNB` })
                 } catch (error) {
