@@ -65,7 +65,7 @@ const getFarmQuoteTokenPrice = (
     return BIG_ONE
   }
 
-  if (farm.quoteToken.symbol === 'WBNB') {
+  if (farm.quoteToken.symbol === 'WBNB' || farm.quoteToken.symbol === 'WMATIC') {
     return bnbPriceBusd
   }
 
@@ -73,7 +73,7 @@ const getFarmQuoteTokenPrice = (
     return BIG_ZERO
   }
 
-  if (quoteTokenFarm.quoteToken.symbol === 'WBNB') {
+  if (quoteTokenFarm.quoteToken.symbol === 'WBNB' || farm.quoteToken.symbol === 'WMATIC') {
     return quoteTokenFarm.tokenPriceVsQuote ? bnbPriceBusd.times(quoteTokenFarm.tokenPriceVsQuote) : BIG_ZERO
   }
 
@@ -85,7 +85,11 @@ const getFarmQuoteTokenPrice = (
 }
 
 const getFarmsPrices = (farms: SerializedFarm[]) => {
-  const bnbBusdFarm = farms.find((farm) => farm.token.symbol === 'USDT' && farm.quoteToken.symbol === 'WBNB')
+  const bnbBusdFarm = farms.find(
+    (farm) =>
+      (farm.token.symbol === 'USDT' && farm.quoteToken.symbol === 'WBNB') ||
+      (farm.token.symbol === 'USDT' && farm.quoteToken.symbol === 'WMATIC'),
+  )
   const bnbPriceBusd = bnbBusdFarm.tokenPriceVsQuote ? BIG_ONE.div(bnbBusdFarm.tokenPriceVsQuote) : BIG_ZERO
   const farmsWithPrices = farms.map((farm) => {
     const quoteTokenFarm = getFarmFromTokenSymbol(farms, farm.quoteToken.symbol)

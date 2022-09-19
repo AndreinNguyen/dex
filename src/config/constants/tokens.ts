@@ -2332,7 +2332,7 @@ export const testnetTokens = defineTokens({
 
 export const mumbaiTokens = defineTokens({
   svc: new Token(MUMBAI, SVC[ChainId.MUMBAI].address, 18, 'SVC', 'Savvycoin', 'https://coin.savvycom.vn/'),
-  wbnb: new Token(MUMBAI, WNATIVE[ChainId.MUMBAI].address, 18, 'WMACTIC', 'Wrapped Matic', 'https://www.binance.com/'),
+  wbnb: new Token(MUMBAI, WNATIVE[ChainId.MUMBAI].address, 18, 'WMATIC', 'Wrapped Matic', 'https://www.binance.com/'),
   cake: new Token(
     MUMBAI,
     '0xa35062141Fa33BCA92Ce69FeD37D0E8908868AAe',
