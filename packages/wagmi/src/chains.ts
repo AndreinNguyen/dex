@@ -134,4 +134,4 @@ export const CHAINS_STARGATE_TESTNET = [
   fantomTestnet,
 ];
 
-export const CHAINS = [bsc, mainnet, bscTest, polygon, polygonMumbai, rinkeby];
+export const CHAINS = [bsc, bscTest, polygon, polygonMumbai];
