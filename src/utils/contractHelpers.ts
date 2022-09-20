@@ -34,6 +34,8 @@ import {
   getTradingCompetitionAddressMoD,
   getBunnySpecialXmasAddress,
   getGalaxyNFTClaimingAddress,
+  getBridgeAddress,
+  getSVCPolygonAddress,
 } from 'utils/addressHelpers'
 
 // ABI
@@ -74,6 +76,8 @@ import galaxyNFTClaimingAbi from 'config/abi/galaxyNFTClaiming.json'
 import nftMarketAbi from 'config/abi/nftMarket.json'
 import pancakeSquadAbi from 'config/abi/pancakeSquad.json'
 import erc721CollectionAbi from 'config/abi/erc721collection.json'
+import bridgeAbi from 'config/abi/bridge.json'
+import svcPolygonAbi from 'config/abi/svcPolygon.json'
 
 // Types
 import type {
@@ -154,6 +158,13 @@ export const getCakeContract = (signer?: Signer | Provider) => {
 }
 export const getSVCContract = (signer?: Signer | Provider) => {
   return getContract(svcAbi, mainnetTokens.svc.address, signer) as Svc
+}
+
+export const getBridgeContract = (signer?: Signer | Provider) => {
+  return getContract(bridgeAbi, getBridgeAddress(), signer)
+}
+export const getSVCPolygonContract = (signer?: Signer | Provider) => {
+  return getContract(svcPolygonAbi, getSVCPolygonAddress(), signer) as Svc
 }
 export const getProfileContract = (signer?: Signer | Provider) => {
   return getContract(profileABI, getPancakeProfileAddress(), signer) as PancakeProfile

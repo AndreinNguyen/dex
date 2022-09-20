@@ -20,6 +20,12 @@ export const getMulticallAddress = (chainId?: number) => {
 export const getPancakeProfileAddress = () => {
   return getAddress(addresses.pancakeProfile)
 }
+export const getBridgeAddress = () => {
+  return getAddress(addresses.bridgeSvc)
+}
+export const getSVCPolygonAddress = () => {
+  return getAddress(addresses.svcPolygon)
+}
 export const getPancakeBunniesAddress = () => {
   return getAddress(addresses.pancakeBunnies)
 }
