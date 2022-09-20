@@ -1,9 +1,7 @@
 import { Token } from '@savvydex/sdk'
-import tokens from 'config/constants/tokens'
-import rugPullTokens from 'config/constants/rugPullTokens'
+import { mainnetTokens } from 'config/constants/tokens'
 
-const { bondly, safemoon, itam, ccar, bttold } = tokens
-const { pokemoney } = rugPullTokens
+const { bondly, safemoon, itam, ccar, bttold } = mainnetTokens
 
 interface WarningTokenList {
   [key: string]: Token
@@ -15,7 +13,6 @@ const SwapWarningTokens = <WarningTokenList>{
   itam,
   ccar,
   bttold,
-  pokemoney,
 }
 
 export default SwapWarningTokens

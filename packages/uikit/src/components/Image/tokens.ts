@@ -5,8 +5,8 @@ const tokens = {
   svc: {
     symbol: "SVC",
     address: {
-      56: process.env.NEXT_PUBLIC_SVC_ADDRESS,
-      97: process.env.NEXT_PUBLIC_SVC_ADDRESS,
+      56: "0x857b64d4A0ce517631210eaf9d512BC04485b439",
+      97: "0xFF3b8ae2FDfbA5daAdcee60FC3E346CAdBcdfb3c",
     },
     decimals: 18,
     projectLink: "https://coin.savvycom.com",

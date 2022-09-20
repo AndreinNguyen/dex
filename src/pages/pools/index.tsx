@@ -1,4 +1,4 @@
-import { useWeb3React } from '@web3-react/core'
+import { useWeb3React } from '@pancakeswap/wagmi'
 import { useContext } from 'react'
 import { FarmsContext, FarmsPageLayout } from 'views/FarmSvc'
 import FarmCard from 'views/FarmSvc/components/FarmCard/FarmCard'

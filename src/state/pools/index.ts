@@ -13,9 +13,9 @@ import { BIG_ZERO } from 'utils/bigNumber'
 import cakeAbi from 'config/abi/cake.json'
 import { getCakeVaultAddress } from 'utils/addressHelpers'
 import { multicallv2 } from 'utils/multicall'
-import tokens from 'config/constants/tokens'
+import { mainnetTokens } from 'config/constants/tokens'
 import { getBalanceNumber } from 'utils/formatBalance'
-import { simpleRpcProvider } from 'utils/providers'
+import { bscRpcProvider } from 'utils/providers'
 import priceHelperLpsConfig from 'config/constants/priceHelperLps'
 import fetchFarms from '../farms/fetchFarms'
 import getFarmsPrices from '../farms/getFarmsPrices'
@@ -97,12 +97,12 @@ export const fetchCakePoolPublicDataAsync = () => async (dispatch, getState) => 
 
 export const fetchCakePoolUserDataAsync = (account: string) => async (dispatch) => {
   const allowanceCall = {
-    address: tokens.svc.address,
+    address: mainnetTokens.svc.address,
     name: 'allowance',
     params: [account, cakeVaultAddress],
   }
   const balanceOfCall = {
-    address: tokens.svc.address,
+    address: mainnetTokens.svc.address,
     name: 'balanceOf',
     params: [account],
   }
@@ -126,7 +126,7 @@ export const fetchPoolsPublicDataAsync = (currentBlockNumber: number) => async (
       fetchPoolsBlockLimits(),
       fetchPoolsTotalStaking(),
       fetchPoolsProfileRequirement(),
-      currentBlockNumber ? Promise.resolve(currentBlockNumber) : simpleRpcProvider.getBlockNumber(),
+      currentBlockNumber ? Promise.resolve(currentBlockNumber) : bscRpcProvider.getBlockNumber(),
     ])
 
     const activePriceHelperLpsConfig = priceHelperLpsConfig.filter((priceHelperLpConfig) => {

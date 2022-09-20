@@ -1,5 +1,6 @@
+import { useActiveChainId } from 'hooks/useActiveWeb3React'
 import { useEffect, useMemo } from 'react'
-import { useWeb3React } from '@web3-react/core'
+import { useWeb3React } from '@pancakeswap/wagmi'
 import { batch, useSelector } from 'react-redux'
 import { useAppDispatch } from 'state'
 import { useFastRefreshEffect, useSlowRefreshEffect } from 'hooks/useRefreshEffect'
@@ -18,12 +19,13 @@ import { makePoolWithUserDataLoadingSelector, makeVaultPoolByKey, poolsWithVault
 
 export const useFetchPublicPoolsData = () => {
   const dispatch = useAppDispatch()
+  const chainId = useActiveChainId()
 
   useSlowRefreshEffect(
     (currentBlock) => {
       const fetchPoolsDataWithFarms = async () => {
-        const activeFarms = farmsConfig.filter((farm) => farm.pid !== 0)
-        await dispatch(fetchFarmsPublicDataAsync(activeFarms.map((farm) => farm.pid)))
+        const activeFarms = farmsConfig(chainId).filter((farm) => farm.pid !== 0)
+        await dispatch(fetchFarmsPublicDataAsync({ pids: activeFarms.map((farm) => farm.pid), chainId }))
         batch(() => {
           dispatch(fetchPoolsPublicDataAsync(currentBlock))
           dispatch(fetchPoolsStakingLimitsAsync())
@@ -32,7 +34,7 @@ export const useFetchPublicPoolsData = () => {
 
       fetchPoolsDataWithFarms()
     },
-    [dispatch],
+    [chainId, dispatch],
   )
 }
 

@@ -15,8 +15,10 @@ interface FinishedRoundTableProps {
 }
 
 const FinishedRoundTable: React.FC<React.PropsWithChildren<FinishedRoundTableProps>> = () => {
-  const { account } = useActiveWeb3React()
-  const { data = [] } = useSWR(['fetchUserPresaleTransaction', account], () => fetchUserPresaleTransaction(account))
+  const { account, chainId } = useActiveWeb3React()
+  const { data = [] } = useSWR(['fetchUserPresaleTransaction', account, chainId], () =>
+    fetchUserPresaleTransaction(account, chainId),
+  )
 
   const convertData = data
     .filter((el) => !el.amountBnb) // because list txns include txns of learn-to-earn, therefore, we ignore it by !el.amountBnb

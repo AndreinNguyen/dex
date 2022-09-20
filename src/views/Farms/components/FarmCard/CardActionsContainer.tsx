@@ -10,6 +10,7 @@ import { useAppDispatch } from 'state'
 import { fetchFarmUserDataAsync } from 'state/farms'
 import styled from 'styled-components'
 import { getAddress } from 'utils/addressHelpers'
+import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import { FarmWithStakedValue } from '../types'
 import useApproveFarm from '../../hooks/useApproveFarm'
 import HarvestAction from './HarvestAction'
@@ -36,6 +37,7 @@ const CardActions: React.FC<FarmCardActionsProps> = ({ farm, account, addLiquidi
   const lpAddress = getAddress(lpAddresses)
   const isApproved = account && allowance && allowance.isGreaterThan(0)
   const dispatch = useAppDispatch()
+  const { chainId } = useActiveWeb3React()
 
   const lpContract = useERC20(lpAddress)
 
@@ -47,9 +49,9 @@ const CardActions: React.FC<FarmCardActionsProps> = ({ farm, account, addLiquidi
     })
     if (receipt?.status) {
       toastSuccess(t('Contract Enabled'), <ToastDescriptionWithTx txHash={receipt.transactionHash} />)
-      dispatch(fetchFarmUserDataAsync({ account, pids: [pid] }))
+      dispatch(fetchFarmUserDataAsync({ account, pids: [pid], chainId }))
     }
-  }, [onApprove, dispatch, account, pid, t, toastSuccess, fetchWithCatchTxError])
+  }, [fetchWithCatchTxError, onApprove, toastSuccess, t, dispatch, account, pid, chainId])
 
   const renderApprovalOrStakeButton = () => {
     return isApproved ? (

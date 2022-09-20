@@ -1,10 +1,11 @@
 import axios from 'axios'
 import camelcaseKeys from 'camelcase-keys'
-import { SAVVYDEX_API } from 'config/constants/endpoints'
+import { ApiEndpoints } from 'config/constants/endpoints'
+import { ChainId } from '@savvydex/sdk'
 import { ResTransaction } from 'state/types'
 
-const fetchUserPresaleTransaction = async (acount: string): Promise<ResTransaction[]> => {
-  const response = await axios.get(`${SAVVYDEX_API}/transactions`, {
+const fetchUserPresaleTransaction = async (acount: string, chainId: ChainId): Promise<ResTransaction[]> => {
+  const response = await axios.get(`${ApiEndpoints[chainId]}/transactions`, {
     params: {
       receiver: acount,
     },

@@ -1,4 +1,5 @@
 import { Menu as UikitMenu } from '@pancakeswap/uikit'
+import { NetworkSwitcher } from 'components/NetworkSwitcher'
 import { NextLinkFromReactRouter } from 'components/NextLink'
 import PhishingWarningBanner from 'components/PhishingWarningBanner'
 import { languageList } from 'config/localization/languages'
@@ -36,7 +37,14 @@ const Menu = (props) => {
         return <NextLinkFromReactRouter to={linkProps.href} {...linkProps} prefetch={false} />
       }}
       userMenu={<UserMenu />}
-      globalMenu={<GlobalSettings />}
+      // globalMenu={<GlobalSettings />}
+      rightSide={
+        <>
+          <GlobalSettings />
+          <NetworkSwitcher />
+          <UserMenu />
+        </>
+      }
       banner={showPhishingWarningBanner && typeof window !== 'undefined' && <PhishingWarningBanner />}
       isDark={isDark}
       currentLang={currentLanguage.code}

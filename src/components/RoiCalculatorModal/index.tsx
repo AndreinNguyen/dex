@@ -15,7 +15,7 @@ import { useEffect, useMemo, useRef } from 'react'
 import styled from 'styled-components'
 import { getBalanceNumber } from 'utils/formatBalance'
 
-import { useWeb3React } from '@web3-react/core'
+import { useWeb3React } from '@pancakeswap/wagmi'
 import AnimatedArrow from './AnimatedArrow'
 import RoiCalculatorFooter from './RoiCalculatorFooter'
 import RoiCard from './RoiCard'

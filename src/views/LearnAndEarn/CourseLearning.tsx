@@ -1,44 +1,45 @@
 import { Button, useModal } from '@pancakeswap/uikit'
 import { ChevronLeft } from '@styled-icons/entypo/ChevronLeft'
-import { useWeb3React } from '@web3-react/core'
+import { useWeb3React } from '@pancakeswap/wagmi'
 import axios from 'axios'
 import camelcaseKeys from 'camelcase-keys'
-import { SAVVYDEX_API } from 'config/constants/endpoints'
+import { ApiEndpoints } from 'config/constants/endpoints'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { useGoogleReCaptcha } from 'react-google-recaptcha-v3'
 import { useMutation } from 'react-query'
 import Page from 'views/Page'
+import { ChainId } from '@savvydex/sdk'
 import ConfirmModal from './ConfirmModal'
 import { Metadata } from './interface'
 import PaginationQuestion from './PaginationQuestion'
 import { LearningContainer, NavigateHeader, ResultContainer } from './style'
 import SubmitAlert from './SubmitAlert'
 
-const getListQuestions = async (id: string) => {
-  const response = await axios.get(`${SAVVYDEX_API}/questions/${id}`)
+const getListQuestions = async ({ id, chainId }: { id: string; chainId: ChainId }) => {
+  const response = await axios.get(`${ApiEndpoints[chainId]}/questions/${id}`)
   return camelcaseKeys(response.data, { deep: true })
 }
 
-const createAnswerQuestion = async (data) => {
-  const response = await axios.post(`${SAVVYDEX_API}/user-questions`, data)
+const createAnswerQuestion = async ({ data, chainId }: { data; chainId: ChainId }) => {
+  const response = await axios.post(`${ApiEndpoints[chainId]}/user-questions`, data)
   return camelcaseKeys(response.data, { deep: true })
 }
 
-const checkQuestionInfo = async (body) => {
-  const response = await axios.post(`${SAVVYDEX_API}/user-questions/check-info`, body)
+const checkQuestionInfo = async ({ body, chainId }: { body; chainId: ChainId }) => {
+  const response = await axios.post(`${ApiEndpoints[chainId]}/user-questions/check-info`, body)
   return camelcaseKeys(response.data, { deep: true })
 }
 
-const claimReward = async (body) => {
-  const response = await axios.post(`${SAVVYDEX_API}/user-questions/claim`, body)
+const claimReward = async ({ body, chainId }: { body; chainId: ChainId }) => {
+  const response = await axios.post(`${ApiEndpoints[chainId]}/user-questions/claim`, body)
   return camelcaseKeys(response.data, { deep: true })
 }
 
 const CourseLearning = () => {
   const router = useRouter()
   const query = router.query
-  const { account } = useWeb3React()
+  const { account, chainId } = useWeb3React()
 
   const { mutateAsync: getListQuestionMutation } = useMutation(getListQuestions)
   const { mutateAsync: createAnswerQuestionMutation } = useMutation(createAnswerQuestion)
@@ -69,7 +70,7 @@ const CourseLearning = () => {
     }
 
     try {
-      const response = await claimRewardMutation(body)
+      const response = await claimRewardMutation({ body, chainId })
       if (response) {
         onRewardAlert()
         setIsClaimed(true)
@@ -121,7 +122,7 @@ const CourseLearning = () => {
       captcha: token,
     }
     try {
-      const response = await createAnswerQuestionMutation(body)
+      const response = await createAnswerQuestionMutation({ data: body, chainId })
       onOpenSuccessModal()
     } catch (error: any) {
       const { response } = error
@@ -154,14 +155,14 @@ const CourseLearning = () => {
     }
 
     async function fetchQuestionData() {
-      const data = await getListQuestionMutation(String(query.courseId))
+      const data = await getListQuestionMutation({ id: String(query.courseId), chainId })
       const shuffleList = await data.data.metadata.sort(() => Math.random() - 0.5)
       setListQuestion(shuffleList)
     }
 
     async function checkQuestionData() {
       const body = { wallet_address: account, question_id: String(query.courseId) }
-      const data = await checkQuestionInfoMutation(body)
+      const data = await checkQuestionInfoMutation({ body, chainId })
       setLoadingComplete(true)
       if (data.data.isAnswered) {
         setResultData(data.data)
@@ -171,7 +172,7 @@ const CourseLearning = () => {
 
     fetchQuestionData()
     checkQuestionData()
-  }, [query, account, isClaimed])
+  }, [query, account, isClaimed, getListQuestionMutation, chainId, checkQuestionInfoMutation])
 
   useEffect(() => {
     if (listQuestion) {

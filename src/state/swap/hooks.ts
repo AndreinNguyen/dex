@@ -1,9 +1,8 @@
-import { Currency, CurrencyAmount, Trade } from '@savvydex/sdk'
-import { useWeb3React } from '@web3-react/core'
+import { ChainId, Currency, CurrencyAmount, Trade, TradeType } from '@savvydex/sdk'
+import { useWeb3React } from '@pancakeswap/wagmi'
 import { ParsedUrlQuery } from 'querystring'
 import { useEffect, useMemo, useState } from 'react'
 import { SLOW_INTERVAL } from 'config/constants'
-import { DEFAULT_INPUT_CURRENCY, DEFAULT_OUTPUT_CURRENCY } from 'config/constants/exchange'
 import useSWRImmutable from 'swr/immutable'
 import { useDispatch, useSelector } from 'react-redux'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
@@ -19,6 +18,7 @@ import { computeSlippageAdjustedAmounts } from 'utils/exchange'
 import getLpAddress from 'utils/getLpAddress'
 import { getTokenAddress } from 'views/Swap/components/Chart/utils'
 import tryParseAmount from 'utils/tryParseAmount'
+import { SVC, USDT } from 'config/constants/tokens'
 import { AppState, useAppDispatch } from '../index'
 import { useCurrencyBalances } from '../wallet/hooks'
 import { Field, replaceSwapState, updateDerivedPairData, updatePairData } from './actions'
@@ -44,7 +44,7 @@ export function useSwapState(): AppState['swap'] {
 const BAD_RECIPIENT_ADDRESSES: string[] = [
   '0x249C9DADfd1B751B1224C5c1CD146dB41FFB1e75', // v2 factory
   '0xE2cb7F5cB8660B44Bddb6141D15f3AE8219F3B95', // v2 router 01
-  process.env.NEXT_PUBLIC_ROUTER_ADDRESS, // v2 router 02
+  '0xb3fCf70006119745Cb241ee78AD43a988EE6Fd41', // TODO: v2 router 02 TESTNET
 ]
 
 /**
@@ -52,7 +52,7 @@ const BAD_RECIPIENT_ADDRESSES: string[] = [
  * @param trade to check for the given address
  * @param checksummedAddress address to check in the pairs and tokens
  */
-function involvesAddress(trade: Trade, checksummedAddress: string): boolean {
+function involvesAddress(trade: Trade<Currency, Currency, TradeType>, checksummedAddress: string): boolean {
   return (
     trade.route.path.some((token) => token.address === checksummedAddress) ||
     trade.route.pairs.some((pair) => pair.liquidityToken.address === checksummedAddress)
@@ -94,9 +94,9 @@ export function useDerivedSwapInfo(
   recipient: string,
 ): {
   currencies: { [field in Field]?: Currency }
-  currencyBalances: { [field in Field]?: CurrencyAmount }
-  parsedAmount: CurrencyAmount | undefined
-  v2Trade: Trade | undefined
+  currencyBalances: { [field in Field]?: CurrencyAmount<Currency> }
+  parsedAmount: CurrencyAmount<Currency> | undefined
+  v2Trade: Trade<Currency, Currency, TradeType> | undefined
   inputError?: string
 } {
   const { account } = useWeb3React()
@@ -201,9 +201,9 @@ function validatedRecipient(recipient: any): string | null {
   return null
 }
 
-export function queryParametersToSwapState(parsedQs: ParsedUrlQuery): SwapState {
-  let inputCurrency = parseCurrencyFromURLParameter(parsedQs.inputCurrency) || DEFAULT_INPUT_CURRENCY
-  let outputCurrency = parseCurrencyFromURLParameter(parsedQs.outputCurrency) || DEFAULT_OUTPUT_CURRENCY
+export function queryParametersToSwapState(parsedQs: ParsedUrlQuery, chainId: ChainId): SwapState {
+  let inputCurrency = parseCurrencyFromURLParameter(parsedQs.inputCurrency) || USDT[chainId].address
+  let outputCurrency = parseCurrencyFromURLParameter(parsedQs.outputCurrency) || SVC[chainId].address
   if (inputCurrency === outputCurrency) {
     if (typeof parsedQs.outputCurrency === 'string') {
       inputCurrency = ''
@@ -242,7 +242,7 @@ export function useDefaultsFromURLSearch():
 
   useEffect(() => {
     if (!chainId) return
-    const parsed = queryParametersToSwapState(query)
+    const parsed = queryParametersToSwapState(query, chainId)
 
     dispatch(
       replaceSwapState({
@@ -275,6 +275,7 @@ export const useFetchPairPrices = ({
   timeWindow,
   currentSwapPrice,
 }: useFetchPairPricesParams) => {
+  const { chainId } = useActiveWeb3React()
   const [pairId, setPairId] = useState(null)
   const [isLoading, setIsLoading] = useState(false)
   const pairData = useSelector(pairByDataIdSelector({ pairId, timeWindow }))
@@ -290,7 +291,8 @@ export const useFetchPairPrices = ({
         // Try to get at least derived data for chart
         // This is used when there is no direct data for pool
         // i.e. when multihops are necessary
-        const derivedData = await fetchDerivedPriceData(token0Address, token1Address, timeWindow)
+        const derivedData = await fetchDerivedPriceData(token0Address, token1Address, timeWindow, chainId)
+
         if (derivedData) {
           const normalizedDerivedData = normalizeDerivedChartData(derivedData)
           dispatch(updateDerivedPairData({ pairData: normalizedDerivedData, pairId, timeWindow }))
@@ -307,7 +309,7 @@ export const useFetchPairPrices = ({
 
     const fetchAndUpdatePairPrice = async () => {
       setIsLoading(true)
-      const { data } = await fetchPairPriceData({ pairId, timeWindow })
+      const { data } = await fetchPairPriceData({ pairId, timeWindow, chainId })
       if (data) {
         // Find out if Liquidity Pool has enough liquidity
         // low liquidity pool might mean that the price is incorrect
@@ -343,12 +345,13 @@ export const useFetchPairPrices = ({
     derivedPairData,
     dispatch,
     isLoading,
+    chainId,
   ])
 
   useEffect(() => {
     const updatePairId = () => {
       try {
-        const pairAddress = getLpAddress(token0Address, token1Address)?.toLowerCase()
+        const pairAddress = getLpAddress(token0Address, token1Address, chainId)?.toLowerCase()
         if (pairAddress !== pairId) {
           setPairId(pairAddress)
         }
@@ -358,7 +361,7 @@ export const useFetchPairPrices = ({
     }
 
     updatePairId()
-  }, [token0Address, token1Address, pairId])
+  }, [token0Address, token1Address, pairId, chainId])
 
   const normalizedPairData = useMemo(
     () => normalizePairDataByActiveToken({ activeToken: token0Address, pairData }),
@@ -400,11 +403,14 @@ export const useFetchPairPrices = ({
 }
 
 export const useLPApr = (pair) => {
+  const { chainId } = useActiveWeb3React()
+
   const { data: poolData } = useSWRImmutable(
     pair ? ['LP7dApr', pair.liquidityToken.address] : null,
     async () => {
       const timestampsArray = getDeltaTimestamps()
-      const blocks = await getBlocksFromTimestamps(timestampsArray, 'desc', 1000)
+      const blocks = await getBlocksFromTimestamps(timestampsArray, 'desc', 1000, chainId)
+
       const [block24h, block48h, block7d, block14d] = blocks ?? []
       const { error, data } = await fetchPoolData(block24h.number, block48h.number, block7d.number, block14d.number, [
         pair.liquidityToken.address.toLowerCase(),

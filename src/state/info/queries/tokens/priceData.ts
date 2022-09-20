@@ -3,7 +3,8 @@ import { gql } from 'graphql-request'
 import { getBlocksFromTimestamps } from 'utils/getBlocksFromTimestamps'
 import { multiQuery } from 'views/Info/utils/infoQueryHelpers'
 import { PriceChartEntry } from 'state/info/types'
-import { INFO_CLIENT } from 'config/constants/endpoints'
+import { ChartSubGrapEndPoints } from 'config/constants/endpoints'
+import { ChainId } from '@savvydex/sdk'
 import orderBy from 'lodash/orderBy'
 
 const getPriceSubqueries = (tokenAddress: string, blocks: any) =>
@@ -33,6 +34,7 @@ const fetchTokenPriceData = async (
   address: string,
   interval: number,
   startTimestamp: number,
+  chainId: ChainId,
 ): Promise<{
   data?: PriceChartEntry[]
   error: boolean
@@ -46,7 +48,7 @@ const fetchTokenPriceData = async (
     time += interval
   }
   try {
-    const blocks = await getBlocksFromTimestamps(timestamps, 'asc', 500)
+    const blocks = await getBlocksFromTimestamps(timestamps, 'asc', 500, chainId)
     if (!blocks || blocks.length === 0) {
       console.error('Error fetching blocks for timestamps', timestamps)
       return {
@@ -57,7 +59,7 @@ const fetchTokenPriceData = async (
     const prices: any | undefined = await multiQuery(
       priceQueryConstructor,
       getPriceSubqueries(address, blocks),
-      INFO_CLIENT,
+      ChartSubGrapEndPoints[chainId],
       200,
     )
 

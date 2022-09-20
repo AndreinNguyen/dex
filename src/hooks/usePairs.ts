@@ -2,7 +2,7 @@ import { useMemo } from 'react'
 import IPancakePairABI from 'config/abi/IPancakePair.json'
 import { Interface } from '@ethersproject/abi'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
-import { TokenAmount, Pair, Currency } from '@savvydex/sdk'
+import { CurrencyAmount, Pair, Currency } from '@savvydex/sdk'
 
 import { useMultipleContractSingleData } from '../state/multicall/hooks'
 import { wrappedCurrency } from '../utils/wrappedCurrency'
@@ -32,16 +32,15 @@ export function usePairs(currencies: [Currency | undefined, Currency | undefined
     () =>
       tokens.map(([tokenA, tokenB]) => {
         try {
-          // debugger
-          // const test = tokenA && tokenB && !tokenA.equals(tokenB) ? Pair.getAddress(tokenA, tokenB) : undefined
           return tokenA && tokenB && !tokenA.equals(tokenB) ? Pair.getAddress(tokenA, tokenB) : undefined
         } catch (error: any) {
+          // TODO: Disable console debug
           // Debug Invariant failed related to this line
-          console.error(
-            error.msg,
-            `- pairAddresses: ${tokenA?.address}-${tokenB?.address}`,
-            `chainId: ${tokenA?.chainId}`,
-          )
+          // console.error(
+          //   error.msg,
+          //   `- pairAddresses: ${tokenA?.address}-${tokenB?.address}`,
+          //   `chainId: ${tokenA?.chainId}`,
+          // )
 
           return undefined
         }
@@ -64,7 +63,10 @@ export function usePairs(currencies: [Currency | undefined, Currency | undefined
       const [token0, token1] = tokenA.sortsBefore(tokenB) ? [tokenA, tokenB] : [tokenB, tokenA]
       return [
         PairState.EXISTS,
-        new Pair(new TokenAmount(token0, reserve0.toString()), new TokenAmount(token1, reserve1.toString())),
+        new Pair(
+          CurrencyAmount.fromRawAmount(token0, reserve0.toString()),
+          CurrencyAmount.fromRawAmount(token1, reserve1.toString()),
+        ),
       ]
     })
   }, [results, tokens])

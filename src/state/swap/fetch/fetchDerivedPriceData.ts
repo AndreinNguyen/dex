@@ -1,18 +1,19 @@
 import orderBy from 'lodash/orderBy'
-import { INFO_CLIENT } from 'config/constants/endpoints'
+import { ChartSubGrapEndPoints } from 'config/constants/endpoints'
 import { ONE_DAY_UNIX, ONE_HOUR_SECONDS } from 'config/constants/info'
 import { getBlocksFromTimestamps } from 'utils/getBlocksFromTimestamps'
 import { getUnixTime, startOfHour, sub } from 'date-fns'
 import { Block } from 'state/info/types'
 import { multiQuery } from 'views/Info/utils/infoQueryHelpers'
+import { ChainId } from '@savvydex/sdk'
 import { getDerivedPrices, getDerivedPricesQueryConstructor } from '../queries/getDerivedPrices'
 import { PairDataTimeWindowEnum } from '../types'
 
-const getTokenDerivedBnbPrices = async (tokenAddress: string, blocks: Block[]) => {
+const getTokenDerivedBnbPrices = async (tokenAddress: string, blocks: Block[], chainId: ChainId) => {
   const prices: any | undefined = await multiQuery(
     getDerivedPricesQueryConstructor,
     getDerivedPrices(tokenAddress, blocks),
-    INFO_CLIENT,
+    ChartSubGrapEndPoints[chainId],
     200,
   )
 
@@ -79,6 +80,7 @@ const fetchDerivedPriceData = async (
   token0Address: string,
   token1Address: string,
   timeWindow: PairDataTimeWindowEnum,
+  chainId: ChainId,
 ) => {
   const interval = getInterval(timeWindow)
   const endTimestamp = getUnixTime(new Date())
@@ -91,15 +93,16 @@ const fetchDerivedPriceData = async (
   }
 
   try {
-    const blocks = await getBlocksFromTimestamps(timestamps, 'asc', 500)
+    const blocks = await getBlocksFromTimestamps(timestamps, 'asc', 500, chainId)
+
     if (!blocks || blocks.length === 0) {
       console.error('Error fetching blocks for timestamps', timestamps)
       return null
     }
 
     const [token0DerivedBnb, token1DerivedBnb] = await Promise.all([
-      getTokenDerivedBnbPrices(token0Address, blocks),
-      getTokenDerivedBnbPrices(token1Address, blocks),
+      getTokenDerivedBnbPrices(token0Address, blocks, chainId),
+      getTokenDerivedBnbPrices(token1Address, blocks, chainId),
     ])
     return { token0DerivedBnb, token1DerivedBnb }
   } catch (error) {

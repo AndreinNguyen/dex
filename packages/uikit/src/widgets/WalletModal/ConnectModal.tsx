@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styled, { useTheme } from "styled-components";
-import getExternalLinkProps from "../../util/getExternalLinkProps";
+import { isMobile } from "react-device-detect";
+import EXTERNAL_LINK_PROPS from "../../util/externalLinkProps";
 import Grid from "../../components/Box/Grid";
 import Box from "../../components/Box/Box";
 import getThemeValue from "../../util/getThemeValue";
@@ -10,13 +11,14 @@ import { Button } from "../../components/Button";
 import { ModalBody, ModalCloseButton, ModalContainer, ModalHeader, ModalTitle } from "../Modal";
 import WalletCard, { MoreWalletCard } from "./WalletCard";
 import config, { walletLocalStorageKey } from "./config";
-import { Config, Login } from "./types";
+import { Config, ConnectorNames, Login } from "./types";
 
 interface Props {
   login: Login;
   onDismiss?: () => void;
   displayCount?: number;
   t: (key: string) => string;
+  connectors?: Config[];
 }
 
 const WalletWrapper = styled(Box)`
@@ -52,19 +54,22 @@ const getPreferredConfig = (walletConfig: Config[]) => {
   ];
 };
 
-const ConnectModal: React.FC<Props> = ({ login, onDismiss = () => null, displayCount = 3, t }) => {
+const ConnectModal: React.FC<Props> = ({ login, onDismiss = () => null, displayCount = 3, t, connectors }) => {
   const [showMore, setShowMore] = useState(false);
   const theme = useTheme();
-  const sortedConfig = getPreferredConfig(config);
+  const sortedConfig = getPreferredConfig(connectors || config);
   // Filter out WalletConnect if user is inside TrustWallet built-in browser
-  const walletsToShow = window.ethereum?.isTrust
+  let walletsToShow = window.ethereum?.isTrust
     ? sortedConfig.filter((wallet) => wallet.title !== "WalletConnect")
     : sortedConfig;
+  if (isMobile) {
+    walletsToShow = walletsToShow.filter((c) => c.connectorId !== ConnectorNames.BSC);
+  }
   const displayListConfig = showMore ? walletsToShow : walletsToShow.slice(0, displayCount);
 
   return (
     <ModalContainer minWidth="320px">
-      <ModalHeader background={getThemeValue("colors.gradients.bubblegum")(theme)}>
+      <ModalHeader background={getThemeValue(theme, "colors.gradients.bubblegum")}>
         <ModalTitle>
           <Heading>{t("Connect Wallet")}</Heading>
         </ModalTitle>
@@ -87,10 +92,10 @@ const ConnectModal: React.FC<Props> = ({ login, onDismiss = () => null, displayC
           </Text>
           <Button
             as="a"
-            href="https://savvycom.gitbook.io/savvydex/get-started/connect-your-wallet-to-savvydex"
+            href="https://docs.pancakeswap.finance/get-started/connection-guide"
             variant="subtle"
             width="100%"
-            {...getExternalLinkProps()}
+            {...EXTERNAL_LINK_PROPS}
           >
             {t("Learn How to Connect")}
           </Button>

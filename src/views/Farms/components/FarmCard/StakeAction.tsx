@@ -1,4 +1,4 @@
-import { useWeb3React } from '@web3-react/core'
+import { useWeb3React } from '@pancakeswap/wagmi'
 import styled from 'styled-components'
 import { Button, Flex, IconButton, AddIcon, MinusIcon, useModal } from '@pancakeswap/uikit'
 import useToast from 'hooks/useToast'
@@ -9,6 +9,7 @@ import { useAppDispatch } from 'state'
 import { fetchFarmUserDataAsync } from 'state/farms'
 import { useRouter } from 'next/router'
 import { useLpTokenPrice, useFarmUser, usePriceCakeBusd } from 'state/farms/hooks'
+import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import DepositModal from '../DepositModal'
 import WithdrawModal from '../WithdrawModal'
 import useUnstakeFarms from '../../hooks/useUnstakeFarms'
@@ -54,6 +55,7 @@ const StakeAction: React.FC<FarmCardActionsProps> = ({
   const lpPrice = useLpTokenPrice(lpSymbol)
   const { toastSuccess } = useToast()
   const { fetchWithCatchTxError } = useCatchTxError()
+  const { chainId } = useActiveWeb3React()
 
   const handleStake = async (amount: string) => {
     const receipt = await fetchWithCatchTxError(() => {
@@ -66,7 +68,7 @@ const StakeAction: React.FC<FarmCardActionsProps> = ({
           {t('Your funds have been staked in the farm')}
         </ToastDescriptionWithTx>,
       )
-      dispatch(fetchFarmUserDataAsync({ account, pids: [pid] }))
+      dispatch(fetchFarmUserDataAsync({ account, pids: [pid], chainId }))
     }
   }
 
@@ -81,7 +83,7 @@ const StakeAction: React.FC<FarmCardActionsProps> = ({
           {t('Your earnings have also been harvested to your wallet')}
         </ToastDescriptionWithTx>,
       )
-      dispatch(fetchFarmUserDataAsync({ account, pids: [pid] }))
+      dispatch(fetchFarmUserDataAsync({ account, pids: [pid], chainId }))
     }
   }
 

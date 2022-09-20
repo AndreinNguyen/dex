@@ -1,8 +1,7 @@
-import { ChainId } from '@savvydex/sdk'
-import { useWeb3React } from '@web3-react/core'
+import useActiveWeb3React, { useActiveChainId } from 'hooks/useActiveWeb3React'
+import { useWeb3React } from '@pancakeswap/wagmi'
 import BigNumber from 'bignumber.js'
 import { farmsConfig, SLOW_INTERVAL } from 'config/constants'
-import { CHAIN_ID } from 'config/constants/networks'
 import { useFastRefreshEffect } from 'hooks/useRefreshEffect'
 import useSWRImmutable from 'swr/immutable'
 import { useMemo } from 'react'
@@ -23,12 +22,13 @@ import {
 export const usePollFarmsWithUserData = () => {
   const dispatch = useAppDispatch()
   const { account } = useWeb3React()
+  const chainId = useActiveChainId()
 
   useSWRImmutable(
-    ['publicFarmData'],
+    ['publicFarmData', chainId],
     () => {
-      const pids = farmsConfig.map((farmToFetch) => farmToFetch.pid)
-      dispatch(fetchFarmsPublicDataAsync(pids))
+      const pids = farmsConfig(chainId).map((farmToFetch) => farmToFetch.pid)
+      dispatch(fetchFarmsPublicDataAsync({ pids, chainId }))
     },
     {
       refreshInterval: SLOW_INTERVAL,
@@ -36,10 +36,10 @@ export const usePollFarmsWithUserData = () => {
   )
 
   useSWRImmutable(
-    account ? ['farmsWithUserData', account] : null,
+    account ? ['farmsWithUserData', account, chainId] : null,
     () => {
-      const pids = farmsConfig.map((farmToFetch) => farmToFetch.pid)
-      dispatch(fetchFarmUserDataAsync({ account, pids }))
+      const pids = farmsConfig(chainId).map((farmToFetch) => farmToFetch.pid)
+      dispatch(fetchFarmUserDataAsync({ account, pids, chainId }))
     },
     {
       refreshInterval: SLOW_INTERVAL,
@@ -52,13 +52,20 @@ export const usePollFarmsWithUserData = () => {
  * 2 = CAKE-BNB LP
  * 3 = BUSD-BNB LP
  */
-const coreFarmPIDs = CHAIN_ID === String(ChainId.MAINNET) ? [2, 3] : [1, 2]
+
+// TODO: support switch network
+const coreFarmPIDs = {
+  56: [2, 3],
+  97: [0, 1, 2],
+}
+
 export const usePollCoreFarmData = () => {
   const dispatch = useAppDispatch()
+  const { chainId } = useActiveWeb3React()
 
   useFastRefreshEffect(() => {
-    dispatch(fetchFarmsPublicDataAsync(coreFarmPIDs))
-  }, [dispatch])
+    dispatch(fetchFarmsPublicDataAsync({ pids: coreFarmPIDs[chainId], chainId }))
+  }, [chainId, dispatch])
 }
 
 export const useFarms = (): DeserializedFarmsState => {

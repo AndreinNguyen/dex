@@ -1,10 +1,11 @@
 import type { Signer } from '@ethersproject/abstract-signer'
 import type { Provider } from '@ethersproject/providers'
 import { Contract } from '@ethersproject/contracts'
-import { simpleRpcProvider } from 'utils/providers'
+import { bscRpcProvider } from 'utils/providers'
 import poolsConfig from 'config/constants/pools'
 import { PoolCategory } from 'config/constants/types'
-import tokens from 'config/constants/tokens'
+import { mainnetTokens } from 'config/constants/tokens'
+import { ChainId } from '@savvydex/sdk'
 
 // Addresses
 import {
@@ -119,7 +120,7 @@ import type {
 } from 'config/abi/types'
 
 export const getContract = (abi: any, address: string, signer?: Signer | Provider) => {
-  const signerOrProvider = signer ?? simpleRpcProvider
+  const signerOrProvider = signer ?? bscRpcProvider()
 
   return new Contract(address, abi, signerOrProvider)
 }
@@ -153,10 +154,10 @@ export const getPointCenterIfoContract = (signer?: Signer | Provider) => {
   return getContract(pointCenterIfo, getPointCenterIfoAddress(), signer) as PointCenterIfo
 }
 export const getCakeContract = (signer?: Signer | Provider) => {
-  return getContract(cakeAbi, tokens.svc.address, signer) as Cake
+  return getContract(cakeAbi, mainnetTokens.svc.address, signer) as Cake
 }
 export const getSVCContract = (signer?: Signer | Provider) => {
-  return getContract(svcAbi, tokens.svc.address, signer) as Svc
+  return getContract(svcAbi, mainnetTokens.svc.address, signer) as Svc
 }
 
 export const getBridgeContract = (signer?: Signer | Provider) => {
@@ -177,8 +178,8 @@ export const getBunnyFactoryContract = (signer?: Signer | Provider) => {
 export const getBunnySpecialContract = (signer?: Signer | Provider) => {
   return getContract(bunnySpecialAbi, getBunnySpecialAddress(), signer) as BunnySpecial
 }
-export const getMasterchefContract = (signer?: Signer | Provider) => {
-  return getContract(masterChef, getMasterChefAddress(), signer) as Masterchef
+export const getMasterchefContract = (signer?: Signer | Provider, chainId?: ChainId) => {
+  return getContract(masterChef, getMasterChefAddress(chainId), signer) as Masterchef
 }
 export const getMasterchefV1Contract = (signer?: Signer | Provider) => {
   return getContract(masterChefV1, getMasterChefV1Address(), signer) as MasterchefV1
@@ -223,8 +224,8 @@ export const getPredictionsContract = (address: string, signer?: Signer | Provid
 export const getChainlinkOracleContract = (address: string, signer?: Signer | Provider) => {
   return getContract(chainlinkOracleAbi, address, signer) as ChainlinkOracle
 }
-export const getMulticallContract = () => {
-  return getContract(MultiCallAbi, getMulticallAddress(), simpleRpcProvider) as Multicall
+export const getMulticallContract = (chainId: ChainId) => {
+  return getContract(MultiCallAbi, getMulticallAddress(chainId), bscRpcProvider(chainId)) as Multicall
 }
 export const getBunnySpecialCakeVaultContract = (signer?: Signer | Provider) => {
   return getContract(bunnySpecialCakeVaultAbi, getBunnySpecialCakeVaultAddress(), signer) as BunnySpecialCakeVault

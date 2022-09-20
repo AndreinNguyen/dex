@@ -1,5 +1,5 @@
 import { Button, Flex, Heading } from '@pancakeswap/uikit'
-import { useWeb3React } from '@web3-react/core'
+import { useWeb3React } from '@pancakeswap/wagmi'
 import BigNumber from 'bignumber.js'
 import Balance from 'components/Balance'
 import { useTranslation } from 'contexts/Localization'
@@ -20,11 +20,11 @@ interface FarmCardActionsProps {
 }
 
 const HarvestAction: React.FC<FarmCardActionsProps> = ({ earnings, pid }) => {
-  const { account } = useWeb3React()
+  const { account, chainId } = useWeb3React()
   const { toastSuccess } = useToast()
   const { fetchWithCatchTxError, loading: pendingTx } = useCatchTxError()
   const { t } = useTranslation()
-  const { onReward } = useHarvestFarm(pid)
+  const { onReward } = useHarvestFarm()
   const cakePrice = usePriceCakeBusd()
   const dispatch = useAppDispatch()
   const rawEarningsBalance = account ? getBalanceAmount(earnings) : BIG_ZERO
@@ -52,7 +52,7 @@ const HarvestAction: React.FC<FarmCardActionsProps> = ({ earnings, pid }) => {
                 {t('Your %symbol% earnings have been sent to your wallet!', { symbol: 'SVC' })}
               </ToastDescriptionWithTx>,
             )
-            dispatch(fetchFarmUserDataAsync({ account, pids: [pid] }))
+            dispatch(fetchFarmUserDataAsync({ account, pids: [pid], chainId }))
           }
         }}
       >

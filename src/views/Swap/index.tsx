@@ -7,14 +7,11 @@ import {
   Flex,
   IconButton,
   Skeleton,
-  Svg,
   Text,
   useMatchBreakpointsContext,
   useModal,
 } from '@pancakeswap/uikit'
-import { CurrencyAmount, Token, Trade } from '@savvydex/sdk'
-import { useWeb3React } from '@web3-react/core'
-import Footer from 'components/Menu/Footer'
+import { CurrencyAmount, Token, Trade, Currency, TradeType } from '@savvydex/sdk'
 import UnsupportedCurrencyFooter from 'components/UnsupportedCurrencyFooter'
 import { EXCHANGE_DOCS_URLS } from 'config/constants'
 import { BIG_INT_ZERO } from 'config/constants/exchange'
@@ -27,6 +24,7 @@ import styled from 'styled-components'
 import { computeTradePriceBreakdown, warningSeverity } from 'utils/exchange'
 import { maxAmountSpend } from 'utils/maxAmountSpend'
 import shouldShowSwapWarning from 'utils/shouldShowSwapWarning'
+import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import { AppBody } from '../../components/App'
 import { GreyCard } from '../../components/Card'
 import ConnectWalletButton from '../../components/ConnectWalletButton'
@@ -116,15 +114,15 @@ export default function Swap() {
     [loadedInputCurrency, loadedOutputCurrency],
   )
 
+  const { account, chainId } = useActiveWeb3React()
+
   // dismiss warning if all imported tokens are in active lists
   const defaultTokens = useAllTokens()
   const importTokensNotInDefault =
     urlLoadedTokens &&
     urlLoadedTokens.filter((token: Token) => {
-      return !(token.address in defaultTokens)
+      return !(token.address in defaultTokens) && token.chainId === chainId
     })
-
-  const { account } = useWeb3React()
 
   // for expert mode
   const [isExpertMode] = useExpertModeManager()
@@ -189,7 +187,7 @@ export default function Swap() {
 
   // modal and loading
   const [{ tradeToConfirm, swapErrorMessage, attemptingTxn, txHash }, setSwapState] = useState<{
-    tradeToConfirm: Trade | undefined
+    tradeToConfirm: Trade<Currency, Currency, TradeType> | undefined
     attemptingTxn: boolean
     swapErrorMessage: string | undefined
     txHash: string | undefined
@@ -226,7 +224,7 @@ export default function Swap() {
     }
   }, [approval, approvalSubmitted])
 
-  const maxAmountInput: CurrencyAmount | undefined = maxAmountSpend(currencyBalances[Field.INPUT])
+  const maxAmountInput: CurrencyAmount<Currency> | undefined = maxAmountSpend(currencyBalances[Field.INPUT])
   const atMaxAmountInput = Boolean(maxAmountInput && parsedAmounts[Field.INPUT]?.equalTo(maxAmountInput))
 
   // the callback to execute the swap

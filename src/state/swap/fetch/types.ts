@@ -1,8 +1,10 @@
+import { ChainId } from '@savvydex/sdk'
 import { PairDataTimeWindowEnum } from '../types'
 
 export type fetchPairDataParams = {
   pairId: string
   timeWindow: PairDataTimeWindowEnum
+  chainId: ChainId
 }
 
 export type LastPairHourIdResponse = {

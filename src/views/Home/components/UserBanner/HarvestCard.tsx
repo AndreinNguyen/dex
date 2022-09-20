@@ -12,6 +12,7 @@ import { harvestFarm } from 'utils/calls'
 import Balance from 'components/Balance'
 import { ToastDescriptionWithTx } from 'components/Toast'
 import useFarmsWithBalance from 'views/Home/hooks/useFarmsWithBalance'
+import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import { getEarningsText } from './EarningsText'
 
 const StyledCard = styled(Card)`
@@ -34,13 +35,14 @@ const HarvestCard = () => {
 
   const earningsText = getEarningsText(numFarmsToCollect, hasCakePoolToCollect, earningsBusd, t)
   const [preText, toCollectText] = earningsText.split(earningsBusd.toString())
+  const { chainId } = useActiveWeb3React()
 
   const harvestAllFarms = useCallback(async () => {
     for (let i = 0; i < farmsWithStakedBalance.length; i++) {
       const farmWithBalance = farmsWithStakedBalance[i]
       // eslint-disable-next-line no-await-in-loop
       const receipt = await fetchWithCatchTxError(() => {
-        return harvestFarm(masterChefContract, farmWithBalance.pid)
+        return harvestFarm(masterChefContract, farmWithBalance.pid, chainId)
       })
       if (receipt?.status) {
         toastSuccess(
@@ -51,7 +53,7 @@ const HarvestCard = () => {
         )
       }
     }
-  }, [farmsWithStakedBalance, masterChefContract, toastSuccess, t, fetchWithCatchTxError])
+  }, [farmsWithStakedBalance, fetchWithCatchTxError, masterChefContract, chainId, toastSuccess, t])
 
   return (
     <StyledCard>

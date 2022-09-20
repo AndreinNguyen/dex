@@ -2,12 +2,14 @@ import erc20 from 'config/abi/erc20.json'
 import chunk from 'lodash/chunk'
 import { getAddress, getMasterChefAddress } from 'utils/addressHelpers'
 import { multicallv2 } from 'utils/multicall'
+import { ChainId } from '@savvydex/sdk'
 import { SerializedFarm } from '../types'
 import { SerializedFarmConfig } from '../../config/constants/types'
 
-const fetchFarmCalls = (farm: SerializedFarm) => {
+const fetchFarmCalls = (farm: SerializedFarm, chainId: ChainId) => {
   const { lpAddresses, token, quoteToken } = farm
-  const lpAddress = getAddress(lpAddresses)
+  const lpAddress = getAddress(lpAddresses, chainId)
+
   return [
     // Balance of token in the LP contract
     {
@@ -25,7 +27,7 @@ const fetchFarmCalls = (farm: SerializedFarm) => {
     {
       address: lpAddress,
       name: 'balanceOf',
-      params: [getMasterChefAddress()],
+      params: [getMasterChefAddress(chainId)],
     },
     // Total supply of LP tokens
     {
@@ -45,9 +47,9 @@ const fetchFarmCalls = (farm: SerializedFarm) => {
   ]
 }
 
-export const fetchPublicFarmsData = async (farms: SerializedFarmConfig[]): Promise<any[]> => {
-  const farmCalls = farms.flatMap((farm) => fetchFarmCalls(farm))
+export const fetchPublicFarmsData = async (farms: SerializedFarmConfig[], chainId: ChainId): Promise<any[]> => {
+  const farmCalls = farms.flatMap((farm) => fetchFarmCalls(farm, chainId))
   const chunkSize = farmCalls.length / farms.length
-  const farmMultiCallResult = await multicallv2(erc20, farmCalls)
+  const farmMultiCallResult = await multicallv2(erc20, farmCalls, chainId)
   return chunk(farmMultiCallResult, chunkSize)
 }

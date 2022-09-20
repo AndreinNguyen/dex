@@ -1,5 +1,5 @@
 import { Button, Heading, Skeleton, Text } from '@pancakeswap/uikit'
-import { useWeb3React } from '@web3-react/core'
+import { useWeb3React } from '@pancakeswap/wagmi'
 import BigNumber from 'bignumber.js'
 import Balance from 'components/Balance'
 import { useTranslation } from 'contexts/Localization'
@@ -39,7 +39,7 @@ const HarvestAction: React.FunctionComponent<HarvestActionProps> = ({ pid, userD
   const { onReward } = useHarvestFarm()
   const { t } = useTranslation()
   const dispatch = useAppDispatch()
-  const { account } = useWeb3React()
+  const { account, chainId } = useWeb3React()
 
   return (
     <ActionContainer>
@@ -71,7 +71,7 @@ const HarvestAction: React.FunctionComponent<HarvestActionProps> = ({ pid, userD
                   {t('Your %symbol% earnings have been sent to your wallet!', { symbol: 'SVC' })}
                 </ToastDescriptionWithTx>,
               )
-              dispatch(fetchFarmUserDataAsync({ account, pids: [pid] }))
+              dispatch(fetchFarmUserDataAsync({ account, pids: [pid], chainId }))
             }
           }}
           ml="4px"

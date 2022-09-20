@@ -9,7 +9,7 @@ import {
   UserMenuItem,
   UserMenuVariant,
 } from '@pancakeswap/uikit'
-import { UnsupportedChainIdError, useWeb3React } from '@web3-react/core'
+import { useWeb3React } from '@pancakeswap/wagmi'
 import ConnectWalletButton from 'components/ConnectWalletButton'
 import Trans from 'components/Trans'
 import { useTranslation } from 'contexts/Localization'
@@ -22,7 +22,7 @@ import WalletUserMenuItem from './WalletUserMenuItem'
 
 const UserMenu = () => {
   const { t } = useTranslation()
-  const { account, error } = useWeb3React()
+  const { account, chain } = useWeb3React()
   const { logout } = useAuth()
   const { hasPendingTransactions, pendingNumber } = usePendingTransactions()
   const { profile } = useProfile()
@@ -32,7 +32,7 @@ const UserMenu = () => {
   const avatarSrc = profile?.nft?.image?.thumbnail
   const [userMenuText, setUserMenuText] = useState<string>('')
   const [userMenuVariable, setUserMenuVariable] = useState<UserMenuVariant>('default')
-  const isWrongNetwork: boolean = error && error instanceof UnsupportedChainIdError
+  const isWrongNetwork = chain?.unsupported
 
   useEffect(() => {
     if (hasPendingTransactions) {

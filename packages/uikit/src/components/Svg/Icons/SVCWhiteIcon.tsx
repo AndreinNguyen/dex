@@ -9,7 +9,7 @@ const Icon: React.FC<SvgProps> = (prop) => {
       width={20}
       height={20}
       alt="Savvycoin logo"
-      src="./images/tokens/SVC.png"
+      src="https://dex.savvycom.ai/images/tokens/SVC.png"
     />
   );
 };

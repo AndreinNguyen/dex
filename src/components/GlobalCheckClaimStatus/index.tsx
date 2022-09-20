@@ -1,4 +1,4 @@
-import { useWeb3React } from '@web3-react/core'
+import { useWeb3React } from '@pancakeswap/wagmi'
 import { GALAXY_NFT_CAMPAIGN_ID } from 'config/constants'
 import { GALAXY_NFT_CLAIMING_API } from 'config/constants/endpoints'
 import request, { gql } from 'graphql-request'

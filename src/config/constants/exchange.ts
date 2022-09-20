@@ -1,15 +1,31 @@
-import { ChainId, JSBI, Percent, Token } from '@savvydex/sdk'
+import { ChainId, JSBI, Percent, Token, WNATIVE, WBNB } from '@savvydex/sdk'
 import { BigNumber } from '@ethersproject/bignumber'
-import { mainnetTokens, testnetTokens } from './tokens'
+import { mainnetTokens, testnetTokens, USDC, USDT, BUSD } from './tokens'
 import { ChainTokenList } from './types'
 
 export const ROUTER_ADDRESS = {
   [ChainId.MAINNET]: '0x10ED43C718714eb63d5aA57B78B54704E256024E',
-  [ChainId.TESTNET]: process.env.NEXT_PUBLIC_ROUTER_ADDRESS,
+  [ChainId.TESTNET]: '0xb3fCf70006119745Cb241ee78AD43a988EE6Fd41',
+  [ChainId.ETHEREUM]: '0x3BC722f252C7bAE2f55647e49aDcB9d33Ff6eBcC',
+  [ChainId.RINKEBY]: '0x3BC722f252C7bAE2f55647e49aDcB9d33Ff6eBcC',
+  [ChainId.GOERLI]: '0x3BC722f252C7bAE2f55647e49aDcB9d33Ff6eBcC',
+  [ChainId.POLYGON]: '0x73A69033FfDf67E59E30e7e8679be5664892e863', // TODO:
+  [ChainId.MUMBAI]: '0x73A69033FfDf67E59E30e7e8679be5664892e863',
 }
 
 // used to construct intermediary pairs for trading
 export const BASES_TO_CHECK_TRADES_AGAINST: ChainTokenList = {
+  [ChainId.ETHEREUM]: [
+    WNATIVE[ChainId.ETHEREUM],
+    USDC[ChainId.ETHEREUM],
+    USDT[ChainId.ETHEREUM],
+    BUSD[ChainId.ETHEREUM],
+    WBNB[ChainId.ETHEREUM],
+  ],
+  [ChainId.RINKEBY]: [WNATIVE[ChainId.GOERLI], USDC[ChainId.GOERLI], BUSD[ChainId.GOERLI]],
+  [ChainId.GOERLI]: [WNATIVE[ChainId.GOERLI], USDC[ChainId.GOERLI], BUSD[ChainId.GOERLI]],
+  [ChainId.POLYGON]: [WNATIVE[ChainId.POLYGON], USDC[ChainId.POLYGON], BUSD[ChainId.POLYGON]],
+  [ChainId.MUMBAI]: [WNATIVE[ChainId.MUMBAI], USDC[ChainId.MUMBAI], BUSD[ChainId.MUMBAI]],
   [ChainId.MAINNET]: [
     mainnetTokens.wbnb,
     mainnetTokens.cake,
@@ -19,7 +35,7 @@ export const BASES_TO_CHECK_TRADES_AGAINST: ChainTokenList = {
     mainnetTokens.eth,
     mainnetTokens.usdc,
   ],
-  [ChainId.TESTNET]: [testnetTokens.wbnb, testnetTokens.cake, testnetTokens.busd],
+  [ChainId.TESTNET]: [testnetTokens.wbnb, testnetTokens.svc, testnetTokens.busd],
 }
 
 /**
@@ -43,10 +59,26 @@ export const CUSTOM_BASES: { [chainId in ChainId]?: { [tokenAddress: string]: To
 export const SUGGESTED_BASES: ChainTokenList = {
   [ChainId.MAINNET]: [mainnetTokens.busd, mainnetTokens.cake, mainnetTokens.btcb],
   [ChainId.TESTNET]: [testnetTokens.wbnb, testnetTokens.cake, testnetTokens.busd],
+  [ChainId.ETHEREUM]: [USDC[ChainId.ETHEREUM], WBNB[ChainId.ETHEREUM], BUSD[ChainId.ETHEREUM], USDT[ChainId.ETHEREUM]],
+  [ChainId.RINKEBY]: [USDC[ChainId.RINKEBY], WNATIVE[ChainId.RINKEBY], BUSD[ChainId.RINKEBY]],
+  [ChainId.GOERLI]: [USDC[ChainId.GOERLI], WNATIVE[ChainId.GOERLI], BUSD[ChainId.GOERLI]],
+  [ChainId.POLYGON]: [USDC[ChainId.POLYGON], WNATIVE[ChainId.POLYGON], BUSD[ChainId.POLYGON]],
+  [ChainId.MUMBAI]: [USDC[ChainId.MUMBAI], WNATIVE[ChainId.MUMBAI], BUSD[ChainId.MUMBAI]],
 }
 
 // used to construct the list of all pairs we consider by default in the frontend
 export const BASES_TO_TRACK_LIQUIDITY_FOR: ChainTokenList = {
+  [ChainId.ETHEREUM]: [
+    USDC[ChainId.ETHEREUM],
+    WNATIVE[ChainId.ETHEREUM],
+    BUSD[ChainId.ETHEREUM],
+    USDT[ChainId.ETHEREUM],
+    WBNB[ChainId.ETHEREUM],
+  ],
+  [ChainId.RINKEBY]: [USDC[ChainId.RINKEBY], WNATIVE[ChainId.RINKEBY], BUSD[ChainId.RINKEBY]],
+  [ChainId.GOERLI]: [USDC[ChainId.GOERLI], WNATIVE[ChainId.GOERLI], BUSD[ChainId.GOERLI]],
+  [ChainId.POLYGON]: [USDC[ChainId.POLYGON], WNATIVE[ChainId.POLYGON], BUSD[ChainId.POLYGON]],
+  [ChainId.MUMBAI]: [USDC[ChainId.MUMBAI], WNATIVE[ChainId.MUMBAI], BUSD[ChainId.MUMBAI]],
   [ChainId.MAINNET]: [mainnetTokens.wbnb, mainnetTokens.dai, mainnetTokens.busd, mainnetTokens.usdt],
   [ChainId.TESTNET]: [testnetTokens.wbnb, testnetTokens.cake, testnetTokens.busd],
 }

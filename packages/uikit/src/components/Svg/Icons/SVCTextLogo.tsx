@@ -5,7 +5,7 @@ import { SvgProps } from "../types";
 const Icon: React.FC<SvgProps> = (props) => {
   return (
     <div {...props} style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
-      <img {...props} width={30} height={30} alt="Savvycoin logo" src="./images/tokens/SVC.png" />
+      <img {...props} width={30} height={30} alt="Savvycoin logo" src="https://dex.savvycom.ai/images/tokens/SVC.png" />
       <Svg {...props} width="100" height="16" viewBox="0 0 100 16" fill="none" xmlns="http://www.w3.org/2000/svg">
         <g clipPath="url(#clip0_10_32)">
           <path

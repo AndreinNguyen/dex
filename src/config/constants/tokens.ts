@@ -1,29 +1,220 @@
-import { ChainId, Token } from '@savvydex/sdk'
+import { ChainId, Token, WNATIVE } from '@savvydex/sdk'
 import { serializeToken } from 'state/user/hooks/helpers'
-import { CHAIN_ID } from './networks'
-import { SerializedToken } from './types'
 
-const { MAINNET, TESTNET } = ChainId
+const { MAINNET, TESTNET, MUMBAI } = ChainId
 
 interface TokenList {
   [symbol: string]: Token
 }
 
+const SVC_MAINNET = new Token(
+  ChainId.MAINNET,
+  '0x857b64d4A0ce517631210eaf9d512BC04485b439',
+  18,
+  'SVC',
+  'Savvy Coin',
+  'https://pancakeswap.finance/',
+)
+
+const SVC_TESTNET = new Token(
+  ChainId.TESTNET,
+  '0xFF3b8ae2FDfbA5daAdcee60FC3E346CAdBcdfb3c',
+  18,
+  'SVC',
+  'Savvy Coin',
+  'https://pancakeswap.finance/',
+)
+
+const SVC_MUMBAI = new Token(
+  ChainId.MUMBAI,
+  '0xAa954FE24D2462244b6Ab54972F7bb78F0Db87fF',
+  18,
+  'SVC',
+  'Savvy Coin',
+  'https://pancakeswap.finance/',
+)
+
+// TODO: update address later
+export const SVC: Record<ChainId, Token> = {
+  [ChainId.MAINNET]: SVC_MAINNET,
+  [ChainId.TESTNET]: SVC_TESTNET,
+  [ChainId.ETHEREUM]: SVC_TESTNET,
+  [ChainId.GOERLI]: SVC_TESTNET,
+  [ChainId.RINKEBY]: SVC_TESTNET,
+  [ChainId.POLYGON]: SVC_TESTNET,
+  [ChainId.MUMBAI]: SVC_MUMBAI,
+}
+
+// TODO: update address later
+export const LP_SVC_BUSD: Record<ChainId, string> = {
+  [ChainId.MAINNET]: '0x564C03d7AC6687D53B2053b69696Cb761A2c046e',
+  [ChainId.TESTNET]: '0xB33aEB67FbE64b0f95Fa3FF83979Bd246e9d7a97',
+  [ChainId.ETHEREUM]: '',
+  [ChainId.GOERLI]: '',
+  [ChainId.RINKEBY]: '',
+  [ChainId.POLYGON]: '',
+  [ChainId.MUMBAI]: '0x413d4ceDC6642734705099360433b479d679C2d0',
+}
+
+// TODO: update address later
+export const LP_WBNB_BUSD: Record<ChainId, string> = {
+  [ChainId.MAINNET]: '0x16b9a82891338f9bA80E2D6970FddA79D1eb0daE',
+  [ChainId.TESTNET]: '0xE7d28e79DFE52d304CADAc4EF439d7b59eF18D4E',
+  [ChainId.ETHEREUM]: '',
+  [ChainId.GOERLI]: '',
+  [ChainId.RINKEBY]: '',
+  [ChainId.POLYGON]: '',
+  [ChainId.MUMBAI]: '0xee055ba9bd7254ba292d1ed3f523b1d71d477f2c',
+}
+
 export const defineTokens = <T extends TokenList>(t: T) => t
 
+const USDC_BSC = new Token(
+  ChainId.MAINNET,
+  '0x8AC76a51cc950d9822D68b83fE1Ad97B32Cd580d',
+  18,
+  'USDC',
+  'Binance-Peg USD Coin',
+  'https://www.centre.io/usdc',
+)
+
+const USDC_TESTNET = new Token(
+  ChainId.TESTNET,
+  '0x64544969ed7EBf5f083679233325356EbE738930',
+  18,
+  'USDC',
+  'Binance-Peg USD Coin',
+  'https://www.centre.io/usdc',
+)
+
+const USDC_ETH = new Token(ChainId.ETHEREUM, '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48', 6, 'USDC', 'USD Coin')
+
+const USDC_RINKEBY = new Token(
+  ChainId.RINKEBY,
+  '0x4DBCdF9B62e891a7cec5A2568C3F4FAF9E8Abe2b',
+  6,
+  'tUSDC',
+  'test USD Coin',
+)
+
+const USDC_GOERLI = new Token(ChainId.GOERLI, '0x07865c6E87B9F70255377e024ace6630C1Eaa37F', 6, 'tUSDC', 'test USD Coin')
+
+const USDT_BSC = new Token(
+  ChainId.MAINNET,
+  '0x55d398326f99059fF775485246999027B3197955',
+  18,
+  'USDT',
+  'Tether USD',
+  'https://tether.to/',
+)
+
+const USDT_TESTNET = new Token(
+  ChainId.TESTNET,
+  '0x3F35B0Ec347fcCfdD2C2bA84B5cd46C7E91ECdF3',
+  18,
+  'USDT',
+  'Tether USD',
+  'https://tether.to/',
+)
+
+const USDT_ETH = new Token(
+  ChainId.ETHEREUM,
+  '0x55d398326f99059fF775485246999027B3197955',
+  18,
+  'USDT',
+  'Tether USD',
+  'https://tether.to/',
+)
+
+const USDT_MUMBAI = new Token(
+  ChainId.MUMBAI,
+  '0x0afF29eeCf746EC239C8DA3E8e630F46FCaBC48e',
+  18,
+  'USDT',
+  'Tether USD',
+  'https://tether.to/',
+)
+
+export const USDT: Record<ChainId, Token> = {
+  [ChainId.MAINNET]: USDT_BSC,
+  [ChainId.TESTNET]: USDT_TESTNET,
+  [ChainId.ETHEREUM]: USDT_ETH,
+  [ChainId.GOERLI]: USDT_ETH,
+  [ChainId.RINKEBY]: USDT_ETH,
+  [ChainId.POLYGON]: USDT_ETH,
+  [ChainId.MUMBAI]: USDT_MUMBAI,
+}
+
+export const USDC: Record<ChainId, Token> = {
+  [ChainId.MAINNET]: USDC_BSC,
+  [ChainId.TESTNET]: USDC_TESTNET,
+  [ChainId.ETHEREUM]: USDC_ETH,
+  [ChainId.RINKEBY]: USDC_RINKEBY,
+  [ChainId.GOERLI]: USDC_GOERLI,
+  [ChainId.POLYGON]: USDC_GOERLI,
+  [ChainId.MUMBAI]: USDC_GOERLI,
+}
+
+const BUSD_MAINNET = new Token(
+  ChainId.MAINNET,
+  '0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56',
+  18,
+  'BUSD',
+  'Binance USD',
+  'https://www.paxos.com/busd/',
+)
+
+const BUSD_TESTNET = new Token(
+  ChainId.TESTNET,
+  '0xeD24FC36d5Ee211Ea25A80239Fb8C4Cfd80f12Ee',
+  18,
+  'BUSD',
+  'Binance USD',
+  'https://www.paxos.com/busd/',
+)
+
+const BUSD_ETH = new Token(
+  ChainId.ETHEREUM,
+  '0x4Fabb145d64652a948d72533023f6E7A623C7C53',
+  18,
+  'BUSD',
+  'Binance USD',
+  'https://www.paxos.com/busd/',
+)
+
+const BUSD_RINKEBY = new Token(
+  ChainId.RINKEBY,
+  '0x4e2442A6f7AeCE64Ca33d31756B5390860BF973E',
+  18,
+  'BUSD',
+  'Binance USD',
+  'https://www.paxos.com/busd/',
+)
+
+const BUSD_GOERLI = new Token(
+  ChainId.GOERLI,
+  '0xb809b9B2dc5e93CB863176Ea2D565425B03c0540',
+  18,
+  'BUSD',
+  'Binance USD',
+  'https://www.paxos.com/busd/',
+)
+
+export const BUSD: Record<ChainId, Token> = {
+  [ChainId.ETHEREUM]: BUSD_ETH,
+  [ChainId.RINKEBY]: BUSD_RINKEBY,
+  [ChainId.GOERLI]: BUSD_GOERLI,
+  [ChainId.MAINNET]: BUSD_MAINNET,
+  [ChainId.TESTNET]: BUSD_TESTNET,
+  [ChainId.POLYGON]: BUSD_TESTNET,
+  [ChainId.MUMBAI]: BUSD_TESTNET,
+}
+
 export const mainnetTokens = defineTokens({
-  svc: new Token(MAINNET, process.env.NEXT_PUBLIC_SVC_ADDRESS, 18, 'SVC', 'Savvycoin', 'https://coin.savvycom.vn/'),
-  svg: new Token(MAINNET, process.env.NEXT_PUBLIC_SVG_ADDRESS, 18, 'SVG', 'Savvygame', 'https://coin.savvycom.vn/svg'),
-  wbnb: new Token(
-    MAINNET,
-    '0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c',
-    18,
-    'WBNB',
-    'Wrapped BNB',
-    'https://www.binance.com/',
-  ),
+  svc: new Token(MAINNET, SVC[ChainId.MAINNET].address, 18, 'SVC', 'Savvycoin', 'https://coin.savvycom.vn/'),
+  wbnb: new Token(MAINNET, WNATIVE[ChainId.MAINNET].address, 18, 'WBNB', 'Wrapped BNB', 'https://www.binance.com/'),
   // bnb here points to the wbnb contract. Wherever the currency BNB is required, conditional checks for the symbol 'BNB' can be used
-  bnb: new Token(MAINNET, '0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c', 18, 'BNB', 'BNB', 'https://www.binance.com/'),
+  bnb: new Token(MAINNET, WNATIVE[ChainId.MAINNET].address, 18, 'BNB', 'BNB', 'https://www.binance.com/'),
   cake: new Token(
     MAINNET,
     '0x0E09FaBB73Bd3Ade0a17ECC321fD13a19e81cE82',
@@ -69,14 +260,7 @@ export const mainnetTokens = defineTokens({
     'BSC Defi blue chips token',
     'https://powerpool.finance/',
   ),
-  busd: new Token(
-    MAINNET,
-    '0x55d398326f99059fF775485246999027B3197955',
-    18,
-    'USDT',
-    'Binance USDT',
-    'https://www.paxos.com/usdt/',
-  ),
+  busd: new Token(MAINNET, USDT[ChainId.MAINNET].address, 18, 'USDT', 'Binance USDT', 'https://www.paxos.com/usdt/'), // TODO: This is USDT, but we haven't changed our name yet
   dai: new Token(
     MAINNET,
     '0x1AF3F329e8BE154074D8769D1FFa4eE058B1DBc3',
@@ -2117,16 +2301,8 @@ export const mainnetTokens = defineTokens({
 } as const)
 
 export const testnetTokens = defineTokens({
-  svc: new Token(TESTNET, process.env.NEXT_PUBLIC_SVC_ADDRESS, 18, 'SVC', 'Savvycoin', 'https://coin.savvycom.vn/'),
-  svg: new Token(TESTNET, process.env.NEXT_PUBLIC_SVG_ADDRESS, 18, 'SVG', 'Savvygame', 'https://coin.savvycom.vn/svg'),
-  wbnb: new Token(
-    TESTNET,
-    '0xae13d989daC2f0dEbFf460aC112a837C89BAa7cd',
-    18,
-    'WBNB',
-    'Wrapped BNB',
-    'https://www.binance.com/',
-  ),
+  svc: new Token(TESTNET, SVC[ChainId.TESTNET].address, 18, 'SVC', 'Savvycoin', 'https://coin.savvycom.vn/'),
+  wbnb: new Token(TESTNET, WNATIVE[ChainId.TESTNET].address, 18, 'WBNB', 'Wrapped BNB', 'https://www.binance.com/'),
   cake: new Token(
     TESTNET,
     '0xa35062141Fa33BCA92Ce69FeD37D0E8908868AAe',
@@ -2135,14 +2311,7 @@ export const testnetTokens = defineTokens({
     'PancakeSwap Token',
     'https://pancakeswap.finance/',
   ),
-  busd: new Token(
-    TESTNET,
-    process.env.NEXT_PUBLIC_BUSD_ADDRESS,
-    18,
-    'USDT',
-    'Binance USDT',
-    'https://www.paxos.com/busd/',
-  ),
+  busd: new Token(TESTNET, USDT[ChainId.TESTNET].address, 18, 'USDT', 'Binance USDT', 'https://www.paxos.com/busd/'), // TODO: This is USDT, but we haven't changed our name yet
   syrup: new Token(
     TESTNET,
     '0xfE1e507CeB712BDe086f3579d2c03248b2dB77f9',
@@ -2161,29 +2330,59 @@ export const testnetTokens = defineTokens({
   ),
 } as const)
 
-const tokens = () => {
-  const chainId = CHAIN_ID
+export const mumbaiTokens = defineTokens({
+  svc: new Token(MUMBAI, SVC[ChainId.MUMBAI].address, 18, 'SVC', 'Savvycoin', 'https://coin.savvycom.vn/'),
+  wbnb: new Token(MUMBAI, WNATIVE[ChainId.MUMBAI].address, 18, 'WMATIC', 'Wrapped Matic', 'https://www.binance.com/'),
+  cake: new Token(
+    MUMBAI,
+    '0xa35062141Fa33BCA92Ce69FeD37D0E8908868AAe',
+    18,
+    'CAKE',
+    'PancakeSwap Token',
+    'https://pancakeswap.finance/',
+  ),
+  busd: new Token(MUMBAI, USDT[ChainId.MUMBAI].address, 18, 'USDT', 'Binance USDT', 'https://www.paxos.com/busd/'), // TODO: This is USDT, but we haven't changed our name yet
+  syrup: new Token(
+    MUMBAI,
+    '0xfE1e507CeB712BDe086f3579d2c03248b2dB77f9',
+    18,
+    'SYRUP',
+    'SyrupBar Token',
+    'https://pancakeswap.finance/',
+  ),
+  bake: new Token(
+    MUMBAI,
+    '0xE02dF9e3e622DeBdD69fb838bB799E3F168902c5',
+    18,
+    'BAKE',
+    'Bakeryswap Token',
+    'https://www.bakeryswap.org/',
+  ),
+} as const)
 
-  // If testnet - return list comprised of testnetTokens wherever they exist, and mainnetTokens where they don't
-  if (parseInt(chainId, 10) === ChainId.TESTNET) {
-    return Object.keys(mainnetTokens).reduce((accum, key) => {
-      return { ...accum, [key]: testnetTokens[key] || mainnetTokens[key] }
-    }, {} as typeof testnetTokens & typeof mainnetTokens)
-  }
+// const tokens = () => {
+//   const chainId = CHAIN_ID
 
-  return mainnetTokens
-}
+//   // If testnet - return list comprised of testnetTokens wherever they exist, and mainnetTokens where they don't
+//   if (parseInt(chainId, 10) === ChainId.TESTNET) {
+//     return Object.keys(mainnetTokens).reduce((accum, key) => {
+//       return { ...accum, [key]: testnetTokens[key] || mainnetTokens[key] }
+//     }, {} as typeof testnetTokens & typeof mainnetTokens)
+//   }
 
-const unserializedTokens = tokens()
+//   return mainnetTokens
+// }
 
-type SerializedTokenList = Record<keyof typeof unserializedTokens, SerializedToken>
+// const unserializedTokens = tokens()
 
-export const serializeTokens = () => {
+// type SerializedTokenList = Record<keyof typeof unserializedTokens, SerializedToken>
+
+export const serializeTokens = (unserializedTokens) => {
   const serializedTokens = Object.keys(unserializedTokens).reduce((accum, key) => {
     return { ...accum, [key]: serializeToken(unserializedTokens[key]) }
-  }, {} as SerializedTokenList)
+  }, {} as any)
 
   return serializedTokens
 }
 
-export default unserializedTokens
+// export default unserializedTokens

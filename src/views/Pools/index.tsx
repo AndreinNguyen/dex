@@ -1,7 +1,7 @@
 import { BigNumber as EthersBigNumber } from '@ethersproject/bignumber'
 import { formatUnits } from '@ethersproject/units'
 import { Flex, Heading, Image, Link, Text } from '@pancakeswap/uikit'
-import { useWeb3React } from '@web3-react/core'
+import { useWeb3React } from '@pancakeswap/wagmi'
 import BigNumber from 'bignumber.js'
 import { BubbleHelper } from 'components/BubbleHelper'
 import FlexLayout from 'components/Layout/Flex'

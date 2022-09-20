@@ -1,6 +1,6 @@
 import { useState, useCallback, Dispatch, SetStateAction } from 'react'
 import { useTranslation } from 'contexts/Localization'
-import { useWeb3React } from '@web3-react/core'
+import { useWeb3React } from '@pancakeswap/wagmi'
 import { useAppDispatch } from 'state'
 import _noop from 'lodash/noop'
 import { useBUSDCakeAmount } from 'hooks/useBUSDPrice'

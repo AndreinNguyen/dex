@@ -1,4 +1,4 @@
-import { useWeb3React } from '@web3-react/core'
+import { useWeb3React } from '@pancakeswap/wagmi'
 import BigNumber from 'bignumber.js'
 import { farmsConfig } from 'config/constants'
 import { useFastRefreshEffect, useSlowRefreshEffect } from 'hooks/useRefreshEffect'
@@ -45,17 +45,19 @@ const deserializeFarm = (farm: SerializedFarm): DeserializedFarm => {
 
 export const usePollFarmsV1WithUserData = () => {
   const dispatch = useAppDispatch()
-  const { account } = useWeb3React()
+  const { account, chainId } = useWeb3React()
 
   useSlowRefreshEffect(() => {
-    const pids = farmsConfig.filter((farmToFetch) => farmToFetch.v1pid).map((farmToFetch) => farmToFetch.v1pid)
+    const pids = farmsConfig(chainId)
+      .filter((farmToFetch) => farmToFetch.v1pid)
+      .map((farmToFetch) => farmToFetch.v1pid)
 
-    dispatch(fetchFarmsPublicDataAsync(pids))
+    dispatch(fetchFarmsPublicDataAsync({ pids, chainId }))
 
     if (account) {
-      dispatch(fetchFarmUserDataAsync({ account, pids }))
+      dispatch(fetchFarmUserDataAsync({ account, pids, chainId }))
     }
-  }, [dispatch, account])
+  }, [dispatch, account, chainId])
 }
 
 /**
@@ -65,10 +67,11 @@ export const usePollFarmsV1WithUserData = () => {
  */
 export const usePollCoreFarmData = () => {
   const dispatch = useAppDispatch()
+  const { chainId } = useWeb3React()
 
   useFastRefreshEffect(() => {
-    dispatch(fetchFarmsPublicDataAsync([251, 252]))
-  }, [dispatch])
+    dispatch(fetchFarmsPublicDataAsync({ pids: [251, 252], chainId }))
+  }, [chainId, dispatch])
 }
 
 export const useFarmsV1 = (): DeserializedFarmsState => {

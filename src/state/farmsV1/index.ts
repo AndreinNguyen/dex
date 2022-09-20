@@ -9,6 +9,7 @@ import stringify from 'fast-json-stable-stringify'
 import farmsConfig from 'config/constants/farms'
 import type { AppState } from 'state'
 import priceHelperLpsConfig from 'config/constants/priceHelperLps'
+import { ChainId } from '@savvydex/sdk'
 import fetchFarms from './fetchFarms'
 import getFarmsPrices from './getFarmsPrices'
 import {
@@ -20,7 +21,8 @@ import {
 import { SerializedFarmsState, SerializedFarm } from '../types'
 import { fetchMasterChefFarmPoolLength } from './fetchMasterChefData'
 
-const noAccountFarmConfig = farmsConfig.map((farm) => ({
+// TODO: Switch to mainnet on production
+const noAccountFarmConfig = farmsConfig(ChainId.TESTNET).map((farm) => ({
   ...farm,
   userData: {
     allowance: '0',
@@ -40,15 +42,15 @@ const initialState: SerializedFarmsState = {
 // Async thunks
 export const fetchFarmsPublicDataAsync = createAsyncThunk<
   [SerializedFarm[], number],
-  number[],
+  { pids: number[]; chainId: ChainId },
   {
     state: AppState
   }
 >(
   'farmsV1/fetchFarmsPublicDataAsync',
-  async (pids) => {
+  async ({ pids, chainId }) => {
     const poolLength = await fetchMasterChefFarmPoolLength()
-    const farmsToFetch = farmsConfig.filter((farmConfig) => pids.includes(farmConfig.v1pid))
+    const farmsToFetch = farmsConfig(chainId).filter((farmConfig) => pids.includes(farmConfig.v1pid))
     const farmsCanFetch = farmsToFetch.filter((f) => poolLength.gt(f.v1pid))
 
     // Add price helper farms
@@ -86,15 +88,15 @@ interface FarmUserDataResponse {
 
 export const fetchFarmUserDataAsync = createAsyncThunk<
   FarmUserDataResponse[],
-  { account: string; pids: number[] },
+  { account: string; pids: number[]; chainId: ChainId },
   {
     state: AppState
   }
 >(
   'farmsV1/fetchFarmUserDataAsync',
-  async ({ account, pids }) => {
+  async ({ account, pids, chainId }) => {
     const poolLength = await fetchMasterChefFarmPoolLength()
-    const farmsToFetch = farmsConfig.filter((farmConfig) => pids.includes(farmConfig.v1pid))
+    const farmsToFetch = farmsConfig(chainId).filter((farmConfig) => pids.includes(farmConfig.v1pid))
     const farmsCanFetch = farmsToFetch.filter((f) => poolLength.gt(f.v1pid))
     const userFarmAllowances = await fetchFarmUserAllowances(account, farmsCanFetch)
     const userFarmTokenBalances = await fetchFarmUserTokenBalances(account, farmsCanFetch)

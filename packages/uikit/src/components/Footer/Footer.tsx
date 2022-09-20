@@ -68,7 +68,7 @@ const MenuItem: React.FC<FooterProps> = () => {
         <p className="p2">
           Savvydex is a demonstration (i.e., solely for non-commercial purposes to learn more about our blockchain
           technologies and services) of being developed multi-chain technologies for Trading, Farming, Staking, etc.,
-          cryptocurrencies in a flexible and efficient way.”
+          cryptocurrencies in a flexible and efficient way.
         </p>
       </div>
 
