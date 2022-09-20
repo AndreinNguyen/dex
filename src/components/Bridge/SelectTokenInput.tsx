@@ -68,7 +68,6 @@ type Props = {
   label: string
   data: any
   setDataToken
-  setData
 }
 
 const SelectTokenInput = ({ label, setDataToken, data }: Props) => {

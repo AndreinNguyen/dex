@@ -34,6 +34,15 @@ const SVC_MUMBAI = new Token(
   'https://pancakeswap.finance/',
 )
 
+const SVC_MUMBAI_BRIDGE = new Token(
+  ChainId.MUMBAI,
+  '0x920C5d0A185Ca7E721824999176e9325D05FB2b6',
+  18,
+  'SVC',
+  'Savvy Coin',
+  'https://pancakeswap.finance/',
+)
+
 // TODO: update address later
 export const SVC: Record<ChainId, Token> = {
   [ChainId.MAINNET]: SVC_MAINNET,
@@ -43,6 +52,16 @@ export const SVC: Record<ChainId, Token> = {
   [ChainId.RINKEBY]: SVC_TESTNET,
   [ChainId.POLYGON]: SVC_TESTNET,
   [ChainId.MUMBAI]: SVC_MUMBAI,
+}
+
+export const SVC_FOR_BRIDGE: Record<ChainId, Token> = {
+  [ChainId.MAINNET]: SVC_MAINNET,
+  [ChainId.TESTNET]: SVC_TESTNET,
+  [ChainId.ETHEREUM]: SVC_TESTNET,
+  [ChainId.GOERLI]: SVC_TESTNET,
+  [ChainId.RINKEBY]: SVC_TESTNET,
+  [ChainId.POLYGON]: SVC_TESTNET,
+  [ChainId.MUMBAI]: SVC_MUMBAI_BRIDGE,
 }
 
 // TODO: update address later
