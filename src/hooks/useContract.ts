@@ -36,7 +36,17 @@ import {
   getSVCContract,
 } from 'utils/contractHelpers'
 import { getMasterChefAddress, getMulticallAddress } from 'utils/addressHelpers'
-import { Erc20, Erc20Bytes32, Multicall, Weth, Cake, Erc721collection, CakeVaultV2, Svc } from 'config/abi/types'
+import {
+  Erc20,
+  Erc20Bytes32,
+  Multicall,
+  Weth,
+  Cake,
+  Erc721collection,
+  CakeVaultV2,
+  Svc,
+  Bridge,
+} from 'config/abi/types'
 import { useSigner } from 'wagmi'
 
 // Imports below migrated from Exchange useContract.ts
@@ -280,7 +290,7 @@ export function useTokenContract(tokenAddress?: string, withSignerIfPossible?: b
 }
 
 export function useBridgeContract(tokenAddress?: string, withSignerIfPossible?: boolean) {
-  return useContract<Erc20>(tokenAddress, BRIDGE_ABI, withSignerIfPossible)
+  return useContract<Bridge>(tokenAddress, BRIDGE_ABI, withSignerIfPossible)
 }
 
 export function useWNativeContract(withSignerIfPossible?: boolean): Contract | null {
