@@ -275,6 +275,7 @@ export const useFetchPairPrices = ({
   timeWindow,
   currentSwapPrice,
 }: useFetchPairPricesParams) => {
+  const { chainId } = useActiveWeb3React()
   const [pairId, setPairId] = useState(null)
   const [isLoading, setIsLoading] = useState(false)
   const pairData = useSelector(pairByDataIdSelector({ pairId, timeWindow }))
@@ -290,7 +291,8 @@ export const useFetchPairPrices = ({
         // Try to get at least derived data for chart
         // This is used when there is no direct data for pool
         // i.e. when multihops are necessary
-        const derivedData = await fetchDerivedPriceData(token0Address, token1Address, timeWindow)
+        const derivedData = await fetchDerivedPriceData(token0Address, token1Address, timeWindow, chainId)
+
         if (derivedData) {
           const normalizedDerivedData = normalizeDerivedChartData(derivedData)
           dispatch(updateDerivedPairData({ pairData: normalizedDerivedData, pairId, timeWindow }))
@@ -307,7 +309,7 @@ export const useFetchPairPrices = ({
 
     const fetchAndUpdatePairPrice = async () => {
       setIsLoading(true)
-      const { data } = await fetchPairPriceData({ pairId, timeWindow })
+      const { data } = await fetchPairPriceData({ pairId, timeWindow, chainId })
       if (data) {
         // Find out if Liquidity Pool has enough liquidity
         // low liquidity pool might mean that the price is incorrect
@@ -343,12 +345,13 @@ export const useFetchPairPrices = ({
     derivedPairData,
     dispatch,
     isLoading,
+    chainId,
   ])
 
   useEffect(() => {
     const updatePairId = () => {
       try {
-        const pairAddress = getLpAddress(token0Address, token1Address)?.toLowerCase()
+        const pairAddress = getLpAddress(token0Address, token1Address, chainId)?.toLowerCase()
         if (pairAddress !== pairId) {
           setPairId(pairAddress)
         }
@@ -358,7 +361,7 @@ export const useFetchPairPrices = ({
     }
 
     updatePairId()
-  }, [token0Address, token1Address, pairId])
+  }, [token0Address, token1Address, pairId, chainId])
 
   const normalizedPairData = useMemo(
     () => normalizePairDataByActiveToken({ activeToken: token0Address, pairData }),
@@ -400,11 +403,14 @@ export const useFetchPairPrices = ({
 }
 
 export const useLPApr = (pair) => {
+  const { chainId } = useActiveWeb3React()
+
   const { data: poolData } = useSWRImmutable(
     pair ? ['LP7dApr', pair.liquidityToken.address] : null,
     async () => {
       const timestampsArray = getDeltaTimestamps()
-      const blocks = await getBlocksFromTimestamps(timestampsArray, 'desc', 1000)
+      const blocks = await getBlocksFromTimestamps(timestampsArray, 'desc', 1000, chainId)
+
       const [block24h, block48h, block7d, block14d] = blocks ?? []
       const { error, data } = await fetchPoolData(block24h.number, block48h.number, block7d.number, block14d.number, [
         pair.liquidityToken.address.toLowerCase(),

@@ -1,3 +1,4 @@
+import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import { useState, useEffect } from 'react'
 import { getBlocksFromTimestamps } from 'utils/getBlocksFromTimestamps'
 import { Block } from 'state/info/types'
@@ -18,6 +19,7 @@ export const useBlocksFromTimestamps = (
 } => {
   const [blocks, setBlocks] = useState<Block[]>()
   const [error, setError] = useState(false)
+  const { chainId } = useActiveWeb3React()
 
   const timestampsString = JSON.stringify(timestamps)
   const blocksString = blocks ? JSON.stringify(blocks) : undefined
@@ -25,7 +27,7 @@ export const useBlocksFromTimestamps = (
   useEffect(() => {
     const fetchData = async () => {
       const timestampsArray = JSON.parse(timestampsString)
-      const result = await getBlocksFromTimestamps(timestampsArray, sortDirection, skipCount)
+      const result = await getBlocksFromTimestamps(timestampsArray, sortDirection, skipCount, chainId)
       if (result.length === 0) {
         setError(true)
       } else {
@@ -36,7 +38,7 @@ export const useBlocksFromTimestamps = (
     if (!blocksArray && !error) {
       fetchData()
     }
-  }, [blocksString, error, skipCount, sortDirection, timestampsString])
+  }, [blocksString, chainId, error, skipCount, sortDirection, timestampsString])
 
   return {
     blocks,

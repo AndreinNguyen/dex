@@ -34,12 +34,13 @@ export function usePairs(currencies: [Currency | undefined, Currency | undefined
         try {
           return tokenA && tokenB && !tokenA.equals(tokenB) ? Pair.getAddress(tokenA, tokenB) : undefined
         } catch (error: any) {
+          // TODO: Disable console debug
           // Debug Invariant failed related to this line
-          console.error(
-            error.msg,
-            `- pairAddresses: ${tokenA?.address}-${tokenB?.address}`,
-            `chainId: ${tokenA?.chainId}`,
-          )
+          // console.error(
+          //   error.msg,
+          //   `- pairAddresses: ${tokenA?.address}-${tokenB?.address}`,
+          //   `chainId: ${tokenA?.chainId}`,
+          // )
 
           return undefined
         }

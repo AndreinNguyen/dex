@@ -57,10 +57,10 @@ export const getStaticProps: GetStaticProps = async () => {
         throw new Error('No block found for 30 days ago')
       }
 
-      const totalTx = await infoServerClient.request(totalTxQuery, {
+      const totalTx = await infoServerClient().request(totalTxQuery, {
         id: FACTORY_ADDRESS,
       })
-      const totalTx30DaysAgo = await infoServerClient.request(totalTxQuery, {
+      const totalTx30DaysAgo = await infoServerClient().request(totalTxQuery, {
         block: {
           number: days30AgoBlock.number,
         },
@@ -110,7 +110,7 @@ export const getStaticProps: GetStaticProps = async () => {
   }
 
   try {
-    const result = await infoServerClient.request(gql`
+    const result = await infoServerClient().request(gql`
       query tvl {
         pancakeFactories(first: 1) {
           totalLiquidityUSD

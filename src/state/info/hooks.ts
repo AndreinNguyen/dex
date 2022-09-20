@@ -1,3 +1,4 @@
+import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import { useCallback, useEffect, useState, useMemo } from 'react'
 import { useSelector } from 'react-redux'
 import { getUnixTime, startOfHour, Duration, sub } from 'date-fns'
@@ -273,6 +274,7 @@ export const useTokenPriceData = (
   const token = useSelector((state: AppState) => state.info.tokens.byAddress[address])
   const priceData = token?.priceData[interval]
   const [error, setError] = useState(false)
+  const { chainId } = useActiveWeb3React()
 
   // construct timestamps and check if we need to fetch more data
   const oldestTimestampFetched = token?.priceData.oldestFetchedTimestamp
@@ -281,7 +283,7 @@ export const useTokenPriceData = (
 
   useEffect(() => {
     const fetch = async () => {
-      const { data, error: fetchingError } = await fetchTokenPriceData(address, interval, startTimestamp)
+      const { data, error: fetchingError } = await fetchTokenPriceData(address, interval, startTimestamp, chainId)
       if (data) {
         dispatch(
           updateTokenPriceData({
@@ -299,7 +301,7 @@ export const useTokenPriceData = (
     if (!priceData && !error) {
       fetch()
     }
-  }, [address, dispatch, error, interval, oldestTimestampFetched, priceData, startTimestamp, timeWindow])
+  }, [address, dispatch, error, interval, oldestTimestampFetched, priceData, startTimestamp, timeWindow, chainId])
 
   return priceData
 }

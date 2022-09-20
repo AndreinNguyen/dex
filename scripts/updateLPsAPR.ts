@@ -7,10 +7,10 @@ import chunk from 'lodash/chunk'
 import { sub, getUnixTime } from 'date-fns'
 import farmsConfig from '../src/config/constants/farms'
 import type { BlockResponse } from '../src/components/SubgraphHealthIndicator'
-import { BLOCKS_CLIENT } from '../src/config/constants/endpoints'
+import { BlockClients } from '../src/config/constants/endpoints'
 import { infoClient } from '../src/utils/graphql'
 
-const BLOCK_SUBGRAPH_ENDPOINT = BLOCKS_CLIENT
+// const BLOCK_SUBGRAPH_ENDPOINT = BLOCKS_CLIENT
 
 interface SingleFarmResponse {
   id: string
@@ -35,10 +35,10 @@ const getWeekAgoTimestamp = () => {
 const LP_HOLDERS_FEE = 0.0017
 const WEEKS_IN_A_YEAR = 52.1429
 
-const getBlockAtTimestamp = async (timestamp: number) => {
+const getBlockAtTimestamp = async (timestamp: number, chainId: ChainId) => {
   try {
     const { blocks } = await request<BlockResponse>(
-      BLOCK_SUBGRAPH_ENDPOINT,
+      BlockClients[chainId],
       `query getBlock($timestampGreater: Int!, $timestampLess: Int!) {
         blocks(first: 1, where: { timestamp_gt: $timestampGreater, timestamp_lt: $timestampLess }) {
           number
@@ -54,7 +54,7 @@ const getBlockAtTimestamp = async (timestamp: number) => {
 
 const getAprsForFarmGroup = async (addresses: string[], blockWeekAgo: number): Promise<AprMap> => {
   try {
-    const { farmsAtLatestBlock, farmsOneWeekAgo } = await infoClient.request<FarmsResponse>(
+    const { farmsAtLatestBlock, farmsOneWeekAgo } = await infoClient().request<FarmsResponse>(
       gql`
         query farmsBulk($addresses: [String]!, $blockWeekAgo: Int!) {
           farmsAtLatestBlock: pairs(first: 30, where: { id_in: $addresses }) {
@@ -96,13 +96,13 @@ const getAprsForFarmGroup = async (addresses: string[], blockWeekAgo: number): P
   }
 }
 
-const fetchAndUpdateLPsAPR = async () => {
-  const lowerCaseAddresses = farmsConfig.map((farm) => farm.lpAddresses[ChainId.MAINNET].toLowerCase())
+const fetchAndUpdateLPsAPR = async (chainId: ChainId) => {
+  const lowerCaseAddresses = farmsConfig(chainId).map((farm) => farm.lpAddresses[ChainId.MAINNET].toLowerCase())
   console.info(`Fetching farm data for ${lowerCaseAddresses.length} addresses`)
   // Split it into chunks of 30 addresses to avoid gateway timeout
   const addressesInGroups = chunk(lowerCaseAddresses, 30)
   const weekAgoTimestamp = getWeekAgoTimestamp()
-  const blockWeekAgo = await getBlockAtTimestamp(weekAgoTimestamp)
+  const blockWeekAgo = await getBlockAtTimestamp(weekAgoTimestamp, chainId)
 
   let allAprs: AprMap = {}
   // eslint-disable-next-line no-restricted-syntax
@@ -118,4 +118,4 @@ const fetchAndUpdateLPsAPR = async () => {
   })
 }
 
-fetchAndUpdateLPsAPR()
+fetchAndUpdateLPsAPR(ChainId.MUMBAI)

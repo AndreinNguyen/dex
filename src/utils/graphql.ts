@@ -1,4 +1,5 @@
-import { INFO_CLIENT } from 'config/constants/endpoints'
+import { INFO_CLIENT, ChartSubGrapEndPoints } from 'config/constants/endpoints'
+import { ChainId } from '@savvydex/sdk'
 import { GraphQLClient } from 'graphql-request'
 
 // Extra headers
@@ -18,14 +19,16 @@ export const getGQLHeaders = (endpoint: string) => {
   return undefined
 }
 
-export const infoClient = new GraphQLClient(INFO_CLIENT, { headers: getGQLHeaders(INFO_CLIENT) })
+export const infoClient = (chainId?: ChainId) =>
+  new GraphQLClient(ChartSubGrapEndPoints[chainId], { headers: getGQLHeaders(ChartSubGrapEndPoints[chainId]) })
 
-export const infoServerClient = new GraphQLClient(INFO_CLIENT, {
-  headers: {
-    'X-Sf': process.env.SF_HEADER,
-  },
-  timeout: 5000,
-})
+export const infoServerClient = (chainId?: ChainId) =>
+  new GraphQLClient(ChartSubGrapEndPoints[chainId], {
+    headers: {
+      'X-Sf': process.env.SF_HEADER,
+    },
+    timeout: 5000,
+  })
 
 export const bitQueryServerClient = new GraphQLClient(process.env.NEXT_PUBLIC_BIT_QUERY_ENDPOINT, {
   headers: {

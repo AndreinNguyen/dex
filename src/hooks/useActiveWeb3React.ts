@@ -35,14 +35,15 @@ export function useNetworkConnectorUpdater() {
         )
       }
     } else if (isChainSupported(parsedQueryChainId)) {
-      switchNetwork(parsedQueryChainId)
-        .then((r) => {
-          console.info('Auto switch network', r)
-        })
-        .catch((err) => {
-          console.error(err)
-        })
-        .finally(() => setTriedSwitchFromQuery(true))
+      // TODO: Disable switch network
+      // switchNetwork(parsedQueryChainId)
+      //   .then((r) => {
+      //     console.info('Auto switch network', r)
+      //   })
+      //   .catch((err) => {
+      //     console.error(err)
+      //   })
+      //   .finally(() => setTriedSwitchFromQuery(true))
     } else {
       setTriedSwitchFromQuery(true)
     }
