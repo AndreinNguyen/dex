@@ -51,6 +51,22 @@ class MyDocument extends Document {
           <link rel="shortcut icon" href="/favicon.ico" />
           <link rel="apple-touch-icon" href="/images/tokens/SVC.png" />
           <link rel="manifest" href="/manifest.json" />
+          <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1, maximum-scale=5, minimum-scale=1, viewport-fit=cover"
+          />
+          <meta
+            name="description"
+            content="Savvycoin is a crypto token in multiple chains for SAVVY community providing flexible, fast and low transaction fees for payments, rewards, and investments."
+          />
+          <meta name="theme-color" content="#14393c" />
+          <meta name="twitter:image" content="https://pancakeswap.finance/images/hero.png" />
+          <meta
+            name="twitter:description"
+            content="Savvycoin is a crypto token in multiple chains for SAVVY community providing flexible, fast and low transaction fees for payments, rewards, and investments."
+          />
+          <meta name="twitter:card" content="summary_large_image" />
+          <meta name="twitter:title" content="😊 Decentralized exchange with cross-chain technology" />
         </Head>
         <body>
           <noscript>
