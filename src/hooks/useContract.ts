@@ -36,7 +36,18 @@ import {
   getSVCContract,
 } from 'utils/contractHelpers'
 import { getMasterChefAddress, getMulticallAddress } from 'utils/addressHelpers'
-import { Erc20, Erc20Bytes32, Multicall, Weth, Cake, Erc721collection, CakeVaultV2, Svc } from 'config/abi/types'
+import {
+  Erc20,
+  Erc20Bytes32,
+  Multicall,
+  Weth,
+  Cake,
+  Erc721collection,
+  CakeVaultV2,
+  Svc,
+  Bridge,
+  BridgePolygon,
+} from 'config/abi/types'
 import { useSigner } from 'wagmi'
 
 // Imports below migrated from Exchange useContract.ts
@@ -46,6 +57,8 @@ import masterChef from 'config/abi/masterchef.json'
 import IPancakePairABI from '../config/abi/IPancakePair.json'
 import { ERC20_BYTES32_ABI } from '../config/abi/erc20'
 import ERC20_ABI from '../config/abi/erc20.json'
+import BRIDGE_ABI from '../config/abi/bridge.json'
+import BRIDGE_POLYGON_ABI from '../config/abi/bridgePolygon.json'
 import WETH_ABI from '../config/abi/weth.json'
 import multiCallAbi from '../config/abi/Multicall.json'
 import { getContract } from '../utils'
@@ -276,6 +289,14 @@ export function useContract<T extends Contract = Contract>(
 
 export function useTokenContract(tokenAddress?: string, withSignerIfPossible?: boolean) {
   return useContract<Erc20>(tokenAddress, ERC20_ABI, withSignerIfPossible)
+}
+
+export function useBridgeContract(tokenAddress?: string, withSignerIfPossible?: boolean) {
+  return useContract<Bridge>(tokenAddress, BRIDGE_ABI, withSignerIfPossible)
+}
+
+export function useBridgePolygonContract(tokenAddress?: string, withSignerIfPossible?: boolean) {
+  return useContract<BridgePolygon>(tokenAddress, BRIDGE_POLYGON_ABI, withSignerIfPossible)
 }
 
 export function useWNativeContract(withSignerIfPossible?: boolean): Contract | null {

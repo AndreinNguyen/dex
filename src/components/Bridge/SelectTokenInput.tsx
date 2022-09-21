@@ -68,18 +68,23 @@ type Props = {
   label: string
   data: any
   setDataToken
-  setData
+  disableSelect?: boolean
 }
 
-const SelectTokenInput = ({ label, setDataToken, data }: Props) => {
+const SelectTokenInput = ({ label, setDataToken, data, disableSelect }: Props) => {
   const [onOpenListNetworkModal] = useModal(<ListTokenModal setDataToken={setDataToken} />)
+
+  const OpenSelectModal = () => {
+    if (disableSelect) return
+    onOpenListNetworkModal()
+  }
 
   return (
     <SelectTokenStyle>
       <label className="label">{label}</label>
       <div className="inputPanel">
         <div className="network general-select">
-          <div className="token-select" onClick={onOpenListNetworkModal} role="presentation">
+          <div className="token-select" onClick={OpenSelectModal} role="presentation">
             <div className="token-info">
               {data?.logo ? <img className="logo" src={data?.logo} alt="" /> : <div className="default-icon" />}
 

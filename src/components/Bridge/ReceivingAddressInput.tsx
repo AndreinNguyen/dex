@@ -1,6 +1,7 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import { Input } from '@pancakeswap/uikit'
 import { useWeb3React } from '@web3-react/core'
+import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import React, { useCallback } from 'react'
 import styled from 'styled-components'
 
@@ -64,7 +65,7 @@ const ReceivingAddressInput = ({ data, onChange, value }: Props) => {
     },
     [onChange],
   )
-  const { account } = useWeb3React()
+  const { account } = useActiveWeb3React()
 
   const handleSameAddressClick = () => {
     onChange(account)

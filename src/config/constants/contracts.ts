@@ -121,5 +121,6 @@ export default {
   svcPolygon: {
     56: '',
     80001: '0x920C5d0A185Ca7E721824999176e9325D05FB2b6',
+    97: '0x920C5d0A185Ca7E721824999176e9325D05FB2b6',
   },
 }
