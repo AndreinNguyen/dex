@@ -14,10 +14,11 @@ import Divider from 'components/Divider'
 import Page from 'components/Layout/Page'
 import { SVC_FOR_BRIDGE } from 'config/constants/tokens'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
-import { useBridgeContract, useTokenContract } from 'hooks/useContract'
+import { useBridgeContract, useBridgePolygonContract, useTokenContract } from 'hooks/useContract'
+import { useSwitchNetwork } from 'hooks/useSwitchNetwork'
 import { useGetCakeBalance } from 'hooks/useTokenBalance'
 import { useCallback, useEffect, useState } from 'react'
-import { getBridgeAddress } from 'utils/addressHelpers'
+import { getBridgeAddress, getSVCPolygonAddress } from 'utils/addressHelpers'
 
 export enum ApproveModalStatus {
   PENDING = 1,
@@ -30,7 +31,7 @@ export enum ApproveModalStatus {
 const Bridge = () => {
   const { account, chainId } = useActiveWeb3React()
   const [fromToken, setFromToken] = useState(networkSupportBridge[chainId])
-  const [toToken, setToToken] = useState(networkSupportBridge[ChainId.MUMBAI])
+  const [toToken, setToToken] = useState()
   const [receivingAddress, setReceivingAddress] = useState('')
   const [totalAmount, setTotalAmount] = useState('')
   const [totalAmountFormatted, setTotalAmountFormatted] = useState<BigNumberEther>()
@@ -38,10 +39,12 @@ const Bridge = () => {
 
   const bridgeAddress = getBridgeAddress()
   const bridgeContract = useBridgeContract(bridgeAddress)
+  const bridgePolygonContract = useBridgePolygonContract(getSVCPolygonAddress())
   const svcContract = useTokenContract(SVC_FOR_BRIDGE[chainId].address)
   const { balance: maxBalanceToken } = useGetCakeBalance()
   const [transactionInfo, setTransactionInfo] = useState()
   const [approveModalStatus, setApproveModalStatus] = useState<ApproveModalStatus>(ApproveModalStatus.PENDING)
+  const { switchNetwork } = useSwitchNetwork()
 
   const reverseNetwork = () => {
     if (fromToken || toToken) {
@@ -58,6 +61,12 @@ const Bridge = () => {
     true,
     'approveBridgeModal',
   )
+
+  useEffect(() => {
+    if (fromToken && fromToken.chainId !== chainId) {
+      switchNetwork(fromToken.chainId)
+    }
+  }, [chainId, fromToken, switchNetwork])
 
   useEffect(() => {
     if (totalAmount) {
@@ -88,8 +97,14 @@ const Bridge = () => {
   const onLockToken = async () => {
     if (receivingAddress) {
       try {
-        const res = await bridgeContract.lock(receivingAddress, totalAmountFormatted)
-        setTransactionInfo(res)
+        let response
+        if (chainId === ChainId.MUMBAI) {
+          response = await bridgePolygonContract.depositPolygon(receivingAddress, totalAmountFormatted)
+        }
+        if (chainId === ChainId.TESTNET) {
+          response = await bridgeContract.lock(receivingAddress, totalAmountFormatted)
+        }
+        setTransactionInfo(response)
         setApproveModalStatus(ApproveModalStatus.SWAP_COMPLETED)
       } catch (error) {
         if (error?.code === 4001) {
@@ -168,7 +183,7 @@ const Bridge = () => {
           <Divider />
 
           <CardBody>
-            <SelectTokenInput label="From" data={fromToken} setDataToken={setFromToken} />
+            <SelectTokenInput label="From" data={fromToken} disableSelect setDataToken={setFromToken} />
             <Flex justifyContent="center" paddingTop="18px">
               <Sync color="#fff" onClick={reverseNetwork} size={24} cursor="pointer" />
             </Flex>

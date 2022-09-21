@@ -46,6 +46,7 @@ import {
   CakeVaultV2,
   Svc,
   Bridge,
+  BridgePolygon,
 } from 'config/abi/types'
 import { useSigner } from 'wagmi'
 
@@ -57,6 +58,7 @@ import IPancakePairABI from '../config/abi/IPancakePair.json'
 import { ERC20_BYTES32_ABI } from '../config/abi/erc20'
 import ERC20_ABI from '../config/abi/erc20.json'
 import BRIDGE_ABI from '../config/abi/bridge.json'
+import BRIDGE_POLYGON_ABI from '../config/abi/bridgePolygon.json'
 import WETH_ABI from '../config/abi/weth.json'
 import multiCallAbi from '../config/abi/Multicall.json'
 import { getContract } from '../utils'
@@ -291,6 +293,10 @@ export function useTokenContract(tokenAddress?: string, withSignerIfPossible?: b
 
 export function useBridgeContract(tokenAddress?: string, withSignerIfPossible?: boolean) {
   return useContract<Bridge>(tokenAddress, BRIDGE_ABI, withSignerIfPossible)
+}
+
+export function useBridgePolygonContract(tokenAddress?: string, withSignerIfPossible?: boolean) {
+  return useContract<BridgePolygon>(tokenAddress, BRIDGE_POLYGON_ABI, withSignerIfPossible)
 }
 
 export function useWNativeContract(withSignerIfPossible?: boolean): Contract | null {
